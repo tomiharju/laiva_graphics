@@ -17,6 +17,7 @@ public class WorldRenderer implements Renderer{
 	private static final float CAMERA_HEIGHT = 7f;
 	private World world;
 	private final PerspectiveCamera cam;
+
 	private final OrthographicCamera guiCam;
 	private SpriteBatch batch;
 
@@ -35,6 +36,7 @@ public class WorldRenderer implements Renderer{
 		batch = new SpriteBatch();
 	
 	}
+
 	
 	public void render(){
 	
