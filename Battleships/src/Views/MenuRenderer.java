@@ -1,8 +1,8 @@
 package Views;
 
-public class MenuRenderer implements Renderer {
+public class MenuRenderer{
 
-	@Override
+	
 	public void render() {
 		// TODO Auto-generated method stub
 		

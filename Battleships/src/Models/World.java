@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 public class World {
 
-	final Sprite[][] seaGrid = new Sprite[10][10];
-	final Sprite[][] mapGrid = new Sprite[10][10];
 	private Matrix4 seaMatrix = new Matrix4();
 	private Matrix4 mapMatrix = new Matrix4();
 	private Texture seaTile;
@@ -32,14 +30,8 @@ public class World {
 	public void createBoard(){
 		for(int z = 0; z < 10; z++) {
 			for(int x = 0; x < 10; x++) {
-				seaGrid[x][z] = new Sprite(seaTile);
-				seaGrid[x][z].setPosition(10*x,10*z);
-				seaGrid[x][z].setSize(10, 10);
-				seaCells.add(new Cell(z+1,letters[x],seaGrid[x][z]));
-				mapGrid[x][z] = new Sprite(mapTile);
-				mapGrid[x][z].setPosition(10*x,10*z);
-				mapGrid[x][z].setSize(10, 10);
-				mapCells.add(new Cell(z+1,letters[x],mapGrid[x][z]));
+				seaCells.add(new Cell(z+1,letters[x],10*x,10*z,new Sprite(seaTile)));
+				mapCells.add(new Cell(z+1,letters[x],10*x,10*z,new Sprite(mapTile)));
 			}
 		}
 		
@@ -56,8 +48,12 @@ public class World {
 		
 		for(Cell c : seaCells){
 			if(c.getNum()==num && c.getChar()==ch){
-				c.getSprite().setColor(1,0,0,1);
-				System.out.println("Recoloring sea..");
+				if(!c.isSelected())
+					c.getSprite().setColor(1,0,0,1);
+				else
+					c.resetColor();
+				c.deSelect();
+				
 			}
 		}
 		
@@ -65,16 +61,20 @@ public class World {
 	public void selectMapTile(int num, char ch){
 		for(Cell c : mapCells){
 			if(c.getNum()==num && c.getChar()==ch){
-				c.getSprite().setColor(1,0,0,1);
+				if(!c.isSelected())
+					c.getSprite().setColor(0,0,0,1);
+				else
+					c.resetColor();
+				c.deSelect();
 				
 			}
 		}
 	}
-	public Sprite[][] getSea(){
-		return seaGrid;
+	public ArrayList<Cell> getSea(){
+		return seaCells;
 	}
-	public Sprite[][] getMap(){
-		return mapGrid;
+	public ArrayList<Cell> getMap(){
+		return mapCells;
 	}
 	
 	public Matrix4 seaOrientation(){

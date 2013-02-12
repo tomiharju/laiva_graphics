@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.collision.Ray;
 public class GameScreen implements Screen, InputProcessor{
 
 	private WorldRenderer worldRenderer;
-	WorldController controller;
+	WorldController worldController;
 	private World world;
 	
 	
@@ -39,7 +39,7 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public void resize(int width, int height) {
-		worldRenderer.setSize(width,height);
+		
 		
 	}
 
@@ -47,7 +47,7 @@ public class GameScreen implements Screen, InputProcessor{
 	public void show() {
 		world = new World();
 		worldRenderer = new WorldRenderer(world);
-		controller = new WorldController(world);
+		worldController = new WorldController(world);
 		Gdx.input.setInputProcessor(this);
 		
 	}
@@ -103,14 +103,11 @@ public class GameScreen implements Screen, InputProcessor{
 		Intersector.intersectRayPlane(pickRay, xzPlane, xzintersection);
 		pickRay = worldRenderer.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
 		Intersector.intersectRayPlane(pickRay, xyPlane, xyintersection);
-		if(xzintersection.z>0)
-			controller.handleTouchAtSea(xzintersection.x, xzintersection.z);
-		if(xyintersection.y<100)
-			controller.handleTouchAtMap(xyintersection.x,xyintersection.y);
-		
-		System.out.println("Sealevel "+xzintersection.x + " " +xzintersection.z);
-		System.out.println("Maplevel "+xyintersection.x +"  "+ (100-xyintersection.y));
-		
+		//implement layer touch
+		if(xzintersection.z>0 || xyintersection.y<100){
+			worldController.handleTouchAtBoard(xyintersection.x,xyintersection.y, xzintersection.x,  xzintersection.z);
+	
+	}
 		
 		return false;
 	}

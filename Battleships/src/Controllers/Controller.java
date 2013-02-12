@@ -1,5 +1,10 @@
 package Controllers;
 
-public interface Controller {
-
+abstract class Controller {
+	
+	protected WorldController worldController;
+	
+	public abstract void handleTouch(float x, float y);
+	public abstract void handleTouch(float x, float y,int axis);
+	
 }

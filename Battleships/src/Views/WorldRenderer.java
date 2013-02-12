@@ -9,9 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
+import Models.Cell;
 import Models.World;
 
-public class WorldRenderer implements Renderer{
+public class WorldRenderer {
 
 	private static final float CAMERA_WIDTH = 10f;
 	private static final float CAMERA_HEIGHT = 7f;
@@ -42,28 +43,27 @@ public class WorldRenderer implements Renderer{
 	
 		cam.update();		
 		 
-		batch.setProjectionMatrix(cam.combined);
-		batch.setTransformMatrix(world.seaOrientation());
-		batch.begin();
-		for(Sprite[] s:world.getSea()){
-			for(Sprite sprite:s){
-				sprite.draw(batch);
-			}
-		}
-		batch.setTransformMatrix(world.mapOrientation());
-		
-		for(Sprite[] s:world.getMap()){
-			for(Sprite sprite:s){
-				sprite.draw(batch);
-			}
-		}
-		
-		
-		batch.end();
+		drawMap();
 	
 	}
 	
-	public void setSize(int w, int h){
+	public void drawMap(){
+		batch.setProjectionMatrix(cam.combined);
+		batch.setTransformMatrix(world.seaOrientation());
+		
+		batch.begin();
+		for(Cell s:world.getSea()){
+			s.getSprite().draw(batch);
+		}
+		
+		batch.setTransformMatrix(world.mapOrientation());
+		for(Cell s:world.getMap()){
+			s.getSprite().draw(batch);		
+		}
+		batch.end();
+		
+	}
+	public void drawEntities(){
 		
 	}
 	
