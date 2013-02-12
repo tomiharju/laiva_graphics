@@ -100,14 +100,16 @@ public class GameScreen implements Screen, InputProcessor{
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
 		Ray pickRay = worldRenderer.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
-		Intersector.intersectRayPlane(pickRay, xzPlane, xzintersection);
+		if(Intersector.intersectRayPlane(pickRay, xzPlane, xzintersection)){
+			if(xzintersection.x>0 && xzintersection.x<100 && xzintersection.z>0 && xzintersection.z<100)
+				worldController.handleTouchAtBoard(0, 0, xzintersection.x, xzintersection.z);
+		}
 		pickRay = worldRenderer.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
-		Intersector.intersectRayPlane(pickRay, xyPlane, xyintersection);
-		//implement layer touch
-		if(xzintersection.z>0 || xyintersection.y<100){
-			worldController.handleTouchAtBoard(xyintersection.x,xyintersection.y, xzintersection.x,  xzintersection.z);
-	
-	}
+		if(Intersector.intersectRayPlane(pickRay, xyPlane, xyintersection)){
+			if(xyintersection.x>0 && xyintersection.x<100 && xyintersection.y>0 && xyintersection.y<100)
+				worldController.handleTouchAtBoard(xyintersection.x, 100-xyintersection.y,0, 0);
+			
+		}
 		
 		return false;
 	}

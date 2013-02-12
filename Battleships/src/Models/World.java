@@ -28,15 +28,16 @@ public class World {
 	}
 	
 	public void createBoard(){
+		seaMatrix.setToRotation(new Vector3(1,0,0),90);
 		for(int z = 0; z < 10; z++) {
 			for(int x = 0; x < 10; x++) {
 				seaCells.add(new Cell(z+1,letters[x],10*x,10*z,new Sprite(seaTile)));
-				mapCells.add(new Cell(z+1,letters[x],10*x,10*z,new Sprite(mapTile)));
+				mapCells.add(new Cell(11-(z+1),letters[x],10*x,10*z,new Sprite(mapTile)));
 			}
 		}
 		
-		seaMatrix.setToRotation(new Vector3(1,0,0),90);
-	
+		
+		
 	}
 	
 	public void loadTextures(){

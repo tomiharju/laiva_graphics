@@ -26,9 +26,9 @@ public class WorldController {
 	}
 	
 	public void handleTouchAtBoard(float xy_x,float xy_y,float xz_x,float xz_z){
-		if(xz_z>0)
+		if(xz_x!=0)
 			cellController.handleTouch(xz_x, xz_z,0);
-		else if(xy_y>0)
+		else if(xy_x!=0)
 			cellController.handleTouch(xy_x,xy_y,1);
 		
 	}
