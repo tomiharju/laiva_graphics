@@ -17,6 +17,7 @@ public class WorldRenderer implements Renderer{
 	private static final float CAMERA_HEIGHT = 7f;
 	private World world;
 	private final PerspectiveCamera cam;
+	private final OrthographicCamera guiCam;
 	private SpriteBatch batch;
 
 	
@@ -26,12 +27,13 @@ public class WorldRenderer implements Renderer{
 		this. world=w;
 		
 		cam = new PerspectiveCamera(67,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		guiCam = new OrthographicCamera(10,10 * (Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
 		cam.position.set(50,150,150);
 		cam.direction.set(0,-1,-1);
 		cam.near=1;
 		cam.far=250;
 		batch = new SpriteBatch();
-		
+	
 	}
 	
 	public void render(){

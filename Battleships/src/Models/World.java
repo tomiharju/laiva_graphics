@@ -66,7 +66,7 @@ public class World {
 		for(Cell c : mapCells){
 			if(c.getNum()==num && c.getChar()==ch){
 				c.getSprite().setColor(1,0,0,1);
-				System.out.println("Recoloring map..");
+				
 			}
 		}
 	}
