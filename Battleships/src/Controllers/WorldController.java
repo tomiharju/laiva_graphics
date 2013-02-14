@@ -8,7 +8,7 @@ public class WorldController {
 	
 	//Co-operative controllers
 	GUIController guiController;
-	CellController cellController;
+	ControllerCell cellController;
 	
 	private World world;
 	
@@ -16,7 +16,7 @@ public class WorldController {
 	public WorldController(World w){
 		this. world=w;
 		guiController = new GUIController(this);
-		cellController = new CellController(this);
+		cellController = new ControllerCell(this);
 	}
 	public void update(float delta){
 		

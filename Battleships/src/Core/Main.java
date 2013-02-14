@@ -1,6 +1,7 @@
 package Core;
 
-import Screens.GameScreen;
+
+import Screens.PlayScreen;
 
 
 import com.badlogic.gdx.Game;
@@ -13,7 +14,8 @@ public class Main extends Game{
 	@Override
 	
 	public void create() {		
-		setScreen(new GameScreen());
+		setScreen(new PlayScreen());
+		
 	}
 	public void changeScreen(Screen s){
 		setScreen(s);

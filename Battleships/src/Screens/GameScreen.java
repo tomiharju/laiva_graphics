@@ -1,8 +1,11 @@
 package Screens;
 
-import Controllers.WorldController;
-import Models.World;
-import Views.WorldRenderer;
+
+
+import ObjectControllers.WorldController;
+import ObjectModels.WorldObject;
+import ObjectRenderers.WorldRenderer;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -15,9 +18,9 @@ import com.badlogic.gdx.math.collision.Ray;
 
 public class GameScreen implements Screen, InputProcessor{
 
-	private WorldRenderer worldRenderer;
-	WorldController worldController;
-	private World world;
+	private WorldRenderer 		worldRenderer;
+	private WorldController 	worldController;
+	private WorldObject 		world;
 	
 	
 	//Input handler variables
@@ -33,7 +36,7 @@ public class GameScreen implements Screen, InputProcessor{
 		Gdx.gl.glClearColor(.223f,.345f,.474f,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		worldRenderer.render();
+	
 		
 	}
 
@@ -45,9 +48,8 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public void show() {
-		world = new World();
-		worldRenderer = new WorldRenderer(world);
-		worldController = new WorldController(world);
+		world = new WorldObject();
+	
 		Gdx.input.setInputProcessor(this);
 		
 	}
@@ -60,12 +62,14 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public void pause() {
+		this.pause();
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void resume() {
+		this.resume();
 		// TODO Auto-generated method stub
 		
 	}
@@ -99,17 +103,8 @@ public class GameScreen implements Screen, InputProcessor{
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		
-		Ray pickRay = worldRenderer.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
-		if(Intersector.intersectRayPlane(pickRay, xzPlane, xzintersection)){
-			if(xzintersection.x>0 && xzintersection.x<100 && xzintersection.z>0 && xzintersection.z<100)
-				worldController.handleTouchAtBoard(0, 0, xzintersection.x, xzintersection.z);
-		}
-		pickRay = worldRenderer.getCamera().getPickRay(Gdx.input.getX(), Gdx.input.getY());
-		if(Intersector.intersectRayPlane(pickRay, xyPlane, xyintersection)){
-			if(xyintersection.x>0 && xyintersection.x<100 && xyintersection.y>0 && xyintersection.y<100)
-				worldController.handleTouchAtBoard(xyintersection.x, 100-xyintersection.y,0, 0);
-			
-		}
+		
+		
 		
 		return false;
 	}
