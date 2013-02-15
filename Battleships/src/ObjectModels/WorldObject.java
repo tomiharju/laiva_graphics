@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import ObjectControllers.BottomGuiController;
 import ObjectControllers.ObjectController;
 import ObjectControllers.SeaController;
 import ObjectControllers.TopGuiController;
 import ObjectControllers.WorldController;
+import ObjectRenderers.BottomGuiRenderer;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
 import ObjectRenderers.TopGuiRenderer;
@@ -21,13 +23,13 @@ public class WorldObject extends ModelObject {
 	//Static objects
 	private SeaObject 		sea;
 	private TopGuiObject 	topGui;	
-	
+	private BottomGuiObject botGui;
 		
 	public WorldObject(){
 		objects 		= new ArrayList<ModelObject>();
 		sea			 	= new SeaObject(new SeaController(),new SeaRenderer());
 		topGui			= new TopGuiObject(new TopGuiController(), new TopGuiRenderer());
-		
+		botGui			= new BottomGuiObject(new BottomGuiController(),new BottomGuiRenderer());
 		
 		
 	}

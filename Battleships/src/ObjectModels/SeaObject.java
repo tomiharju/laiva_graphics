@@ -19,7 +19,7 @@ public class SeaObject extends ModelObject {
 		setController(controller);
 		setRenderer(renderer);
 
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/seaTile.jpg")));
+		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/waterTexture.jpg")));
 		sprite.setSize(Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
 		sprite.setPosition(0, (float) (Gdx.graphics.getHeight()*0.2));
 		WorldObject.objects.add(this);
