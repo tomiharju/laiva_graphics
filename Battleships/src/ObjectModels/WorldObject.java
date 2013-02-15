@@ -37,6 +37,7 @@ public class WorldObject extends ModelObject {
 	public void update(){
 		for(ModelObject o: objects)
 			o.update();
+		
 	}
 	
 

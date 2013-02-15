@@ -42,6 +42,7 @@ public class WorldRenderer extends ObjectRenderer{
 		for(ObjectRenderer o: renderers)
 			o.draw();
 		batch.end();
+		
 	}
 
 	@Override
