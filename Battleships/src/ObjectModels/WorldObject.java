@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import ObjectControllers.BottomGuiController;
 import ObjectControllers.ObjectController;
 import ObjectControllers.SeaController;
+import ObjectControllers.ShipController;
 import ObjectControllers.TopGuiController;
 import ObjectControllers.WorldController;
+import ObjectModels.ShipObject.ShipType;
 import ObjectRenderers.BottomGuiRenderer;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
+import ObjectRenderers.ShipRenderer;
 import ObjectRenderers.TopGuiRenderer;
 import ObjectRenderers.WorldRenderer;
 
@@ -25,6 +28,9 @@ public class WorldObject extends ModelObject {
 	private TopGuiObject 	topGui;	
 	private BottomGuiObject botGui;
 		
+	//Ships
+	ShipObject rowboat = new ShipObject(ShipType.ROWBOAT,new ShipController(),new ShipRenderer());
+	
 	public WorldObject(){
 		objects 		= new ArrayList<ModelObject>();
 		sea			 	= new SeaObject(new SeaController(),new SeaRenderer());

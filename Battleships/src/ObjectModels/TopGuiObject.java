@@ -21,7 +21,7 @@ public class TopGuiObject extends ModelObject{
 		sprite.setPosition(0, (float) (Gdx.graphics.getHeight()*0.8));
 		WorldObject.objects.add(this);
 		
-		ShipObject ship = new ShipObject("rowboat");
+		
 	}
 
 	@Override

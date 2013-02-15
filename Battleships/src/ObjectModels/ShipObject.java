@@ -1,26 +1,44 @@
 package ObjectModels;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
+
+import com.badlogic.gdx.Gdx;
 
 import ObjectControllers.ObjectController;
 import ObjectRenderers.ObjectRenderer;
 
 public class ShipObject extends ModelObject{
 
-	private int size;
-	private int hp;
-	
-	public ShipObject(String shiptype){
-		Properties prop = new Properties();
-		try{
-			prop.load(new FileInputStream("//ships.properties"));
-			System.out.println("Size: "+prop.getProperty(shiptype+"size")); 
-			System.out.println("Hp :"+prop.getProperty(shiptype+"hp"));
-			System.out.println("Properties listed...");
-		}catch(Exception e){
-			System.out.println(e.getMessage());
+	public enum ShipType{
+		ROWBOAT(1,10),
+		MOTORBOAT(2,20),
+		BATTLESHIP(5,50);
+		private int size,hp;
+		
+		private ShipType(int s,int h){
+			size=s;
+			hp=h;
 		}
+		private int getHp(){
+			return hp;
+		}
+		private int getSize(){
+			return size;
+		}
+		
+	}
+	private int health;
+	private int shipsize;
+	
+	
+	public ShipObject(ShipType ship,ObjectController controller,ObjectRenderer renderer){
+		setController(controller);
+		setRenderer(renderer);
+		health=ship.getHp();
+		shipsize=ship.getSize();
+		System.out.println(health+"  "+shipsize);
 	}
 	
 	
