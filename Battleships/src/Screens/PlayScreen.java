@@ -28,7 +28,7 @@ public class PlayScreen implements Screen, InputProcessor{
 		controller.setObject(world);
 		world.setController(controller);
 		world.setRenderer(renderer);
-		
+		Gdx.input.setInputProcessor(this);
 	}
 	
 	
@@ -101,7 +101,7 @@ public class PlayScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			
+			controller.touchDown(screenX,Gdx.graphics.getHeight()- screenY);
 		return false;
 		
 	}

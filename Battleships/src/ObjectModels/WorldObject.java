@@ -2,9 +2,10 @@ package ObjectModels;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import ObjectControllers.BottomGuiController;
+import ObjectControllers.BotGuiController;
 import ObjectControllers.ObjectController;
 import ObjectControllers.SeaController;
 import ObjectControllers.ShipController;
@@ -28,16 +29,18 @@ public class WorldObject extends ModelObject {
 	private TopGuiObject 	topGui;	
 	private BottomGuiObject botGui;
 		
-	//Ships
-	ShipObject rowboat = new ShipObject(ShipType.ROWBOAT,new ShipController(),new ShipRenderer());
+	
+	
 	
 	public WorldObject(){
 		objects 		= new ArrayList<ModelObject>();
 		sea			 	= new SeaObject(new SeaController(),new SeaRenderer());
 		topGui			= new TopGuiObject(new TopGuiController(), new TopGuiRenderer());
-		botGui			= new BottomGuiObject(new BottomGuiController(),new BottomGuiRenderer());
+		botGui			= new BottomGuiObject(new BotGuiController(),new BottomGuiRenderer());
 		
-		
+		new ShipObject(ShipType.ROWBOAT,new ShipController(100,(float) (Gdx.graphics.getHeight()*0.9)),new ShipRenderer());
+		new ShipObject(ShipType.MOTORBOAT,new ShipController(150,(float) (Gdx.graphics.getHeight()*0.9)),new ShipRenderer());
+	//	new ShipObject(ShipType.BATTLESHIP,new ShipController(),new ShipRenderer());
 	}
 	
 	public void update(){

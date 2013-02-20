@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import ObjectControllers.BottomGuiController;
+import ObjectControllers.BotGuiController;
 import ObjectControllers.ObjectController;
 import ObjectControllers.SeaController;
 import ObjectRenderers.BottomGuiRenderer;
@@ -15,7 +15,7 @@ public class BottomGuiObject extends ModelObject{
 
 	
 	
-	public BottomGuiObject(BottomGuiController controller, BottomGuiRenderer renderer){
+	public BottomGuiObject(BotGuiController controller, BottomGuiRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
 		

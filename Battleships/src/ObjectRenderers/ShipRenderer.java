@@ -2,10 +2,14 @@ package ObjectRenderers;
 
 public class ShipRenderer extends ObjectRenderer{
 
+	public ShipRenderer(){
+		WorldRenderer.renderers.add(this);
+	}
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
+		object.getSprite().draw(WorldRenderer.batch);
 		
 	}
 
+	
 }

@@ -29,7 +29,7 @@ public class SeaObject extends ModelObject {
 	
 	@Override
 	public void update() {
-		((SeaController)controller).ImaSeaController();
+		
 	}
 
 

@@ -1,8 +1,11 @@
 package ObjectModels;
 
 import ObjectControllers.ObjectController;
+import ObjectControllers.ShipController;
 import ObjectControllers.TopGuiController;
+import ObjectModels.ShipObject.ShipType;
 import ObjectRenderers.ObjectRenderer;
+import ObjectRenderers.ShipRenderer;
 import ObjectRenderers.TopGuiRenderer;
 
 import com.badlogic.gdx.Gdx;
@@ -10,6 +13,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class TopGuiObject extends ModelObject{
+	
+	
+	
 
 	
 	public TopGuiObject(TopGuiController controller,TopGuiRenderer renderer){
@@ -20,6 +26,7 @@ public class TopGuiObject extends ModelObject{
 		sprite.setSize(Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2));
 		sprite.setPosition(0, (float) (Gdx.graphics.getHeight()*0.8));
 		WorldObject.objects.add(this);
+		
 		
 		
 	}

@@ -1,7 +1,5 @@
 package ObjectRenderers;
 
-import ObjectModels.ModelObject;
-
 public class SeaRenderer extends ObjectRenderer
 {
 

@@ -15,7 +15,9 @@ public abstract class ModelObject {
 	
 	
 	public abstract void update();
-	
+	public void select(){
+		System.out.println(sprite.getHeight() +" is selected");
+	}
 	
 	
 	public Sprite getSprite(){

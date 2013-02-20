@@ -24,14 +24,17 @@ public class WorldRenderer extends ObjectRenderer{
 	public WorldRenderer(){
 		renderers 	= new ArrayList<ObjectRenderer>();
 		batch 		= new SpriteBatch();
+		batch.enableBlending();
 		setupCamera();
+		
 		
 		
 	}
 	
 	public void setupCamera(){
 		
-		cam = new OrthographicCamera(10,10 * (Gdx.graphics.getHeight() / (float)Gdx.graphics.getWidth()));
+		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.setToOrtho(true,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(5,5,0);
 		cam.update();
 		
