@@ -39,7 +39,7 @@ public class WorldObject extends ModelObject {
 		botGui			= new BottomGuiObject(new BotGuiController(),new BottomGuiRenderer());
 		
 		new ShipObject(ShipType.ROWBOAT,new ShipController(100,(float) (Gdx.graphics.getHeight()*0.9)),new ShipRenderer());
-		new ShipObject(ShipType.MOTORBOAT,new ShipController(150,(float) (Gdx.graphics.getHeight()*0.9)),new ShipRenderer());
+		new ShipObject(ShipType.MOTORBOAT,new ShipController(250,(float) (Gdx.graphics.getHeight()*0.9)),new ShipRenderer());
 	//	new ShipObject(ShipType.BATTLESHIP,new ShipController(),new ShipRenderer());
 	}
 	

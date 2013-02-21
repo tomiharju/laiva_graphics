@@ -3,11 +3,13 @@ package ObjectRenderers;
 import java.util.ArrayList;
 
 import ObjectModels.ModelObject;
-
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 
 public class WorldRenderer extends ObjectRenderer{
@@ -17,8 +19,8 @@ public class WorldRenderer extends ObjectRenderer{
 	public static OrthographicCamera cam;
 	public static SpriteBatch batch;
 	public static float ppux,ppuy;
-
 	
+	private ShapeRenderer debugrenderer;
 	
 	
 	public WorldRenderer(){
@@ -27,7 +29,7 @@ public class WorldRenderer extends ObjectRenderer{
 		batch.enableBlending();
 		setupCamera();
 		
-		
+		debugrenderer= new ShapeRenderer();
 		
 	}
 	
@@ -48,9 +50,17 @@ public class WorldRenderer extends ObjectRenderer{
 		for(ObjectRenderer o: renderers)
 			o.draw();
 		batch.end();
-		
-	}
+	
+		debugrenderer.begin(ShapeType.Rectangle);
+		for(ObjectRenderer o: renderers){
+			Rectangle rect = o.getObject().getBounds();
+			debugrenderer.setColor(1, 0, 0, 1);
+		    debugrenderer.rect(rect.getX(), rect.getY(), rect.width, rect.height);
 
+		}
+		
+		debugrenderer.end();
+	}
 	@Override
 	public void setObject(ModelObject object) {
 		this.object=object;

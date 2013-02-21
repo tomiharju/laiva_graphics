@@ -64,6 +64,7 @@ public class ShipObject extends ModelObject{
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		
 		WorldObject.objects.add(this);
+		
 	}
 	
 	
@@ -72,6 +73,8 @@ public class ShipObject extends ModelObject{
 	@Override
 	public void update() {
 		position.lerp(((ShipController)controller).pollPosition(),0.1f);
+		bounds.x=position.x-bounds.width/2;
+		bounds.y=position.y-bounds.height/2;
 		angle.setAngle(((ShipController)controller).pollRotation());
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		sprite.setRotation(angle.angle());

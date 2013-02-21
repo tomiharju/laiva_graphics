@@ -19,20 +19,21 @@ public class WorldController extends ObjectController{
 
 		
 		public static ArrayList<ObjectController> controllers;
-		
+		public static ArrayList<ShipController> shipControllers;
 		private boolean objectClicked;
 		private ObjectController activeController;
 		
 		public WorldController(){
 			controllers = new ArrayList<ObjectController>();
+			shipControllers= new ArrayList<ShipController>();
 			objectClicked=false;
 		}
 		
 		public void touchDown(float x,float y){
 			
-			Vector2 touchPoint = new Vector2(x,y);
+			
 			for(ObjectController c: controllers){
-				if(touchPoint.dst(c.pollPosition())<15){
+				if(c.getObject().getBounds().contains(x, y)){ 
 					activeController=c;
 					c.select();
 					objectClicked=true;
@@ -41,13 +42,13 @@ public class WorldController extends ObjectController{
 				objectClicked=false;
 				
 			}
-			if(objectClicked)
-			activeController.handleInput(x, y);
+			
 		
 		}
-		public void touchDragged(float x,float y){
+		public void touchUp(float x,float y){
 			if(objectClicked){
 				activeController.handleInput(x, y);
+				
 			}
 		}
 

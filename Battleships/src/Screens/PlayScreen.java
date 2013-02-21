@@ -108,13 +108,13 @@ public class PlayScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		controller.touchUp(screenX,Gdx.graphics.getHeight()- screenY);
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		controller.touchDragged(screenX,Gdx.graphics.getHeight()- screenY);
+		
 		return false;
 	}
 
