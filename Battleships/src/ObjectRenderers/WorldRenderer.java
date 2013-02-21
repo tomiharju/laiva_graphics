@@ -16,7 +16,7 @@ public class WorldRenderer extends ObjectRenderer{
 	public static ArrayList<ObjectRenderer> renderers;
 	public static OrthographicCamera cam;
 	public static SpriteBatch batch;
-	
+	public static float ppux,ppuy;
 
 	
 	
@@ -37,6 +37,9 @@ public class WorldRenderer extends ObjectRenderer{
 		cam.setToOrtho(true,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(5,5,0);
 		cam.update();
+		
+		ppux=Gdx.graphics.getWidth()/100;
+		ppuy=Gdx.graphics.getHeight()/100;
 		
 	}
 	

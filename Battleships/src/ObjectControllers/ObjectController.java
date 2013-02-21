@@ -11,6 +11,7 @@ public abstract class ObjectController {
 	protected ModelObject object;
 	protected Vector2 position;
 	protected float rotation;
+	protected boolean selected;
 	
 	public ModelObject getObject() {
 		return object;
@@ -28,6 +29,15 @@ public abstract class ObjectController {
 	public void setPosition(Vector2 p){
 		position=p;
 	}
+	public boolean pollSelection(){
+		return selected;
+	}
+	public void select(){
+		selected=!selected;
+	}
+	public abstract void handleInput(float x, float y);
+		
+	
 	
 	
 	

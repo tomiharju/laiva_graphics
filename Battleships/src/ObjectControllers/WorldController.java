@@ -1,5 +1,7 @@
 package ObjectControllers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Plane;
@@ -15,24 +17,44 @@ public class WorldController extends ObjectController{
 	
 
 
-		public static ObjectController activeController;
 		
+		public static ArrayList<ObjectController> controllers;
+		
+		private boolean objectClicked;
+		private ObjectController activeController;
+		
+		public WorldController(){
+			controllers = new ArrayList<ObjectController>();
+			objectClicked=false;
+		}
 		
 		public void touchDown(float x,float y){
 			
-		
-			if(y>Gdx.graphics.getHeight()*0.8){
-				TopGuiController.touchDown(x, y);
+			Vector2 touchPoint = new Vector2(x,y);
+			for(ObjectController c: controllers){
+				if(touchPoint.dst(c.pollPosition())<15){
+					activeController=c;
+					c.select();
+					objectClicked=true;
+					break;
+				}
+				objectClicked=false;
 				
 			}
-			else if(y>Gdx.graphics.getHeight()*0.2 && y<Gdx.graphics.getHeight()*0.8){
-				if(activeController!=null)
-					activeController.setPosition(new Vector2(x,y));
-				SeaController.touchDown(x, y);
-			}
-			else
-				BotGuiController.touchDown(x, y);
+			if(objectClicked)
+			activeController.handleInput(x, y);
 		
+		}
+		public void touchDragged(float x,float y){
+			if(objectClicked){
+				activeController.handleInput(x, y);
+			}
+		}
+
+		@Override
+		public void handleInput(float x, float y) {
+			// TODO Auto-generated method stub
+			
 		}
 		
 		

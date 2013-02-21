@@ -49,30 +49,13 @@ public class WorldObject extends ModelObject {
 		
 	}
 	
-
-
-
-	@Override
-	public Sprite getSprite() {
-		
-		return sprite;
-	}
-	
-	@Override
-	public ObjectController getController() {
-		return controller;
-	}
-
 	@Override
 	public void setController(ObjectController controller) {
 		this.controller=controller;
 		
 	}
 
-	@Override
-	public ObjectRenderer getRenderer() {
-		return renderer;
-	}
+	
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {

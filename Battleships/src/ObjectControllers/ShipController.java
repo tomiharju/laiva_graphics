@@ -9,7 +9,13 @@ public class ShipController extends ObjectController {
 	public ShipController(float x, float y){
 		position = new Vector2(x,y);
 		rotation = 0;
-		TopGuiController.shipControllers.add(this);
+		WorldController.controllers.add(this);
+	}
+
+	@Override
+	public void handleInput(float x,float y) {
+		setPosition(new Vector2(x,y));
+		
 	}
 	
 	

@@ -7,12 +7,14 @@ import java.util.Properties;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import ObjectControllers.ObjectController;
 import ObjectControllers.SeaController;
 import ObjectControllers.ShipController;
 import ObjectRenderers.ObjectRenderer;
+import ObjectRenderers.WorldRenderer;
 
 public class ShipObject extends ModelObject{
 
@@ -52,15 +54,16 @@ public class ShipObject extends ModelObject{
 	public ShipObject(ShipType ship,ObjectController controller,ObjectRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		WorldObject.objects.add(this);
+		bounds = new Rectangle(0,0,ship.getWidth()*WorldRenderer.ppux,ship.getLenght()*WorldRenderer.ppuy);
 		
 		
 		position=new Vector2();
 		angle=new Vector2();
 		
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+ship.getFile())));
-		sprite.setSize(ship.getWidth()*2,ship.getLenght()*2);
-		System.out.println("Finished creating ship!");
+		sprite.setSize(bounds.getWidth(),bounds.getHeight());
+		
+		WorldObject.objects.add(this);
 	}
 	
 	
@@ -72,6 +75,7 @@ public class ShipObject extends ModelObject{
 		angle.setAngle(((ShipController)controller).pollRotation());
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		sprite.setRotation(angle.angle());
+		
 	}
 
 	@Override

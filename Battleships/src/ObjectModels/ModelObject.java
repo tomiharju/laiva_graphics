@@ -4,20 +4,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ObjectControllers.ObjectController;
 import ObjectRenderers.ObjectRenderer;
-
+import com.badlogic.gdx.math.Rectangle;
 public abstract class ModelObject {
 	
 	protected ObjectController controller;
 	protected ObjectRenderer renderer;
 	protected Sprite sprite;
-	
+	protected Rectangle bounds;
 	
 	
 	
 	public abstract void update();
-	public void select(){
-		System.out.println(sprite.getHeight() +" is selected");
-	}
+	
 	
 	
 	public Sprite getSprite(){
@@ -41,9 +39,11 @@ public abstract class ModelObject {
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
 	}
+	public Rectangle getBounds(){
+		return bounds;
+	}
 	
 	
-	//Structural methods
 	
 	
 	
