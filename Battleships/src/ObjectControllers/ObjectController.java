@@ -12,6 +12,7 @@ public abstract class ObjectController {
 	protected Vector2 position;
 	protected float rotation;
 	protected boolean selected;
+	protected boolean isHidden;
 	
 	public ModelObject getObject() {
 		return object;
@@ -33,10 +34,23 @@ public abstract class ObjectController {
 		return selected;
 	}
 	public void select(){
-		selected=!selected;
+		selected=true;
 	}
-	public abstract void handleInput(float x, float y);
-		
+	public void deSelect(){
+		selected=false;
+	}
+	public boolean isHidden(){
+		return isHidden;
+	}
+	public void hide(){
+		isHidden=true;
+	}
+	public void show(){
+		isHidden=false;
+	}
+	
+	public abstract void handleInputDown(float x, float y);
+	public abstract void handleInputUp(float x, float y);
 	
 	
 	

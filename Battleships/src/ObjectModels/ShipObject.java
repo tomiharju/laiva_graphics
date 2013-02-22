@@ -49,7 +49,7 @@ public class ShipObject extends ModelObject{
 	
 	
 	
-	private Vector2 position;
+	
 	private Vector2 angle;
 	public ShipObject(ShipType ship,ObjectController controller,ObjectRenderer renderer){
 		setController(controller);

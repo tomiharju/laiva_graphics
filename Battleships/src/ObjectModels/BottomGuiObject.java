@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import ObjectControllers.BotGuiController;
 import ObjectControllers.ObjectController;
 import ObjectControllers.SeaController;
-import ObjectRenderers.BottomGuiRenderer;
+import ObjectRenderers.BotGuiRenderer;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
 
@@ -16,7 +16,7 @@ public class BottomGuiObject extends ModelObject{
 
 	
 	
-	public BottomGuiObject(BotGuiController controller, BottomGuiRenderer renderer){
+	public BottomGuiObject(BotGuiController controller, BotGuiRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
 		bounds = new Rectangle(0,0,Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2));

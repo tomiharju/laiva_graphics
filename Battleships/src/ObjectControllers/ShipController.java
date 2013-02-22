@@ -8,16 +8,16 @@ public class ShipController extends ObjectController {
 	
 	
 	public ShipController(float x, float y){
-		position = new Vector2(x,y);
-		
-		rotation = 0;
-		
 		WorldController.controllers.add(this);
 		WorldController.shipControllers.add(this);
+		
+		
+		position = new Vector2(x,y);
+		rotation = 0;
 	}
 
 	@Override
-	public void handleInput(float x,float y) {
+	public void handleInputUp(float x,float y) {
 		boolean legalmove=true;
 		for(ShipController sc:WorldController.shipControllers){
 			if(!sc.equals(this)){
@@ -30,6 +30,12 @@ public class ShipController extends ObjectController {
 		if(legalmove){
 			setPosition(new Vector2(x,y));
 		}
+		
+	}
+
+	@Override
+	public void handleInputDown(float x, float y) {
+		// TODO Auto-generated method stub
 		
 	}
 	

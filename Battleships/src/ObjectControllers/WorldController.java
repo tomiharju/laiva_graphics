@@ -20,40 +20,49 @@ public class WorldController extends ObjectController{
 		
 		public static ArrayList<ObjectController> controllers;
 		public static ArrayList<ShipController> shipControllers;
-		private boolean objectClicked;
+		
 		private ObjectController activeController;
 		
 		public WorldController(){
 			controllers = new ArrayList<ObjectController>();
 			shipControllers= new ArrayList<ShipController>();
-			objectClicked=false;
+			
 		}
 		
 		public void touchDown(float x,float y){
 			
 			
 			for(ObjectController c: controllers){
+				c.deSelect();
 				if(c.getObject().getBounds().contains(x, y)){ 
 					activeController=c;
-					c.select();
-					objectClicked=true;
-					break;
+					activeController.handleInputDown(x, y);
+					activeController.select();
+					
 				}
-				objectClicked=false;
+				
 				
 			}
 			
 		
 		}
 		public void touchUp(float x,float y){
-			if(objectClicked){
-				activeController.handleInput(x, y);
+			if(activeController!=null)
+				activeController.handleInputUp(x, y);
+			
 				
-			}
+		}
+
+		
+
+		@Override
+		public void handleInputDown(float x, float y) {
+			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
-		public void handleInput(float x, float y) {
+		public void handleInputUp(float x, float y) {
 			// TODO Auto-generated method stub
 			
 		}

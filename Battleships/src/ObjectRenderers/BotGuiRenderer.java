@@ -1,19 +1,17 @@
 package ObjectRenderers;
 
-public class SeaRenderer extends ObjectRenderer
-{
+public class BotGuiRenderer extends ObjectRenderer{
 
 	
 	
 	
-	public SeaRenderer(){
+	public BotGuiRenderer(){
 		WorldRenderer.renderers.add(this);
 	}
 	@Override
 	public void draw() {
 		object.getSprite().draw(WorldRenderer.batch);
+		
 	}
-
-	
 
 }

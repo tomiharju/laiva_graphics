@@ -3,45 +3,37 @@ package ObjectControllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-public class SeaController extends ObjectController{
+public class MapController extends ObjectController {
 
-	
 	private Vector2 firstTouchPosition;
-	private MapController _mapController;
+	private SeaController _seaController;
 	
-	public SeaController(){
+	public MapController(){
 		WorldController.controllers.add(this);
 		
-		isHidden=false;
+		isHidden=true;
 		firstTouchPosition= new Vector2();
-		position = new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+		position=new Vector2(3*Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 	}
 	
-	public void linkMapController(ObjectController cont){
-		_mapController=(MapController) cont;
-		_mapController.linkSeaController(this);
+	public void linkSeaController(ObjectController cont){
+		_seaController=(SeaController) cont;
 	}
 	@Override
 	public void handleInputDown(float x, float y) {
-			firstTouchPosition.set(x, y);
+		firstTouchPosition.set(x, y);
 		
-		
-	
-		
-	
 	}
+
 	@Override
 	public void handleInputUp(float x, float y) {
 		if((firstTouchPosition.dst(x, y))>object.getBounds().getWidth()/2){
 			hide();
-			_mapController.show();
+			_seaController.show();
 			
 		}
-			
-		
 		
 	}
-	
 	public void hide(){
 		position.set(3*Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 	}
@@ -49,7 +41,4 @@ public class SeaController extends ObjectController{
 		position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 	}
 
-	
-	
-	
 }

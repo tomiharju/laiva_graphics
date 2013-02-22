@@ -1,17 +1,14 @@
 package ObjectRenderers;
 
-public class BottomGuiRenderer extends ObjectRenderer{
+public class MapRenderer extends ObjectRenderer{
 
 	
-	
-	
-	public BottomGuiRenderer(){
+	public MapRenderer(){
 		WorldRenderer.renderers.add(this);
 	}
 	@Override
 	public void draw() {
 		object.getSprite().draw(WorldRenderer.batch);
-		
 	}
 
 }

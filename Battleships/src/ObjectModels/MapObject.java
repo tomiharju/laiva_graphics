@@ -1,43 +1,37 @@
 package ObjectModels;
 
-import ObjectControllers.ObjectController;
-import ObjectControllers.SeaController;
-import ObjectControllers.ShipController;
-import ObjectRenderers.ObjectRenderer;
-import ObjectRenderers.SeaRenderer;
-import ObjectRenderers.WorldRenderer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class SeaObject extends ModelObject {
+import ObjectControllers.MapController;
+import ObjectControllers.ObjectController;
+import ObjectControllers.ShipController;
+import ObjectRenderers.MapRenderer;
+import ObjectRenderers.ObjectRenderer;
+
+public class MapObject extends ModelObject{
 
 	
-
 	
-	public SeaObject(SeaController controller, SeaRenderer renderer){
+	public MapObject(MapController controller, MapRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		bounds = new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
+		bounds = new Rectangle(Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
 		
-		position = new Vector2(bounds.x+bounds.getWidth()/2,bounds.y+bounds.getHeight()/2);
+		position=new Vector2();
 		
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/waterTexture.jpg")));
+		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/radarTexture.jpg")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(0,bounds.getY());
 		
 		WorldObject.objects.add(this);
-		
 	}
-	
-	
 	@Override
 	public void update() {
-		
-		position.lerp(((SeaController)controller).pollPosition(),0.1f);
+		position.lerp(((MapController)controller).pollPosition(),0.1f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 	
@@ -45,15 +39,12 @@ public class SeaObject extends ModelObject {
 		
 	}
 
-
 	@Override
 	public void setController(ObjectController controller) {
 		this.controller=controller;
 		this.controller.setObject(this);
 		
-		
 	}
-
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
@@ -62,11 +53,4 @@ public class SeaObject extends ModelObject {
 		
 	}
 
-
-	
-	
-	
-
-
-	
 }
