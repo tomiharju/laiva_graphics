@@ -41,4 +41,10 @@ public class MapController extends ObjectController {
 		position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 	}
 
+	@Override
+	public void handleInputDrag(float x, float y) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

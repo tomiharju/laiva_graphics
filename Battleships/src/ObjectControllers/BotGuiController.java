@@ -15,6 +15,12 @@ public class BotGuiController extends ObjectController{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void handleInputDrag(float x, float y) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }

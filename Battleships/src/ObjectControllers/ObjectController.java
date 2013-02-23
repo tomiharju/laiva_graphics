@@ -51,7 +51,7 @@ public abstract class ObjectController {
 	
 	public abstract void handleInputDown(float x, float y);
 	public abstract void handleInputUp(float x, float y);
-	
+	public abstract void handleInputDrag(float x,float y);
 	
 	
 	

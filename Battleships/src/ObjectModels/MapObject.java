@@ -23,7 +23,7 @@ public class MapObject extends ModelObject{
 		
 		position=new Vector2();
 		
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/radarTexture.jpg")));
+		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/radarTextureRippled.png")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(0,bounds.getY());
 		

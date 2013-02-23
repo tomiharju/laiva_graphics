@@ -19,13 +19,13 @@ public class WorldController extends ObjectController{
 
 		
 		public static ArrayList<ObjectController> controllers;
-		public static ArrayList<ShipController> shipControllers;
+		
 		
 		private ObjectController activeController;
 		
 		public WorldController(){
 			controllers = new ArrayList<ObjectController>();
-			shipControllers= new ArrayList<ShipController>();
+			
 			
 		}
 		
@@ -49,8 +49,12 @@ public class WorldController extends ObjectController{
 		public void touchUp(float x,float y){
 			if(activeController!=null)
 				activeController.handleInputUp(x, y);
-			
-				
+			activeController=null;
+		}
+		public void touchDragged(float x,float y){
+			if(activeController!=null){
+				activeController.handleInputDrag(x, y);
+			}
 		}
 
 		
@@ -63,6 +67,12 @@ public class WorldController extends ObjectController{
 
 		@Override
 		public void handleInputUp(float x, float y) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void handleInputDrag(float x, float y) {
 			// TODO Auto-generated method stub
 			
 		}

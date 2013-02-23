@@ -1,5 +1,7 @@
 package ObjectControllers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
@@ -8,10 +10,12 @@ public class SeaController extends ObjectController{
 	
 	private Vector2 firstTouchPosition;
 	private MapController _mapController;
+	public static ArrayList<ShipController> shipControllers;
 	
 	public SeaController(){
 		WorldController.controllers.add(this);
 		
+		shipControllers= new ArrayList<ShipController>();
 		isHidden=false;
 		firstTouchPosition= new Vector2();
 		position = new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
@@ -47,6 +51,12 @@ public class SeaController extends ObjectController{
 	}
 	public void show(){
 		position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+	}
+
+	@Override
+	public void handleInputDrag(float x, float y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

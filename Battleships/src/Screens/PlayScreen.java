@@ -117,7 +117,7 @@ public class PlayScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		
+		controller.touchDragged(screenX,Gdx.graphics.getHeight()- screenY);
 		return false;
 	}
 

@@ -9,7 +9,7 @@ public class ShipController extends ObjectController {
 	
 	public ShipController(float x, float y){
 		WorldController.controllers.add(this);
-		WorldController.shipControllers.add(this);
+		SeaController.shipControllers.add(this);
 		
 		
 		position = new Vector2(x,y);
@@ -18,10 +18,16 @@ public class ShipController extends ObjectController {
 
 	@Override
 	public void handleInputUp(float x,float y) {
+		
+		
+	}
+
+	@Override
+	public void handleInputDrag(float x, float y) {
 		boolean legalmove=true;
-		for(ShipController sc:WorldController.shipControllers){
+		for(ShipController sc:SeaController.shipControllers){
 			if(!sc.equals(this)){
-				if(sc.getObject().getBounds().contains(x, y))
+				if(sc.getObject().getBounds().overlaps(new Rectangle(x-object.getBounds().getWidth()/2,y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight())))
 					legalmove=false;
 			}
 				
@@ -30,6 +36,7 @@ public class ShipController extends ObjectController {
 		if(legalmove){
 			setPosition(new Vector2(x,y));
 		}
+		
 		
 	}
 
