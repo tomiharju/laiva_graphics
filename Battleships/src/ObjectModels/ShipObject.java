@@ -75,7 +75,16 @@ public class ShipObject extends ModelObject{
 		position.lerp(((ShipController)controller).pollPosition(),0.1f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
-		angle.setAngle(((ShipController)controller).pollRotation());
+		if(controller.pollOrientation()){
+			System.out.println("Im a ship, and im turning 90 degrees");
+			float temp;
+			temp = bounds.width;
+			bounds.width=bounds.height;
+			bounds.height=temp;
+			sprite.rotate90(true);
+			sprite.setSize(bounds.getWidth(),bounds.getHeight());
+			((ShipController)controller).orientationConfirmed();
+		}
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		sprite.setRotation(angle.angle());
 		

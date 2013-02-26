@@ -36,11 +36,10 @@ public class SeaObject extends ModelObject {
 	
 	@Override
 	public void update() {
-		
 		position.lerp(((SeaController)controller).pollPosition(),0.1f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
-	
+		
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		
 	}
@@ -61,6 +60,7 @@ public class SeaObject extends ModelObject {
 		this.renderer.setObject(this);
 		
 	}
+	
 
 
 	

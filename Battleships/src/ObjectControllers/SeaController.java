@@ -19,6 +19,8 @@ public class SeaController extends ObjectController{
 		isHidden=false;
 		firstTouchPosition= new Vector2();
 		position = new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+		hidePosition = new Vector2(3*Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+		visiblePosition = new Vector2(position);
 	}
 	
 	public void linkMapController(ObjectController cont){
@@ -47,10 +49,14 @@ public class SeaController extends ObjectController{
 	}
 	
 	public void hide(){
-		position.set(3*Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+		position.set(hidePosition);
+		for(ShipController sc:shipControllers)
+			sc.hide();
 	}
 	public void show(){
-		position.set(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+		position.set(visiblePosition);
+		for(ShipController sc:shipControllers)
+			sc.show();
 	}
 
 	@Override

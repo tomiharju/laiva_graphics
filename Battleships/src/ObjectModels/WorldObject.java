@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import Core.GameLogicHandler;
 import ObjectControllers.BotGuiController;
 import ObjectControllers.MapController;
 import ObjectControllers.ObjectController;
@@ -23,6 +24,9 @@ import ObjectRenderers.WorldRenderer;
 
 
 public class WorldObject extends ModelObject {
+	
+	//Class that handles the game logic
+	GameLogicHandler logicHandler;
 	
 	public static ArrayList<ModelObject> objects;
 	
@@ -46,9 +50,11 @@ public class WorldObject extends ModelObject {
 		((SeaController)sea_o.getController()).linkMapController(map_o.getController());
 		
 		
-		new ShipObject(ShipType.ROWBOAT,new ShipController(100,(float) (Gdx.graphics.getHeight()*0.9)),new ShipRenderer());
-		new ShipObject(ShipType.MOTORBOAT,new ShipController(250,(float) (Gdx.graphics.getHeight()*0.9)),new ShipRenderer());
+		new ShipObject(ShipType.ROWBOAT,new ShipController(100,(float) (Gdx.graphics.getHeight()*0.7)),new ShipRenderer());
+		new ShipObject(ShipType.MOTORBOAT,new ShipController(250,(float) (Gdx.graphics.getHeight()*0.7)),new ShipRenderer());
 	//	new ShipObject(ShipType.BATTLESHIP,new ShipController(),new ShipRenderer());
+		
+		logicHandler = new GameLogicHandler(this);
 	}
 	
 	
