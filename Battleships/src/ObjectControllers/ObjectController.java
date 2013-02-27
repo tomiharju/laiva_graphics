@@ -41,21 +41,19 @@ public abstract class ObjectController {
 	public void deSelect(){
 		selected=false;
 	}
+	public boolean isSelected(){
+		return selected;
+	}
 	public boolean isHidden(){
 		return isHidden;
 	}
-	public void hide(){
-		isHidden=true;
-	}
-	public void show(){
-		isHidden=false;
-	}
 	
+	public abstract void hide();
+	public abstract void show();
 	public abstract void handleInputDown(float x, float y);
 	public abstract void handleInputUp(float x, float y);
 	public abstract void handleInputDrag(float x,float y);
 	public void changeOrientation(){
-		System.out.println("Changing orientation");
 		orientation_changed=true;
 	}
 	public void orientationConfirmed(){

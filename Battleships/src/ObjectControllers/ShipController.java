@@ -21,7 +21,20 @@ public class ShipController extends ObjectController {
 
 	@Override
 	public void handleInputUp(float x,float y) {
+		boolean legalmove=true;
+		for(ShipController sc:SeaController.shipControllers){
+			if(!sc.equals(this)){
+				Rectangle clear_bounds = new Rectangle(x-object.getBounds().getWidth()/2,y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
+				Rectangle sea_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
+				if(sc.getObject().getBounds().overlaps(clear_bounds) || !sea_bounds.contains(clear_bounds))
+					legalmove=false;
+			}
+				
+		}
 		
+		if(legalmove){
+			setPosition(new Vector2(x,y));
+		}
 		
 	}
 
@@ -53,7 +66,6 @@ public class ShipController extends ObjectController {
 	public void show(){
 		visiblePosition.set(hidePosition.x-Gdx.graphics.getWidth(), hidePosition.y);
 		position.set(visiblePosition);
-		System.out.println("Showing "+position.x + " "+position.y); 
 	}
 
 	@Override

@@ -10,8 +10,6 @@ public class MapController extends ObjectController {
 	
 	public MapController(){
 		WorldController.controllers.add(this);
-		
-		isHidden=true;
 		firstTouchPosition= new Vector2();
 		position=new Vector2(3*Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 	}

@@ -58,7 +58,7 @@ public class ShipObject extends ModelObject{
 		
 		
 		position=new Vector2();
-		angle=new Vector2();
+		
 		
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+ship.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
@@ -86,7 +86,7 @@ public class ShipObject extends ModelObject{
 			((ShipController)controller).orientationConfirmed();
 		}
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
-		sprite.setRotation(angle.angle());
+		
 		
 	}
 

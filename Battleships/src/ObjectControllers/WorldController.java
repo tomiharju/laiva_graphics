@@ -2,16 +2,8 @@ package ObjectControllers;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Plane;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
+import ObjectModels.WorldObject;
 
-import ObjectModels.ModelObject;
-import ObjectRenderers.ObjectRenderer;
-import ObjectRenderers.WorldRenderer;
 
 public class WorldController extends ObjectController{
 	
@@ -19,69 +11,72 @@ public class WorldController extends ObjectController{
 
 		
 		public static ArrayList<ObjectController> controllers;
-		private boolean multitouched=false;
-		private ObjectController activeController;
+		public ObjectController activeController;
+		
+		private final int MAP_CONTROLLER=1;
+		private final int SEA_CONTROLLER=2;
 		
 		public WorldController(){
 			controllers = new ArrayList<ObjectController>();
-			
+		
 			
 		}
-		
-		public void touchDown(float x,float y,boolean multitouch){
-			multitouched=multitouch;
-			if(multitouched){
-				if(activeController!=null)
-					activeController.changeOrientation();
-			}
-			else
-			for(ObjectController c: controllers){
-				c.deSelect();
-				if(c.getObject().getBounds().contains(x, y)){ 
-					activeController=c;
-					activeController.handleInputDown(x, y);
-					activeController.select();
-					
-					
-				}
-				
-				
-			}
+		public void changeController(int c){
 			
+			switch(c){
+			case MAP_CONTROLLER:{
+				activeController = ((WorldObject)object).getMap_o().getController();
+				break;
+			}
+			case SEA_CONTROLLER:{
+				activeController = ((WorldObject)object).getSea_o().getController();
+			}
+				
+			}
+		}
 		
+		public void touchDown(float x,float y){
+			activeController.handleInputDown(x, y);
 		}
 		public void touchUp(float x,float y){
-			if(multitouched)
-				activeController=null;
-			if(activeController!=null)
-				activeController.handleInputUp(x, y);
-			
+			activeController.handleInputUp(x, y);
 		}
 		public void touchDragged(float x,float y){
-			if(activeController!=null && !multitouched){
-				activeController.handleInputDrag(x, y);
-			}
+			activeController.handleInputDrag(x, y);
 		}
-
 		
 
 		@Override
 		public void handleInputDown(float x, float y) {
-			// TODO Auto-generated method stub
+			
 			
 		}
-
 		@Override
 		public void handleInputUp(float x, float y) {
+			
+			
+		}
+		@Override
+		public void handleInputDrag(float x, float y) {
+			
+			
+		}
+
+		@Override
+		public void hide() {
 			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
-		public void handleInputDrag(float x, float y) {
+		public void show() {
 			// TODO Auto-generated method stub
 			
 		}
+		
+		
+		
+
 		
 		
 		

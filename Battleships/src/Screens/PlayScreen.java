@@ -15,11 +15,14 @@ import com.badlogic.gdx.math.collision.Ray;
 
 public class PlayScreen implements Screen, InputProcessor{
 
-		
+		private boolean paused;
 	
 		private WorldRenderer	 	renderer;
 		private WorldController 	controller;
 		private WorldObject 		world;
+		private GameLogicHandler 	logicHandler;
+	
+		
 	
 	public PlayScreen(){
 		renderer 	= 	new WorldRenderer();
@@ -30,8 +33,9 @@ public class PlayScreen implements Screen, InputProcessor{
 		world.setController(controller);
 		world.setRenderer(renderer);
 		Gdx.input.setInputProcessor(this);
-		
-		
+			
+		logicHandler = new GameLogicHandler(controller,world);
+		logicHandler.run();
 	}
 	
 	
@@ -42,9 +46,12 @@ public class PlayScreen implements Screen, InputProcessor{
 		
 		Gdx.gl.glClearColor(0f,.0f,.0f,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		
+		if(!paused){
 		world.update();		//Update all game objects
 		renderer.draw();	//Render all game objects
-	
+		}
 	}
 
 	@Override
@@ -67,13 +74,13 @@ public class PlayScreen implements Screen, InputProcessor{
 
 	@Override
 	public void pause() {
-		
+		paused=true;
 		
 	}
 
 	@Override
 	public void resume() {
-		
+		paused=false;
 		
 	}
 
@@ -109,8 +116,8 @@ public class PlayScreen implements Screen, InputProcessor{
 			boolean onefinger = Gdx.input.isTouched(0);
 			boolean secondfinger = Gdx.input.isTouched(1);
 			boolean multitouch = onefinger && secondfinger;
-			System.out.println(multitouch);
-			controller.touchDown(screenX,Gdx.graphics.getHeight()- screenY,multitouch);
+			
+			controller.touchDown(screenX,Gdx.graphics.getHeight()- screenY);
 		return false;
 		
 	}

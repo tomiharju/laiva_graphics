@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-import Core.GameLogicHandler;
 import ObjectControllers.BotGuiController;
 import ObjectControllers.MapController;
 import ObjectControllers.ObjectController;
@@ -21,6 +20,7 @@ import ObjectRenderers.SeaRenderer;
 import ObjectRenderers.ShipRenderer;
 import ObjectRenderers.TopGuiRenderer;
 import ObjectRenderers.WorldRenderer;
+import Screens.GameLogicHandler;
 
 
 public class WorldObject extends ModelObject {
@@ -39,6 +39,9 @@ public class WorldObject extends ModelObject {
 	
 	
 	public WorldObject(){
+		setController(controller);
+		setRenderer(renderer);
+		
 		//Create objects with controllers and renderers
 		objects 			= new ArrayList<ModelObject>();
 		sea_o			 	= new SeaObject(new SeaController(),new SeaRenderer());
@@ -47,14 +50,14 @@ public class WorldObject extends ModelObject {
 		botGui_o			= new BottomGuiObject(new BotGuiController(),new BotGuiRenderer());
 	
 		//Link needed controllers
-		((SeaController)sea_o.getController()).linkMapController(map_o.getController());
+	//	((SeaController)sea_o.getController()).linkMapController(map_o.getController());
 		
 		
 		new ShipObject(ShipType.ROWBOAT,new ShipController(100,(float) (Gdx.graphics.getHeight()*0.7)),new ShipRenderer());
 		new ShipObject(ShipType.MOTORBOAT,new ShipController(250,(float) (Gdx.graphics.getHeight()*0.7)),new ShipRenderer());
 	//	new ShipObject(ShipType.BATTLESHIP,new ShipController(),new ShipRenderer());
 		
-		logicHandler = new GameLogicHandler(this);
+		
 	}
 	
 	
@@ -79,6 +82,29 @@ public class WorldObject extends ModelObject {
 		this.renderer=renderer;
 		
 	}
+
+
+
+
+	public SeaObject getSea_o() {
+		return sea_o;
+	}
+	public MapObject getMap_o() {
+		return map_o;
+	}
+
+	public TopGuiObject getTopGui_o() {
+		return topGui_o;
+	}
+
+
+	public BottomGuiObject getBotGui_o() {
+		return botGui_o;
+	}
+
+
+
+
 
 
 }
