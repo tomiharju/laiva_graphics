@@ -10,11 +10,15 @@ import com.badlogic.gdx.Screen;
 
 public class Main extends Game{
 	
+	public NativeConnector nativeConnector;
 	
+	
+	public Main(NativeConnector c){
+		this.nativeConnector=c;
+	}
 	@Override
-	
 	public void create() {		
-		setScreen(new PlayScreen());
+		setScreen(new PlayScreen(nativeConnector));
 		
 	}
 	public void changeScreen(Screen s){

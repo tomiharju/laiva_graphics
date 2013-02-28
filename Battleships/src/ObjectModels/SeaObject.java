@@ -36,7 +36,7 @@ public class SeaObject extends ModelObject {
 	
 	@Override
 	public void update() {
-		position.lerp(((SeaController)controller).pollPosition(),0.1f);
+		position.lerp(controller.pollPosition(),0.1f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 		
@@ -47,7 +47,7 @@ public class SeaObject extends ModelObject {
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=controller;
+		this.controller=(SeaController)controller;
 		this.controller.setObject(this);
 		
 		
@@ -56,7 +56,7 @@ public class SeaObject extends ModelObject {
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer=renderer;
+		this.renderer=(SeaRenderer)renderer;
 		this.renderer.setObject(this);
 		
 	}

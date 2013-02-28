@@ -40,14 +40,14 @@ public class TopGuiObject extends ModelObject{
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=controller;
+		this.controller=(TopGuiController)controller;
 		this.controller.setObject(this);
 		
 	}
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer=renderer;
+		this.renderer=(TopGuiRenderer)renderer;
 		this.renderer.setObject(this);
 		
 	}

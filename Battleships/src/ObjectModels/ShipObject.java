@@ -14,6 +14,7 @@ import ObjectControllers.ObjectController;
 import ObjectControllers.SeaController;
 import ObjectControllers.ShipController;
 import ObjectRenderers.ObjectRenderer;
+import ObjectRenderers.ShipRenderer;
 import ObjectRenderers.WorldRenderer;
 
 public class ShipObject extends ModelObject{
@@ -51,7 +52,7 @@ public class ShipObject extends ModelObject{
 	
 	
 	private Vector2 angle;
-	public ShipObject(ShipType ship,ObjectController controller,ObjectRenderer renderer){
+	public ShipObject(ShipType ship,ShipController controller,ShipRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
 		bounds = new Rectangle(0,0,ship.getWidth()*WorldRenderer.ppux,ship.getLenght()*WorldRenderer.ppuy);
@@ -72,18 +73,17 @@ public class ShipObject extends ModelObject{
 	
 	@Override
 	public void update() {
-		position.lerp(((ShipController)controller).pollPosition(),0.1f);
+		position.lerp(controller.pollPosition(),0.1f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 		if(controller.pollOrientation()){
-			System.out.println("Im a ship, and im turning 90 degrees");
 			float temp;
 			temp = bounds.width;
 			bounds.width=bounds.height;
 			bounds.height=temp;
 			sprite.rotate90(true);
 			sprite.setSize(bounds.getWidth(),bounds.getHeight());
-			((ShipController)controller).orientationConfirmed();
+			controller.orientationConfirmed();
 		}
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		
@@ -92,14 +92,14 @@ public class ShipObject extends ModelObject{
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=controller;
+		this.controller=(ShipController)controller;
 		this.controller.setObject(this);
 		
 	}
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer=renderer;
+		this.renderer=(ShipRenderer)renderer;
 		this.renderer.setObject(this);
 		
 	}

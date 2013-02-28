@@ -1,5 +1,6 @@
 package Screens;
 
+import Core.NativeConnector;
 import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
 
@@ -12,8 +13,9 @@ public class GameLogicHandler extends Thread{
 	
 	private WorldObject world;
 	private WorldController controller;
-	
-	public GameLogicHandler(WorldController c,WorldObject w){
+	private NativeConnector nativeConnector;
+	public GameLogicHandler(WorldController c,WorldObject w,NativeConnector con){
+		this.nativeConnector=con;
 		this.world=w;
 		this.controller=c;
 		setGameState(MY_TURN);
@@ -21,7 +23,7 @@ public class GameLogicHandler extends Thread{
 	
 	
 	public void run(){
-		//game_state = serverProxy.getState();
+		//nativeConnector.helloworld(); //Call to android function
 		
 		
 	}

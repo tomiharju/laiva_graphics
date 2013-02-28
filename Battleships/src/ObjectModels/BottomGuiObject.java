@@ -33,14 +33,14 @@ public class BottomGuiObject extends ModelObject{
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=controller;
+		this.controller=(BotGuiController)controller;
 		this.controller.setObject(this);
 		
 	}
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer=renderer;
+		this.renderer=(BotGuiRenderer)renderer;
 		this.renderer.setObject(this);
 		
 	}

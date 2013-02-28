@@ -1,5 +1,6 @@
 package Screens;
 
+import Core.NativeConnector;
 import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
 import ObjectRenderers.WorldRenderer;
@@ -16,25 +17,21 @@ import com.badlogic.gdx.math.collision.Ray;
 public class PlayScreen implements Screen, InputProcessor{
 
 		private boolean paused;
-	
-		private WorldRenderer	 	renderer;
-		private WorldController 	controller;
 		private WorldObject 		world;
+		private WorldController		controller;
+		private WorldRenderer		renderer;
 		private GameLogicHandler 	logicHandler;
-	
+		
 		
 	
-	public PlayScreen(){
-		renderer 	= 	new WorldRenderer();
-		controller 	= 	new WorldController();
-		world 		= 	new WorldObject();
-		renderer.setObject(world);
-		controller.setObject(world);
-		world.setController(controller);
-		world.setRenderer(renderer);
+	public PlayScreen(NativeConnector connector){
+		
+		controller	= 	new WorldController();
+		renderer	=	new WorldRenderer();
+		world 		= 	new WorldObject(controller,renderer);
 		Gdx.input.setInputProcessor(this);
 			
-		logicHandler = new GameLogicHandler(controller,world);
+		logicHandler = new GameLogicHandler((WorldController)world.getController(),world,connector);
 		logicHandler.run();
 	}
 	
@@ -48,9 +45,9 @@ public class PlayScreen implements Screen, InputProcessor{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		
-		if(!paused){
-		world.update();		//Update all game objects
-		renderer.draw();	//Render all game objects
+		if(!paused){	
+			world.update();				//Update all game objects
+			renderer.draw();		//Render all game objects
 		}
 	}
 

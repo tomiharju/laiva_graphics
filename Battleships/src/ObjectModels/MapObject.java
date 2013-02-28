@@ -31,7 +31,7 @@ public class MapObject extends ModelObject{
 	}
 	@Override
 	public void update() {
-		position.lerp(((MapController)controller).pollPosition(),0.1f);
+		position.lerp(controller.pollPosition(),0.1f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 	
@@ -41,14 +41,14 @@ public class MapObject extends ModelObject{
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=controller;
+		this.controller=(MapController)controller;
 		this.controller.setObject(this);
 		
 	}
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer=renderer;
+		this.renderer=(MapRenderer)renderer;
 		this.renderer.setObject(this);
 		
 	}

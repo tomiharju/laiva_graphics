@@ -38,7 +38,7 @@ public class WorldObject extends ModelObject {
 	
 	
 	
-	public WorldObject(){
+	public WorldObject(ObjectController controller,ObjectRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
 		
@@ -71,16 +71,16 @@ public class WorldObject extends ModelObject {
 	
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=controller;
-		
+		this.controller=(WorldController)controller;
+		this.controller.setObject(this);
 	}
 
 	
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer=renderer;
-		
+		this.renderer=(WorldRenderer)renderer;
+		this.renderer.setObject(this);
 	}
 
 
