@@ -1,7 +1,15 @@
 package ObjectControllers;
 
+import com.badlogic.gdx.math.Vector2;
+
 public class BotGuiController extends ObjectController{
 
+	
+	
+	public BotGuiController(Vector2 pos){
+		
+		position=pos;
+	}
 	@Override
 	public void handleInputDown(float x, float y) {
 		// TODO Auto-generated method stub

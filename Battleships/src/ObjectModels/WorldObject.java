@@ -6,11 +6,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ObjectControllers.BotGuiController;
-import ObjectControllers.MapController;
+import ObjectControllers.ShootingMapView;
 import ObjectControllers.ObjectController;
-import ObjectControllers.SeaController;
+import ObjectControllers.ShipPlacementView;
 import ObjectControllers.ShipController;
 import ObjectControllers.TopGuiController;
+import ObjectControllers.WeaponController;
 import ObjectControllers.WorldController;
 import ObjectModels.ShipObject.ShipType;
 import ObjectRenderers.BotGuiRenderer;
@@ -19,6 +20,7 @@ import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
 import ObjectRenderers.ShipRenderer;
 import ObjectRenderers.TopGuiRenderer;
+import ObjectRenderers.WeaponRenderer;
 import ObjectRenderers.WorldRenderer;
 import Screens.GameLogicHandler;
 
@@ -31,10 +33,9 @@ public class WorldObject extends ModelObject {
 	public static ArrayList<ModelObject> objects;
 	
 	//Game components
-	private SeaObject 		sea_o;
-	private MapObject		map_o;
-	private TopGuiObject 	topGui_o;	
-	private BottomGuiObject botGui_o;
+	private ShipPlacementViewObject 	shipPlacementView_o;
+	private ShootingMapViewObject		shootingMapView_o;
+
 	
 	
 	
@@ -44,18 +45,16 @@ public class WorldObject extends ModelObject {
 		
 		//Create objects with controllers and renderers
 		objects 			= new ArrayList<ModelObject>();
-		sea_o			 	= new SeaObject(new SeaController(),new SeaRenderer());
-		map_o				= new MapObject(new MapController(),new MapRenderer());
-		topGui_o			= new TopGuiObject(new TopGuiController(), new TopGuiRenderer());
-		botGui_o			= new BottomGuiObject(new BotGuiController(),new BotGuiRenderer());
+		shipPlacementView_o	= new ShipPlacementViewObject(new ShipPlacementView(),new SeaRenderer());
+		shootingMapView_o		= new ShootingMapViewObject(new ShootingMapView(),new MapRenderer());
+		((ShipPlacementView)shipPlacementView_o.controller).createShips();
+		((ShootingMapView)shootingMapView_o.controller).createWeapons();
 	
 		//Link needed controllers
-	//	((SeaController)sea_o.getController()).linkMapController(map_o.getController());
+		((ShipPlacementView)shipPlacementView_o.controller).linkMapController(shootingMapView_o.controller);
 		
 		
-		new ShipObject(ShipType.ROWBOAT,new ShipController(100,(float) (Gdx.graphics.getHeight()*0.7)),new ShipRenderer());
-		new ShipObject(ShipType.MOTORBOAT,new ShipController(250,(float) (Gdx.graphics.getHeight()*0.7)),new ShipRenderer());
-	//	new ShipObject(ShipType.BATTLESHIP,new ShipController(),new ShipRenderer());
+		
 		
 		
 	}
@@ -86,22 +85,14 @@ public class WorldObject extends ModelObject {
 
 
 
-	public SeaObject getSea_o() {
-		return sea_o;
+	public ShipPlacementViewObject getSea_o() {
+		return shipPlacementView_o;
 	}
-	public MapObject getMap_o() {
-		return map_o;
-	}
-
-	public TopGuiObject getTopGui_o() {
-		return topGui_o;
+	public ShootingMapViewObject getMap_o() {
+		return shootingMapView_o;
 	}
 
-
-	public BottomGuiObject getBotGui_o() {
-		return botGui_o;
-	}
-
+	
 
 
 

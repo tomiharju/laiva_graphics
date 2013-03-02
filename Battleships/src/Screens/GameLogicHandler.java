@@ -1,24 +1,24 @@
 package Screens;
 
-import Core.NativeConnector;
+import Core.NativeFunctions;
 import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
 
 public class GameLogicHandler extends Thread{
 	
 	private int game_state;
-	private final int OPPONENT_TURN=1;
-	private final int MY_TURN=2;
-	private final int PAUSED=3;
+	private static final int OPPONENT_TURN=1;
+	private static final int MY_TURN=2;
+	private static final int PAUSED=3;
 	
-	private WorldObject world;
-	private WorldController controller;
-	private NativeConnector nativeConnector;
-	public GameLogicHandler(WorldController c,WorldObject w,NativeConnector con){
+	private static WorldObject world;
+	private static WorldController controller;
+	private NativeFunctions nativeConnector;
+	public GameLogicHandler(WorldController c,WorldObject w,NativeFunctions con){
 		this.nativeConnector=con;
 		this.world=w;
 		this.controller=c;
-		setGameState(MY_TURN);
+		setGameState(OPPONENT_TURN);
 	}
 	
 	
@@ -28,8 +28,8 @@ public class GameLogicHandler extends Thread{
 		
 	}
 	
-	public void setGameState(int state){
-		
+	public static void setGameState(int state){
+	
 		switch(state){
 		
 		case MY_TURN:{

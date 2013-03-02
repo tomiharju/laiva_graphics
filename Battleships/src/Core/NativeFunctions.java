@@ -1,6 +1,6 @@
 package Core;
 
-public interface NativeConnector {
+public interface NativeFunctions {
 	
 	public void helloworld();
 		

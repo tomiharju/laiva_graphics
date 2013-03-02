@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import ObjectControllers.ObjectController;
-import ObjectControllers.SeaController;
+import ObjectControllers.ShipPlacementView;
 import ObjectControllers.ShipController;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.ShipRenderer;
@@ -31,9 +31,7 @@ public class ShipObject extends ModelObject{
 			hp=h;
 			file=f;
 		}
-		private int getHp(){
-			return hp;
-		}
+	
 		private int getLenght(){
 			return lenght;
 		}
@@ -51,14 +49,14 @@ public class ShipObject extends ModelObject{
 	
 	
 	
-	private Vector2 angle;
+	
 	public ShipObject(ShipType ship,ShipController controller,ShipRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
 		bounds = new Rectangle(0,0,ship.getWidth()*WorldRenderer.ppux,ship.getLenght()*WorldRenderer.ppuy);
 		
 		
-		position=new Vector2();
+		position=new Vector2(controller.pollPosition());
 		
 		
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+ship.getFile())));

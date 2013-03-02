@@ -6,22 +6,22 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import ObjectControllers.MapController;
+import ObjectControllers.ShootingMapView;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipController;
 import ObjectRenderers.MapRenderer;
 import ObjectRenderers.ObjectRenderer;
 
-public class MapObject extends ModelObject{
+public class ShootingMapViewObject extends ModelObject{
 
 	
 	
-	public MapObject(MapController controller, MapRenderer renderer){
+	public ShootingMapViewObject(ShootingMapView controller, MapRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		bounds = new Rectangle(Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
+	bounds = new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
 		
-		position=new Vector2();
+		position = new Vector2(controller.pollPosition());
 		
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/radarTextureRippled.png")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
@@ -31,17 +31,16 @@ public class MapObject extends ModelObject{
 	}
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),0.1f);
-		bounds.x=position.x-bounds.width/2;
-		bounds.y=position.y-bounds.height/2;
-	
-		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
+		position.lerp(controller.pollPosition(),0.5f);
+		bounds.x=position.x;
+		bounds.y=position.y;
 		
+		sprite.setPosition(position.x, position.y);
 	}
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=(MapController)controller;
+		this.controller=(ShootingMapView)controller;
 		this.controller.setObject(this);
 		
 	}

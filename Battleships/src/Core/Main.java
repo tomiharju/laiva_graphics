@@ -10,10 +10,10 @@ import com.badlogic.gdx.Screen;
 
 public class Main extends Game{
 	
-	public NativeConnector nativeConnector;
+	public NativeFunctions nativeConnector;
 	
 	
-	public Main(NativeConnector c){
+	public Main(NativeFunctions c){
 		this.nativeConnector=c;
 	}
 	@Override

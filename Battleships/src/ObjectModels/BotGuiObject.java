@@ -7,19 +7,19 @@ import com.badlogic.gdx.math.Rectangle;
 
 import ObjectControllers.BotGuiController;
 import ObjectControllers.ObjectController;
-import ObjectControllers.SeaController;
+import ObjectControllers.ShipPlacementView;
 import ObjectRenderers.BotGuiRenderer;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
 
-public class BottomGuiObject extends ModelObject{
+public class BotGuiObject extends ModelObject{
 
 	
 	
-	public BottomGuiObject(BotGuiController controller, BotGuiRenderer renderer){
+	public BotGuiObject(BotGuiController controller, BotGuiRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		bounds = new Rectangle(0,0,Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2));
+		bounds = new Rectangle(controller.pollPosition().x,0,Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2));
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/BarTexture.jpg")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(bounds.getX(),bounds.getY());

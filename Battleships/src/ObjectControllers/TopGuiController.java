@@ -11,8 +11,8 @@ public class TopGuiController extends ObjectController {
 
 	
 	
-	public TopGuiController(){
-		
+	public TopGuiController(Vector2 pos){
+		position=pos;
 	}
 
 	

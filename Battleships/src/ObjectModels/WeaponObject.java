@@ -1,25 +1,81 @@
 package ObjectModels;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+
 import ObjectControllers.ObjectController;
+import ObjectControllers.ShipController;
+import ObjectControllers.WeaponController;
 import ObjectRenderers.ObjectRenderer;
+import ObjectRenderers.ShipRenderer;
+import ObjectRenderers.WeaponRenderer;
+import ObjectRenderers.WorldRenderer;
 
 public class WeaponObject extends ModelObject {
-
+	public enum WeaponType{
+		CANNON("cannon.png",10,10),
+		CROSSHAIR("crosshair.png",10,10);
+		private String file;
+		private int height;
+		private int width;
+		private WeaponType(String f,int h,int w){
+			file=f;
+			height=h;
+			width=w;
+		}
+		private String getFile(){
+			return file;
+		}
+		private int getWidth(){
+			return width;
+		}
+		private int getHeight(){
+			return height;
+		}
+		
+	}
+	
+	
+	
+	public WeaponObject(WeaponType weapon,ObjectController controller, ObjectRenderer renderer){
+		setController(controller);
+		setRenderer(renderer);
+		
+		bounds = new Rectangle(0,0,weapon.getWidth()*WorldRenderer.ppux,weapon.getHeight()*WorldRenderer.ppuy);
+		
+		
+		position=new Vector2(controller.pollPosition());
+		
+		
+		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+weapon.getFile())));
+		sprite.setSize(bounds.getWidth(),bounds.getHeight());
+		
+		WorldObject.objects.add(this);
+	}
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+	
+		position.lerp(controller.pollPosition(),0.1f);
+		bounds.x=position.x-bounds.width/2;
+		bounds.y=position.y-bounds.height/2;
+		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		
 	}
 
 	@Override
 	public void setController(ObjectController controller) {
-		// TODO Auto-generated method stub
+		this.controller=(WeaponController)controller;
+		this.controller.setObject(this);
 		
 	}
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		// TODO Auto-generated method stub
+		this.renderer=(WeaponRenderer)renderer;
+		this.renderer.setObject(this);
 		
 	}
 

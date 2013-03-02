@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class TopGuiObject extends ModelObject{
 	
@@ -22,7 +23,8 @@ public class TopGuiObject extends ModelObject{
 	public TopGuiObject(TopGuiController controller,TopGuiRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		bounds = new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.8),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2));
+		position = new Vector2(controller.pollPosition());
+		bounds = new Rectangle(position.x,(float) (Gdx.graphics.getHeight()*0.8),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.2));
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/BarTexture.jpg")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(bounds.getX(),bounds.getY());

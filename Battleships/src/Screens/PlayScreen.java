@@ -1,6 +1,6 @@
 package Screens;
 
-import Core.NativeConnector;
+import Core.NativeFunctions;
 import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
 import ObjectRenderers.WorldRenderer;
@@ -24,7 +24,7 @@ public class PlayScreen implements Screen, InputProcessor{
 		
 		
 	
-	public PlayScreen(NativeConnector connector){
+	public PlayScreen(NativeFunctions connector){
 		
 		controller	= 	new WorldController();
 		renderer	=	new WorldRenderer();
@@ -110,11 +110,7 @@ public class PlayScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			boolean onefinger = Gdx.input.isTouched(0);
-			boolean secondfinger = Gdx.input.isTouched(1);
-			boolean multitouch = onefinger && secondfinger;
-			
-			controller.touchDown(screenX,Gdx.graphics.getHeight()- screenY);
+		controller.touchDown(screenX,Gdx.graphics.getHeight()- screenY);
 		return false;
 		
 	}

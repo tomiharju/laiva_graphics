@@ -1,7 +1,7 @@
 package ObjectModels;
 
 import ObjectControllers.ObjectController;
-import ObjectControllers.SeaController;
+import ObjectControllers.ShipPlacementView;
 import ObjectControllers.ShipController;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
@@ -13,17 +13,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class SeaObject extends ModelObject {
+public class ShipPlacementViewObject extends ModelObject {
 
 	
 
 	
-	public SeaObject(SeaController controller, SeaRenderer renderer){
+	public ShipPlacementViewObject(ShipPlacementView controller, SeaRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
 		bounds = new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
 		
-		position = new Vector2(bounds.x+bounds.getWidth()/2,bounds.y+bounds.getHeight()/2);
+		position = new Vector2(controller.pollPosition());
 		
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/waterTexture.jpg")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
@@ -36,18 +36,18 @@ public class SeaObject extends ModelObject {
 	
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),0.1f);
-		bounds.x=position.x-bounds.width/2;
-		bounds.y=position.y-bounds.height/2;
+		position.lerp(controller.pollPosition(),0.5f);
+		bounds.x=position.x;
+		bounds.y=position.y;
 		
-		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
+		sprite.setPosition(position.x, position.y);
 		
 	}
 
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=(SeaController)controller;
+		this.controller=(ShipPlacementView)controller;
 		this.controller.setObject(this);
 		
 		

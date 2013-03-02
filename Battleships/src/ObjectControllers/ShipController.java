@@ -10,19 +10,18 @@ public class ShipController extends ObjectController {
 
 	
 	public ShipController(float x, float y){
-		WorldController.controllers.add(this);
-		SeaController.shipControllers.add(this);
+		ShipPlacementView.controllers.add(this);
 		
 	
 		position = new Vector2(x,y);
-		hidePosition = new Vector2();
-		visiblePosition = new Vector2();
+		hidePosition = new Vector2(position.x+Gdx.graphics.getWidth(),position.y); 
+		visiblePosition = new Vector2(position);
 	}
 
 	@Override
 	public void handleInputUp(float x,float y) {
 		boolean legalmove=true;
-		for(ShipController sc:SeaController.shipControllers){
+		for(ShipController sc:ShipPlacementView.controllers){
 			if(!sc.equals(this)){
 				Rectangle clear_bounds = new Rectangle(x-object.getBounds().getWidth()/2,y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
 				Rectangle sea_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
@@ -41,7 +40,7 @@ public class ShipController extends ObjectController {
 	@Override
 	public void handleInputDrag(float x, float y) {
 		boolean legalmove=true;
-		for(ShipController sc:SeaController.shipControllers){
+		for(ShipController sc:ShipPlacementView.controllers){
 			if(!sc.equals(this)){
 				Rectangle clear_bounds = new Rectangle(x-object.getBounds().getWidth()/2,y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
 				Rectangle sea_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
@@ -61,10 +60,10 @@ public class ShipController extends ObjectController {
 	
 	public void hide(){
 		hidePosition.set(position.x+Gdx.graphics.getWidth(), position.y);
+		visiblePosition.set(position);
 		position.set(hidePosition);
 	}
 	public void show(){
-		visiblePosition.set(hidePosition.x-Gdx.graphics.getWidth(), hidePosition.y);
 		position.set(visiblePosition);
 	}
 
