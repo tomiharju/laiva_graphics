@@ -34,16 +34,14 @@ public class GameLogicHandler extends Thread{
 		
 		case MY_TURN:{
 		
-			controller.changeController(MY_TURN);
+			controller.changeController();
 			
-			//Change view to map
-			//Allow firing logic
+		
 			break;
 		}
 		case OPPONENT_TURN:{
-			controller.changeController(OPPONENT_TURN);
-			//Change view to sea
-			//
+			controller.changeController();
+			
 			break;
 		}
 		case PAUSED:{

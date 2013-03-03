@@ -8,21 +8,22 @@ import Screens.GameLogicHandler;
 
 public class WorldController extends ObjectController{
 	
-
-
-		
-	
-		public ObjectController activeController;
-		
-		private final int MAP_CONTROLLER=1;
-		private final int SEA_CONTROLLER=2;
+		public  ObjectController activeController;
+		int state;
+		private final  int MAP_CONTROLLER=1;
+		private final  int SEA_CONTROLLER=2;
 		
 		public WorldController(){
 			activeController=null;
+			state=2;
 			}
-		public void changeController(int c){
+		public void changeController(){
+			if(state==2)
+				state=1;
+			else
+				state=2;
 			
-			switch(c){
+			switch(state){
 			case MAP_CONTROLLER:{
 				activeController = ((WorldObject)object).getMap_o().getController();
 				activeController.show();
@@ -39,15 +40,15 @@ public class WorldController extends ObjectController{
 		
 		public void touchDown(float x,float y){
 			activeController.handleInputDown(x, y);
-		//	GameLogicHandler.setGameState(1);
+			
 		}
 		public void touchUp(float x,float y){
 			activeController.handleInputUp(x, y);
-		//GameLogicHandler.setGameState(2);
+	
 		}
 		public void touchDragged(float x,float y){
 			activeController.handleInputDrag(x, y);
-			
+		
 		}
 		
 

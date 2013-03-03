@@ -6,25 +6,22 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import ObjectControllers.ShootingMapView;
+import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
-import ObjectControllers.ShipController;
-import ObjectRenderers.MapRenderer;
+import ObjectRenderers.GuiRenderer;
 import ObjectRenderers.ObjectRenderer;
+import ObjectRenderers.ShipRenderer;
 
-public class ShootingMapViewObject extends ModelObject{
+public class GuiObject extends ModelObject {
 
 	
-	
-	public ShootingMapViewObject(ShootingMapView controller, MapRenderer renderer){
+	public GuiObject(ObjectController controller,ObjectRenderer renderer,String file,float w, float h){
 		setController(controller);
 		setRenderer(renderer);
+		
 		position = new Vector2(controller.pollPosition());
-		bounds = new Rectangle(position.x,position.y,Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
-		
-		
-		
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/radarTextureRippled.png")));
+		bounds = new Rectangle(position.x,position.y,w,h);
+		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+file)));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x,position.y);
 		
@@ -32,23 +29,23 @@ public class ShootingMapViewObject extends ModelObject{
 	}
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),0.5f);
-		bounds.x=position.x;
-		bounds.y=position.y;
+		position.lerp(controller.pollPosition(),0.1f);
+		bounds.x=position.x-bounds.width/2;
+		bounds.y=position.y-bounds.height/2;
+		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		
-		sprite.setPosition(position.x, position.y);
 	}
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller=(ShootingMapView)controller;
+		this.controller=(GuiController)controller;
 		this.controller.setObject(this);
 		
 	}
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer=(MapRenderer)renderer;
+		this.renderer=(GuiRenderer)renderer;
 		this.renderer.setObject(this);
 		
 	}

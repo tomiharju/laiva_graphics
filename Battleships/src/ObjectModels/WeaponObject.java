@@ -44,15 +44,16 @@ public class WeaponObject extends ModelObject {
 		setController(controller);
 		setRenderer(renderer);
 		
-		bounds = new Rectangle(0,0,weapon.getWidth()*WorldRenderer.ppux,weapon.getHeight()*WorldRenderer.ppuy);
-		
-		
 		position=new Vector2(controller.pollPosition());
+		bounds = new Rectangle(position.x,position.y,weapon.getWidth()*WorldRenderer.ppux,weapon.getHeight()*WorldRenderer.ppuy);
+		
+		
+	
 		
 		
 		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+weapon.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
-		
+		sprite.setPosition(position.x, position.y);
 		WorldObject.objects.add(this);
 	}
 	@Override

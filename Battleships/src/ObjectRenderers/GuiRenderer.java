@@ -1,11 +1,9 @@
 package ObjectRenderers;
 
-public class BotGuiRenderer extends ObjectRenderer{
+public class GuiRenderer extends ObjectRenderer{
 
 	
-	
-	
-	public BotGuiRenderer(){
+	public GuiRenderer(){
 		WorldRenderer.renderers.add(this);
 	}
 	@Override

@@ -10,12 +10,12 @@ public class WeaponController extends ObjectController{
 
 	
 	public WeaponController(float x, float y){
-		ShootingMapView.controllers.add(this);
+		ShootingMapView.weaponControllers.add(this);
 		
 		position = new Vector2(x,y);
 		hidePosition = new Vector2(position.x+Gdx.graphics.getWidth(),position.y); 
 		visiblePosition = new Vector2(position);
-		System.out.println("Im a weapon my location at start is "+position.toString());
+		
 	}
 	
 	@Override
