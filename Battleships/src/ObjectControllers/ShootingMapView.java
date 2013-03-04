@@ -39,7 +39,7 @@ public class ShootingMapView extends ObjectController {
 		position = new Vector2(0,(float) (Gdx.graphics.getHeight()*0.2));
 		hidePosition = new Vector2(Gdx.graphics.getWidth(),position.y);
 		visiblePosition = new Vector2(position);
-		button_fire = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2,50,new FireCommand()),new GuiRenderer(),"button_fire.png",50,50);
+		button_fire = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2,50,new FireCommand(this)),new GuiRenderer(),"button_fire.png",50,50);
 		arrow_left = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2+100,50,new HideCommand(this)),new GuiRenderer(),"arrow_left.png",50,50);
 		guiControllers.add((GuiController) button_fire.getController());
 		guiControllers.add((GuiController) arrow_left.getController());
@@ -56,7 +56,7 @@ public class ShootingMapView extends ObjectController {
 		if(object.getBounds().contains(x,y)){
 		for(WeaponController wc:weaponControllers){
 			if(wc.getObject().getBounds().contains(x,y))
-				wc.select();
+				selected_weapon=wc;
 		}
 		if(crosshair.getBounds().contains(x,y))
 			activeController = (WeaponController) crosshair.getController();
@@ -67,7 +67,6 @@ public class ShootingMapView extends ObjectController {
 			for (GuiController c : guiControllers)
 				if (c.getObject().getBounds().contains(x, y)) {
 					c.executeCommand();
-					System.out.println("Executing a command");
 					}
 			
 		}
