@@ -17,6 +17,12 @@ public class ShipController extends ObjectController {
 		visiblePosition = new Vector2(position);
 	}
 
+	public Vector2 getRelativePosition(){
+		Vector2 relPos = new Vector2();
+		relPos.set(position.x, (float) (position.y-Gdx.graphics.getHeight()*0.2));
+		return relPos;
+		
+	}
 	@Override
 	public void handleInputUp(float x,float y) {
 		boolean legalmove=true;

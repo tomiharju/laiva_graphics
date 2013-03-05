@@ -1,5 +1,7 @@
 package ObjectControllers;
 
+import Screens.GameLogicHandler;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +17,28 @@ public class WeaponController extends ObjectController{
 		position = new Vector2(x,y);
 		hidePosition = new Vector2(position.x+Gdx.graphics.getWidth(),position.y); 
 		visiblePosition = new Vector2(position);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public Vector2 getRelativePosition(){
+		Vector2 relPos = new Vector2();
+		relPos.set(position.x, (float) (position.y-Gdx.graphics.getHeight()*0.2));
+		return relPos;
 		
 	}
 	

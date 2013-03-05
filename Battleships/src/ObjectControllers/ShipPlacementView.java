@@ -38,7 +38,7 @@ public class ShipPlacementView extends ObjectController {
 		visiblePosition = new Vector2(position);
 
 		button_ready = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2,50,new ReadyCommand(this)), new GuiRenderer(),"button_ready.png",50, 50);
-		arrow_right = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2+100,50,new HideCommand(this)), new GuiRenderer(),
+		arrow_right = new GuiObject(new GuiController(Gdx.graphics.getWidth()-50,50,new HideCommand(this)), new GuiRenderer(),
 				"arrow_right.png",50, 50);
 		guiControllers.add((GuiController) button_ready.getController());
 		guiControllers.add((GuiController) arrow_right.getController());

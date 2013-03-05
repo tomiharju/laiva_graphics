@@ -13,6 +13,7 @@ import ObjectModels.WeaponObject.WeaponType;
 import ObjectRenderers.GuiRenderer;
 
 import ObjectRenderers.WeaponRenderer;
+import Screens.GameLogicHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -40,12 +41,32 @@ public class ShootingMapView extends ObjectController {
 		hidePosition = new Vector2(Gdx.graphics.getWidth(),position.y);
 		visiblePosition = new Vector2(position);
 		button_fire = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2,50,new FireCommand(this)),new GuiRenderer(),"button_fire.png",50,50);
-		arrow_left = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2+100,50,new HideCommand(this)),new GuiRenderer(),"arrow_left.png",50,50);
+		arrow_left = new GuiObject(new GuiController(50,50,new HideCommand(this)),new GuiRenderer(),"arrow_left.png",50,50);
 		guiControllers.add((GuiController) button_fire.getController());
 		guiControllers.add((GuiController) arrow_left.getController());
 	}
+	
+	public void fire(){
+		if(selected_weapon!=null)
+			GameLogicHandler.sendAttackCoordinates(((WeaponController) crosshair.getController()).getRelativePosition(),((WeaponObject) selected_weapon.getObject()).getWeapon());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void createWeapons(){
-		new WeaponObject(WeaponType.CANNON,new WeaponController(50,100),new WeaponRenderer());
+		new WeaponObject(WeaponType.CANNON,new WeaponController(100,(float) (Gdx.graphics.getHeight()*0.9)),new WeaponRenderer());
+		new WeaponObject(WeaponType.CANNON,new WeaponController(200,(float) (Gdx.graphics.getHeight()*0.9)),new WeaponRenderer());
 		crosshair = new WeaponObject(WeaponType.CROSSHAIR,new WeaponController(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2),new WeaponRenderer());
 	}
 	public void linkSeaController(ObjectController cont){

@@ -1,5 +1,6 @@
 package ObjectModels;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ObjectControllers.ObjectController;
@@ -46,6 +47,7 @@ public abstract class ModelObject {
 	public Vector2 getPosition(){
 		return position;
 	}
+
 	
 	
 	

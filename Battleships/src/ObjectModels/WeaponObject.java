@@ -22,6 +22,7 @@ public class WeaponObject extends ModelObject {
 		private int height;
 		private int width;
 		private WeaponType(String f,int h,int w){
+			
 			file=f;
 			height=h;
 			width=w;
@@ -35,10 +36,13 @@ public class WeaponObject extends ModelObject {
 		private int getHeight(){
 			return height;
 		}
-		
+		private int getWeaponNumber(){
+			return this.ordinal();
+		}
 	}
 	
 	
+	private int weaponType;
 	
 	public WeaponObject(WeaponType weapon,ObjectController controller, ObjectRenderer renderer){
 		setController(controller);
@@ -47,7 +51,7 @@ public class WeaponObject extends ModelObject {
 		position=new Vector2(controller.pollPosition());
 		bounds = new Rectangle(position.x,position.y,weapon.getWidth()*WorldRenderer.ppux,weapon.getHeight()*WorldRenderer.ppuy);
 		
-		
+		weaponType=weapon.getWeaponNumber();
 	
 		
 		
@@ -55,6 +59,10 @@ public class WeaponObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x, position.y);
 		WorldObject.objects.add(this);
+	}
+	
+	public int getWeapon(){
+		return weaponType; 
 	}
 	@Override
 	public void update() {

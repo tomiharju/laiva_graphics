@@ -1,5 +1,7 @@
 package Screens;
 
+import com.badlogic.gdx.math.Vector2;
+
 import Core.NativeFunctions;
 import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
@@ -24,9 +26,17 @@ public class GameLogicHandler extends Thread{
 	
 	public void run(){
 		//nativeConnector.helloworld(); //Call to android function
-		
-		
 	}
+	
+	
+	public static void sendAttackCoordinates(Vector2 pos,int weapontype){
+		System.out.println("Firing at "+pos.toString()+ " with "+weapontype);
+		//nativeConnector.sendAttackAction(pos.x,pos.y, weapontype);
+	}
+	
+	
+	
+	
 	
 	public static void setGameState(int state){
 	
