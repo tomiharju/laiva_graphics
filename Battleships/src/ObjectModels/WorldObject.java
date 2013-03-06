@@ -30,18 +30,13 @@ public class WorldObject extends ModelObject {
 		setController(controller);
 		setRenderer(renderer);
 
-		// Create objects with controllers and renderers
-		objects = new ArrayList<ModelObject>();
-		shipPlacementView_o = new ShipPlacementViewObject(
-				new ShipPlacementView(), new SeaRenderer());
-		shootingMapView_o = new ShootingMapViewObject(new ShootingMapView(),
-				new MapRenderer());
+		
+		objects 			= new ArrayList<ModelObject>();
+		shipPlacementView_o = new ShipPlacementViewObject(new ShipPlacementView(), new SeaRenderer());
+		shootingMapView_o 	= new ShootingMapViewObject(new ShootingMapView(),new MapRenderer());
 		((ShipPlacementView) shipPlacementView_o.controller).createShips();
 		((ShootingMapView) shootingMapView_o.controller).createWeapons();
-
-		// Link needed controllers
-		((ShipPlacementView) shipPlacementView_o.controller)
-				.linkMapController(shootingMapView_o.controller);
+		((ShipPlacementView) shipPlacementView_o.controller).linkMapController(shootingMapView_o.controller);
 
 	}
 
@@ -63,11 +58,11 @@ public class WorldObject extends ModelObject {
 		this.renderer.setObject(this);
 	}
 
-	public ShipPlacementViewObject getSea_o() {
+	public ShipPlacementViewObject shipView() {
 		return shipPlacementView_o;
 	}
 
-	public ShootingMapViewObject getMap_o() {
+	public ShootingMapViewObject mapView() {
 		return shootingMapView_o;
 	}
 

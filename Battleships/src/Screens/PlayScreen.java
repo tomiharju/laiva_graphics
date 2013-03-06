@@ -22,17 +22,19 @@ public class PlayScreen implements Screen, InputProcessor{
 		private WorldRenderer		renderer;
 		private GameLogicHandler 	logicHandler;
 		
-		
+		private float				update_interval;
+		private final float			FPS=80;
 	
 	public PlayScreen(NativeFunctions connector){
 		
-		controller	= 	new WorldController();
-		renderer	=	new WorldRenderer();
-		world 		= 	new WorldObject(controller,renderer);
-		Gdx.input.setInputProcessor(this);
+		controller		= 	new WorldController();
+		renderer		=	new WorldRenderer();
+		world 			= 	new WorldObject(controller,renderer);
+		controller.initialize();//Required to set other controllers in worldcontroller
 			
-		logicHandler = new GameLogicHandler((WorldController)world.getController(),world,connector);
+		logicHandler 	= new GameLogicHandler((WorldController)world.getController(),world,connector);
 		logicHandler.run();
+		Gdx.input.setInputProcessor(this);
 	}
 	
 	
@@ -41,13 +43,15 @@ public class PlayScreen implements Screen, InputProcessor{
 	@Override
 	public void render(float delta) {
 		
-		Gdx.gl.glClearColor(0f,.0f,.0f,1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		
-		if(!paused){	
+		if((update_interval+=Gdx.graphics.getDeltaTime())>(1/FPS))
+		if(!paused){
+			Gdx.gl.glClearColor(0f,.0f,.0f,1);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			world.update();				//Update all game objects
-			renderer.draw();		//Render all game objects
+			renderer.draw();			//Render all game objects
+			update_interval=0;
 		}
 	}
 

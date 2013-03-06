@@ -7,7 +7,6 @@ import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
 
 public class GameLogicHandler extends Thread{
-	
 	private int game_state;
 	private static final int OPPONENT_TURN=1;
 	private static final int MY_TURN=2;
@@ -16,16 +15,22 @@ public class GameLogicHandler extends Thread{
 	private static WorldObject world;
 	private static WorldController controller;
 	private NativeFunctions nativeConnector;
+	
+	
+	
 	public GameLogicHandler(WorldController c,WorldObject w,NativeFunctions con){
 		this.nativeConnector=con;
 		this.world=w;
 		this.controller=c;
-		setGameState(OPPONENT_TURN);
+		
 	}
 	
 	
 	public void run(){
 		//nativeConnector.helloworld(); //Call to android function
+		
+		
+		
 	}
 	
 	
@@ -33,33 +38,13 @@ public class GameLogicHandler extends Thread{
 		System.out.println("Firing at "+pos.toString()+ " with "+weapontype);
 		//nativeConnector.sendAttackAction(pos.x,pos.y, weapontype);
 	}
-	
-	
-	
-	
-	
-	public static void setGameState(int state){
-	
-		switch(state){
-		
-		case MY_TURN:{
-		
-			controller.changeController();
-			
-		
-			break;
-		}
-		case OPPONENT_TURN:{
-			controller.changeController();
-			
-			break;
-		}
-		case PAUSED:{
-			
-			break;
-		}
-		
-		
-		}
+	public static void changePlayerView(){
+		controller.changePlayerView();
 	}
+	
+	
+	
+	
+	
+	
 }

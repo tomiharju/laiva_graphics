@@ -33,15 +33,16 @@ public class ShootingMapView extends ObjectController {
 	
 	
 	public ShootingMapView(){
-		weaponControllers = new ArrayList<WeaponController>();
-		guiControllers = new ArrayList<GuiController>();
-		activeController=null;
+		weaponControllers 	= new ArrayList<WeaponController>();
+		guiControllers 		= new ArrayList<GuiController>();
+		activeController	= null;
 		
-		position = new Vector2(0,(float) (Gdx.graphics.getHeight()*0.2));
-		hidePosition = new Vector2(Gdx.graphics.getWidth(),position.y);
-		visiblePosition = new Vector2(position);
-		button_fire = new GuiObject(new GuiController(Gdx.graphics.getWidth()/2,50,new FireCommand(this)),new GuiRenderer(),"button_fire.png",50,50);
-		arrow_left = new GuiObject(new GuiController(50,50,new HideCommand(this)),new GuiRenderer(),"arrow_left.png",50,50);
+		position 			= new Vector2(0,(float) (Gdx.graphics.getHeight()*0.2));
+		hidePosition 		= new Vector2(Gdx.graphics.getWidth(),position.y);
+		visiblePosition 	= new Vector2(position);
+		
+		button_fire 		= new GuiObject(new GuiController(Gdx.graphics.getWidth()/2,50,new FireCommand(this)),new GuiRenderer(),"button_fire.png",50,50);
+		arrow_left 			= new GuiObject(new GuiController(50,50,new HideCommand(this)),new GuiRenderer(),"arrow_left.png",50,50);
 		guiControllers.add((GuiController) button_fire.getController());
 		guiControllers.add((GuiController) arrow_left.getController());
 	}
@@ -52,22 +53,10 @@ public class ShootingMapView extends ObjectController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void createWeapons(){
 		new WeaponObject(WeaponType.CANNON,new WeaponController(100,(float) (Gdx.graphics.getHeight()*0.9)),new WeaponRenderer());
 		new WeaponObject(WeaponType.CANNON,new WeaponController(200,(float) (Gdx.graphics.getHeight()*0.9)),new WeaponRenderer());
-		crosshair = new WeaponObject(WeaponType.CROSSHAIR,new WeaponController(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2),new WeaponRenderer());
+		crosshair 			= new WeaponObject(WeaponType.CROSSHAIR,new WeaponController(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2),new WeaponRenderer());
 	}
 	public void linkSeaController(ObjectController cont){
 		_placementController=(ShipPlacementView) cont;
@@ -75,19 +64,22 @@ public class ShootingMapView extends ObjectController {
 	@Override
 	public void handleInputDown(float x, float y) {
 		if(object.getBounds().contains(x,y)){
-		for(WeaponController wc:weaponControllers){
-			if(wc.getObject().getBounds().contains(x,y))
-				selected_weapon=wc;
+			for(WeaponController wc:weaponControllers){
+				if(wc.getObject().getBounds().contains(x,y)){
+					selected_weapon=wc;
+					break;
+				}
+				else if(crosshair.getBounds().contains(x,y)){
+					activeController = (WeaponController) crosshair.getController();
+					break;
+				}
 		}
-		if(crosshair.getBounds().contains(x,y))
-			activeController = (WeaponController) crosshair.getController();
-		else
-			activeController=null;
-		}
+			}
 		else{
 			for (GuiController c : guiControllers)
 				if (c.getObject().getBounds().contains(x, y)) {
 					c.executeCommand();
+					break;
 					}
 			
 		}
@@ -113,7 +105,7 @@ public class ShootingMapView extends ObjectController {
 			gc.hide();
 	}
 	public void show(){
-		_placementController.hide();
+		
 		position.set(visiblePosition);
 		for(WeaponController sc:weaponControllers)
 			sc.show();

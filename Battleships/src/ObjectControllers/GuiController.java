@@ -10,8 +10,8 @@ public class GuiController extends ObjectController {
 	private Command command;
 	public GuiController(float x, float y,Command command){
 		this.command=command;
-		position = new Vector2(x,y);
-		hidePosition = new Vector2(position.x+Gdx.graphics.getWidth(),position.y); 
+		position 		= new Vector2(x,y);
+		hidePosition 	= new Vector2(Gdx.graphics.getWidth(),position.y); 
 		visiblePosition = new Vector2(position);
 			
 		
@@ -24,9 +24,8 @@ public class GuiController extends ObjectController {
 	
 	@Override
 	public void hide() {
-		hidePosition.set(position.x+Gdx.graphics.getWidth(), position.y);
 		visiblePosition.set(position);
-		position.set(hidePosition);
+		position.add(hidePosition);
 		
 	}
 

@@ -53,14 +53,10 @@ public class ShipObject extends ModelObject{
 	public ShipObject(ShipType ship,ShipController controller,ShipRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		position=new Vector2(controller.pollPosition());
-		bounds = new Rectangle(position.x,position.y,ship.getWidth()*WorldRenderer.ppux,ship.getLenght()*WorldRenderer.ppuy);
+		position		= new Vector2(controller.pollPosition());
+		bounds 			= new Rectangle(position.x,position.y,ship.getWidth()*WorldRenderer.ppux,ship.getLenght()*WorldRenderer.ppuy);
 		
-		
-		
-		
-		
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+ship.getFile())));
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+ship.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x,position.y);
 		
@@ -73,7 +69,7 @@ public class ShipObject extends ModelObject{
 	
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),0.1f);
+		position.set(controller.pollPosition());
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 		if(controller.pollOrientation()){

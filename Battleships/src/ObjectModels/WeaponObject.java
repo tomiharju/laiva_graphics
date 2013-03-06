@@ -17,12 +17,12 @@ import ObjectRenderers.WorldRenderer;
 public class WeaponObject extends ModelObject {
 	public enum WeaponType{
 		CANNON("cannon.png",10,10),
+		TORPEDO("cannon.png",10,10),
 		CROSSHAIR("crosshair.png",10,10);
 		private String file;
 		private int height;
 		private int width;
 		private WeaponType(String f,int h,int w){
-			
 			file=f;
 			height=h;
 			width=w;
@@ -48,17 +48,16 @@ public class WeaponObject extends ModelObject {
 		setController(controller);
 		setRenderer(renderer);
 		
-		position=new Vector2(controller.pollPosition());
-		bounds = new Rectangle(position.x,position.y,weapon.getWidth()*WorldRenderer.ppux,weapon.getHeight()*WorldRenderer.ppuy);
-		
-		weaponType=weapon.getWeaponNumber();
-	
+		position		= new Vector2(controller.pollPosition());
+		bounds 			= new Rectangle(position.x,position.y,weapon.getWidth()*WorldRenderer.ppux,weapon.getHeight()*WorldRenderer.ppuy);
 		
 		
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+weapon.getFile())));
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+weapon.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x, position.y);
 		WorldObject.objects.add(this);
+		
+		weaponType=weapon.getWeaponNumber();
 	}
 	
 	public int getWeapon(){
@@ -66,8 +65,7 @@ public class WeaponObject extends ModelObject {
 	}
 	@Override
 	public void update() {
-	
-		position.lerp(controller.pollPosition(),0.1f);
+		position.lerp(controller.pollPosition(),1f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);

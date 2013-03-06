@@ -21,10 +21,10 @@ public class ShipPlacementViewObject extends ModelObject {
 	public ShipPlacementViewObject(ShipPlacementView controller, SeaRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		position = new Vector2(controller.pollPosition());
-		bounds = new Rectangle(position.x,position.y,Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
+		position 		= new Vector2(controller.pollPosition());
+		bounds 			= new Rectangle(position.x,position.y,Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
 		
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/waterTexture.jpg")));
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/waterTexture.jpg")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x,position.y);
 		
@@ -38,9 +38,7 @@ public class ShipPlacementViewObject extends ModelObject {
 		position.lerp(controller.pollPosition(),0.5f);
 		bounds.x=position.x;
 		bounds.y=position.y;
-		
 		sprite.setPosition(position.x, position.y);
-		
 	}
 
 

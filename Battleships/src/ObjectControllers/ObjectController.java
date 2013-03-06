@@ -14,7 +14,7 @@ public abstract class ObjectController {
 	protected Vector2 visiblePosition;
 	protected boolean orientation_changed;
 	protected boolean selected;
-	protected boolean isHidden;
+	
 	
 	public ModelObject getObject() {
 		return object;
@@ -44,15 +44,13 @@ public abstract class ObjectController {
 	public boolean isSelected(){
 		return selected;
 	}
-	public boolean isHidden(){
-		return isHidden;
-	}
 	
-	public abstract void hide();
-	public abstract void show();
-	public abstract void handleInputDown(float x, float y);
-	public abstract void handleInputUp(float x, float y);
-	public abstract void handleInputDrag(float x,float y);
+	
+	public void hide(){};
+	public void show(){};
+	public void handleInputDown(float x, float y){};
+	public void handleInputUp(float x, float y){};
+	public void handleInputDrag(float x,float y){};
 	public void changeOrientation(){
 		orientation_changed=true;
 	}

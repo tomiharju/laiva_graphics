@@ -19,9 +19,9 @@ public class GuiObject extends ModelObject {
 		setController(controller);
 		setRenderer(renderer);
 		
-		position = new Vector2(controller.pollPosition());
-		bounds = new Rectangle(position.x,position.y,w,h);
-		sprite 	=  new Sprite(new Texture(Gdx.files.internal("data/"+file)));
+		position 		= new Vector2(controller.pollPosition());
+		bounds 			= new Rectangle(position.x,position.y,w,h);
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+file)));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x,position.y);
 		
@@ -29,7 +29,7 @@ public class GuiObject extends ModelObject {
 	}
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),0.1f);
+		position.lerp(controller.pollPosition(),0.5f);
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);

@@ -10,7 +10,7 @@ public class HideCommand implements Command{
 	}
 	@Override
 	public void execute() {
-		GameLogicHandler.setGameState(1);
+		GameLogicHandler.changePlayerView();
 		
 	}
 

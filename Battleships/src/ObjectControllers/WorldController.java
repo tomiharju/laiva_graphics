@@ -1,37 +1,46 @@
 package ObjectControllers;
 
-import java.util.ArrayList;
-
 import ObjectModels.WorldObject;
-import Screens.GameLogicHandler;
 
 
 public class WorldController extends ObjectController{
 	
-		public  ObjectController activeController;
-		int state;
-		private final  int MAP_CONTROLLER=1;
-		private final  int SEA_CONTROLLER=2;
 		
+		int state;
+		private final  int SHIP_VIEW=1;
+		private final  int MAP_VIEW=2;
+		private ShipPlacementView shipView;
+		private ShootingMapView mapView;
+		private ObjectController active_view;
 		public WorldController(){
-			activeController=null;
-			state=2;
-			}
-		public void changeController(){
+			
+		}
+		public void initialize(){
+			shipView=(ShipPlacementView) ((WorldObject) object).shipView().getController();
+			mapView=(ShootingMapView) ((WorldObject) object).mapView().getController();
+			active_view=shipView;
+			shipView.show();
+			mapView.hide();
+			state=1;
+		}
+		
+		public void changePlayerView(){
 			if(state==2)
 				state=1;
 			else
 				state=2;
 			
 			switch(state){
-			case MAP_CONTROLLER:{
-				activeController = ((WorldObject)object).getMap_o().getController();
-				activeController.show();
+				case SHIP_VIEW:{
+					shipView.show();
+					mapView.hide();
+					active_view=shipView;
 				break;
 			}
-			case SEA_CONTROLLER:{
-				activeController = ((WorldObject)object).getSea_o().getController();
-				activeController.show();
+				case MAP_VIEW:{
+					mapView.show();
+					shipView.hide();
+					active_view=mapView;
 				break;
 			}
 				
@@ -39,46 +48,22 @@ public class WorldController extends ObjectController{
 		}
 		
 		public void touchDown(float x,float y){
-			activeController.handleInputDown(x, y);
+			active_view.handleInputDown(x, y);
 			
 		}
 		public void touchUp(float x,float y){
-			activeController.handleInputUp(x, y);
+			active_view.handleInputUp(x, y);
 	
 		}
 		public void touchDragged(float x,float y){
-			activeController.handleInputDrag(x, y);
+			active_view.handleInputDrag(x, y);
 		
 		}
 		
 
-		@Override
-		public void handleInputDown(float x, float y) {
-			
-			
-		}
-		@Override
-		public void handleInputUp(float x, float y) {
-			
-			
-		}
-		@Override
-		public void handleInputDrag(float x, float y) {
-			
-			
-		}
+		
 
-		@Override
-		public void hide() {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void show() {
-			// TODO Auto-generated method stub
-			
-		}
+		
 		
 		
 		

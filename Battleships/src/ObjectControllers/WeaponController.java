@@ -15,24 +15,10 @@ public class WeaponController extends ObjectController{
 		ShootingMapView.weaponControllers.add(this);
 		
 		position = new Vector2(x,y);
-		hidePosition = new Vector2(position.x+Gdx.graphics.getWidth(),position.y); 
+		hidePosition = new Vector2(Gdx.graphics.getWidth(),position.y); 
 		visiblePosition = new Vector2(position);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public Vector2 getRelativePosition(){
@@ -44,16 +30,15 @@ public class WeaponController extends ObjectController{
 	
 	@Override
 	public void hide() {
-		hidePosition.set(position.x+Gdx.graphics.getWidth(), position.y);
 		visiblePosition.set(position);
-		position.set(hidePosition);
-		System.out.println("Im a weapon my location is "+position.toString());
+		position.add(hidePosition);
+		
 	}
 
 	@Override
 	public void show() {
 		position.set(visiblePosition);
-		System.out.println("Im a weapon my location is "+position.toString());
+	
 		
 	}
 

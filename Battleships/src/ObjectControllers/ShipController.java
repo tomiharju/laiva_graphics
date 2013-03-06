@@ -12,13 +12,13 @@ public class ShipController extends ObjectController {
 	public ShipController(float x, float y){
 		ShipPlacementView.shipControllers.add(this);
 		
-		position = new Vector2(x,y);
-		hidePosition = new Vector2(position.x+Gdx.graphics.getWidth(),position.y); 
+		position 		= new Vector2(x,y);
+		hidePosition 	= new Vector2(Gdx.graphics.getWidth(),position.y); 
 		visiblePosition = new Vector2(position);
 	}
 
 	public Vector2 getRelativePosition(){
-		Vector2 relPos = new Vector2();
+		Vector2 relPos 	= new Vector2();
 		relPos.set(position.x, (float) (position.y-Gdx.graphics.getHeight()*0.2));
 		return relPos;
 		
@@ -64,9 +64,8 @@ public class ShipController extends ObjectController {
 	
 	
 	public void hide(){
-		hidePosition.set(position.x+Gdx.graphics.getWidth(), position.y);
 		visiblePosition.set(position);
-		position.set(hidePosition);
+		position.add(hidePosition);
 	}
 	public void show(){
 		position.set(visiblePosition);
