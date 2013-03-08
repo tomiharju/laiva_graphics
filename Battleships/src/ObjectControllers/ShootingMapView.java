@@ -52,7 +52,8 @@ public class ShootingMapView extends ObjectController {
 	
 	public void fire(){
 		if(selected_weapon!=null)
-			GameLogicHandler.sendAttackCoordinates( activeController.position,((WeaponObject) selected_weapon.getObject()).getWeapon());
+			System.out.println();
+			//GameLogicHandler.sendAttackCoordinates( activeController.position,((WeaponObject) selected_weapon.getObject()).getWeapon());
 	}
 	
 	
@@ -62,7 +63,7 @@ public class ShootingMapView extends ObjectController {
 			new WeaponObject(weapon,new WeaponController(p[weapon.ordinal()][0],p[weapon.ordinal()][1],1,1),new WeaponRenderer());
 		}
 		
-		//crosshair 			= new WeaponObject(WeaponType.CROSSHAIR,new WeaponController(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2),new WeaponRenderer());
+		
 	}
 	public void linkSeaController(ObjectController cont){
 		_placementController=(ShipPlacementView) cont;
@@ -72,7 +73,7 @@ public class ShootingMapView extends ObjectController {
 	
 			for(WeaponController wc:weaponControllers){
 				if(wc.getObject().getBounds().contains(pos.x,pos.y)){
-					if(((WeaponObject) wc.getObject()).getWeapon()==2)//Check if its crosshair type.
+					if(((WeaponObject) wc.getObject()).getWeapon().ordinal()==2)//Check if its crosshair type.
 						activeController = wc;
 					
 					selected_weapon=wc;

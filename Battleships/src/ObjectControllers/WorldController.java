@@ -3,7 +3,10 @@ package ObjectControllers;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import ObjectModels.ShipObject;
+import ObjectModels.WeaponObject;
 import ObjectModels.WorldObject;
+import ObjectModels.WeaponObject.WeaponType;
 
 
 public class WorldController extends ObjectController{
@@ -50,6 +53,39 @@ public class WorldController extends ObjectController{
 				
 			}
 		}
+		
+		
+		public void calculateDamageTaken(Vector3 point, int weapon_type){
+			int radius=0;
+			for(WeaponType w : WeaponType.values())
+				if(w.ordinal()==weapon_type){
+					radius = w.getRadius();
+				}
+			for(ShipController sc : ShipPlacementView.shipControllers){
+				if(sc.position.dst(point)<radius){
+					((ShipObject) sc.getObject()).dealDamage(
+							new DamageCalculator(point,radius,(ShipObject) sc.getObject()).start());
+				}
+					
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		public void touchDown(Vector3 touchPoint){
 			active_view.handleInputDown(touchPoint);

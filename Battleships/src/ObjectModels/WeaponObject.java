@@ -16,34 +16,31 @@ import ObjectRenderers.WeaponRenderer;
 import ObjectRenderers.WorldRenderer;
 
 public class WeaponObject extends ModelObject {
+	
 	public enum WeaponType{
-		CANNON("cannon.png",1,11),
-		TORPEDO("cannon.png",5,1),
-		CROSSHAIR("crosshair.png",10,10);
+		CANNON("cannon.png",1),
+		TORPEDO("cannon.png",1),
+		CROSSHAIR("crosshair.png",1);
+		
 		private String file;
-		private int height;
-		private int width;
-		private WeaponType(String f,int h,int w){
+		private int radius;
+		
+		private WeaponType(String f,int r){
 			file=f;
-			height=h;
-			width=w;
+			radius=r;
 		}
 		private String getFile(){
 			return file;
 		}
-		public int getWidth(){
-			return width;
+		public int getRadius(){
+			return radius;
 		}
-		public int getHeight(){
-			return height;
-		}
-		private int getWeaponNumber(){
-			return this.ordinal();
-		}
+	
+		
 	}
 	
 	
-	private int weaponType;
+	private WeaponType weapon;
 	
 	public WeaponObject(WeaponType weapon,ObjectController controller, ObjectRenderer renderer){
 		setController(controller);
@@ -58,11 +55,11 @@ public class WeaponObject extends ModelObject {
 		sprite.setPosition(position.x, position.y);
 		WorldObject.objects.add(this);
 		
-		weaponType=weapon.getWeaponNumber();
+		this.weapon=weapon;
 	}
 	
-	public int getWeapon(){
-		return weaponType; 
+	public WeaponType getWeapon(){
+		return weapon; 
 	}
 	@Override
 	public void update() {

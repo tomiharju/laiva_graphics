@@ -59,7 +59,6 @@ public class ShipController extends ObjectController {
 		}
 		
 		if(legalmove){
-			System.out.println("legal move, moving");
 			setPosition(new Vector3(pos));
 		}
 		

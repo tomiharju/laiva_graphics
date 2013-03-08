@@ -106,7 +106,6 @@ public class ShipPlacementView extends ObjectController {
 	@Override
 	public void handleInputDrag(Vector3 pos) {
 		if (activeController != null){
-			
 			activeController.handleInputDrag(pos);
 		}
 

@@ -1,6 +1,7 @@
 package Commands;
 
 import ObjectControllers.ObjectController;
+import Screens.GameLogicHandler;
 
 public class ReadyCommand implements Command{
 
@@ -10,7 +11,7 @@ public class ReadyCommand implements Command{
 	}
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		GameLogicHandler.sendImReady();
 		
 	}
 

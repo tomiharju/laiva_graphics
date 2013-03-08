@@ -15,6 +15,8 @@ public class Main extends Game{
 	
 	public Main(NativeFunctions c){
 		this.nativeConnector=c;
+		//c.connectGame(this);
+		
 	}
 	@Override
 	public void create() {		

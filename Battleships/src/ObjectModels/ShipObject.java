@@ -21,18 +21,20 @@ import ObjectRenderers.WorldRenderer;
 public class ShipObject extends ModelObject{
 
 	public enum ShipType{
-		ROWBOAT(1,1,10,"rowboat.png"),
-		MOTORBOAT(2,1,20,"motorboat.png"),
-		BATTLESHIP(5,1,50,"battleship.png");
+		ROWBOAT(1,1,"rowboat.png"),
+		MOTORBOAT(2,1,"motorboat.png"),
+		BATTLESHIP(5,1,"battleship.png");
 		private int lenght,width,hp;
 		private String file;
-		private ShipType(int l,int w,int hp,String f){
+		private ShipType(int l,int w,String f){
 			lenght=l;
 			width=w;
-			hp=hp;
+			hp=l*w*10000;
 			file=f;
 		}
-	
+		public int getHp(){
+			return hp;
+		}
 		public int getLenght(){
 			return lenght;
 		}
@@ -46,7 +48,7 @@ public class ShipObject extends ModelObject{
 	}
 	
 	
-	
+	private int hitpoints;
 	
 	
 	
@@ -62,11 +64,15 @@ public class ShipObject extends ModelObject{
 		sprite.setPosition(position.x,position.y);
 		
 		WorldObject.objects.add(this);
+		hitpoints=ship.getHp();
 		
 	}
+
 	
-	
-	
+	public void dealDamage(int dmg){
+		hitpoints-=dmg;
+		
+	}
 	
 	@Override
 	public void update() {
