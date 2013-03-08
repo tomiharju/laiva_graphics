@@ -5,18 +5,21 @@ import Screens.GameLogicHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 
 
 public class WeaponController extends ObjectController{
-
 	
-	public WeaponController(float x, float y){
+	Rectangle clear_bounds;
+	Rectangle map_bounds;
+	
+	public WeaponController(float x, float y,float w, float h){
+		super(x,y,w,h);
 		ShootingMapView.weaponControllers.add(this);
-		
-		position = new Vector2(x,y);
-		hidePosition = new Vector2(Gdx.graphics.getWidth(),position.y); 
-		visiblePosition = new Vector2(position);
+		clear_bounds=new Rectangle();
+		map_bounds=new Rectangle(0,2.5f,10,10);
+	
 		
 	}
 	
@@ -43,22 +46,22 @@ public class WeaponController extends ObjectController{
 	}
 
 	@Override
-	public void handleInputDown(float x, float y) {
+	public void handleInputDown(Vector3 pos) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void handleInputUp(float x, float y) {
+	public void handleInputUp(Vector3 pos) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void handleInputDrag(float x, float y) {
+	public void handleInputDrag(Vector3 pos) {
 		boolean legalmove=true;
-			Rectangle map_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
-			Rectangle clear_bounds = new Rectangle(x-object.getBounds().getWidth()/2,y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());	
+			
+			clear_bounds.set(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());	
 			if(!map_bounds.contains(clear_bounds))
 					legalmove=false;
 			
@@ -66,7 +69,7 @@ public class WeaponController extends ObjectController{
 		
 		
 		if(legalmove){
-			setPosition(new Vector2(x,y));
+			setPosition(new Vector3(pos));
 			
 		}
 		

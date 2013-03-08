@@ -14,6 +14,7 @@ import ObjectRenderers.ShipRenderer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class ShipPlacementView extends ObjectController {
 
@@ -28,26 +29,25 @@ public class ShipPlacementView extends ObjectController {
 	private GuiObject top_texture;
 	private GuiObject bot_texture;
 
-	public ShipPlacementView() {
+	public ShipPlacementView(float x,float y, float w, float h) {
+		super(x,y,w,h);
 		shipControllers 	= new ArrayList<ShipController>();
 		guiControllers 		= new ArrayList<GuiController>();
 		activeController 	= null;
 		
-		position 			= new Vector2(0, (float) (Gdx.graphics.getHeight() * 0.2));
-		hidePosition 		= new Vector2(Gdx.graphics.getWidth(), position.y);
-		visiblePosition 	= new Vector2(position);
+	
 
-		button_ready 		= new GuiObject(new GuiController(Gdx.graphics.getWidth()/2,50,new ReadyCommand(this)), new GuiRenderer(),"button_ready.png",50, 50);
-		arrow_right 		= new GuiObject(new GuiController(Gdx.graphics.getWidth()-50,50,new HideCommand(this)), new GuiRenderer(),"arrow_right.png",50, 50);
+		button_ready 		= new GuiObject(new GuiController(5,1.5f,1.5f,1.5f,new ReadyCommand(this)), new GuiRenderer(),"button_ready.png");
+		arrow_right 		= new GuiObject(new GuiController(8,1.5f,1.5f,1.5f,new HideCommand(this)), new GuiRenderer(),"arrow_right.png");
 		guiControllers.add((GuiController) button_ready.getController());
 		guiControllers.add((GuiController) arrow_right.getController());
 	}
 
 	public void createShips() {
-		new ShipObject(ShipType.ROWBOAT, new ShipController(100,
-				(float) (Gdx.graphics.getHeight() * 0.7)), new ShipRenderer());
-		new ShipObject(ShipType.MOTORBOAT, new ShipController(250,
-				(float) (Gdx.graphics.getHeight() * 0.7)), new ShipRenderer());
+		for(ShipType ship : ShipType.values()){
+			new ShipObject(ship,new ShipController(1,8,ship.getLenght(),ship.getWidth()),new ShipRenderer());
+		}
+		
 		
 	}
 
@@ -74,29 +74,29 @@ public class ShipPlacementView extends ObjectController {
 	}
 
 	@Override
-	public void handleInputDown(float x, float y) {
-		if(object.getBounds().contains(x, y)){
+	public void handleInputDown(Vector3 pos) {
+		
 			for (ShipController c : shipControllers)
-				if (c.getObject().getBounds().contains(x, y)) {
+				if (c.getObject().getBounds().contains(pos.x,pos.y)) {
 					if (c.isSelected())
 						c.changeOrientation();
 
 				activeController = c;
 				c.select();
 			}
-		}
-		else{
+		
+		
 			for (GuiController c : guiControllers)
-				if (c.getObject().getBounds().contains(x, y)) {
+				if (c.getObject().getBounds().contains(pos.x, pos.y)) {
 					c.executeCommand();
 					}
-			
-		}
+		
+		
 
 	}
 
 	@Override
-	public void handleInputUp(float x, float y) {
+	public void handleInputUp(Vector3 pos) {
 		for (ShipController c : shipControllers) {
 			if (!c.equals(activeController))
 				c.deSelect();
@@ -104,9 +104,11 @@ public class ShipPlacementView extends ObjectController {
 	}
 
 	@Override
-	public void handleInputDrag(float x, float y) {
-		if (activeController != null)
-			activeController.handleInputDrag(x, y);
+	public void handleInputDrag(Vector3 pos) {
+		if (activeController != null){
+			
+			activeController.handleInputDrag(pos);
+		}
 
 	}
 

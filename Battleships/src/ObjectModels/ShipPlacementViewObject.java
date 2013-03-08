@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class ShipPlacementViewObject extends ModelObject {
 
@@ -21,8 +22,8 @@ public class ShipPlacementViewObject extends ModelObject {
 	public ShipPlacementViewObject(ShipPlacementView controller, SeaRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		position 		= new Vector2(controller.pollPosition());
-		bounds 			= new Rectangle(position.x,position.y,Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
+		position 		= new Vector3(controller.pollPosition());
+		bounds 			= new Rectangle(controller.pollBounds());
 		
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/waterTexture.jpg")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());

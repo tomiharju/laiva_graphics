@@ -19,6 +19,8 @@ public class WorldRenderer extends ObjectRenderer{
 	public static OrthographicCamera cam;
 	public static SpriteBatch batch;
 	public static float ppux,ppuy;
+	static final float VIEWPORT_WIDTH=10;
+	static final float VIEWPORT_HEIGHT=15;
 	
 	private ShapeRenderer debugrenderer;
 	
@@ -35,10 +37,10 @@ public class WorldRenderer extends ObjectRenderer{
 	
 	public void setupCamera(){
 		
-		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.setToOrtho(true,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(5,5,0);
-		cam.update();
+		cam = new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT); //Dimension of the world, 10x15(km)
+		//cam.setToOrtho(true,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		cam.position.set(VIEWPORT_WIDTH / 2,VIEWPORT_HEIGHT / 2,0);
+	
 		
 		ppux=Gdx.graphics.getWidth()/100;
 		ppuy=Gdx.graphics.getHeight()/100;
@@ -46,6 +48,9 @@ public class WorldRenderer extends ObjectRenderer{
 	}
 	
 	public void draw(){
+		cam.update();
+		batch.setProjectionMatrix(cam.combined);
+		debugrenderer.setProjectionMatrix(cam.combined);
 		batch.begin();
 		for(ObjectRenderer o: renderers)
 			o.draw();

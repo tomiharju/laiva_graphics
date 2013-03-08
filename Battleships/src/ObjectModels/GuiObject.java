@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
@@ -15,12 +16,12 @@ import ObjectRenderers.ShipRenderer;
 public class GuiObject extends ModelObject {
 
 	
-	public GuiObject(ObjectController controller,ObjectRenderer renderer,String file,float w, float h){
+	public GuiObject(ObjectController controller,ObjectRenderer renderer,String file){
 		setController(controller);
 		setRenderer(renderer);
 		
-		position 		= new Vector2(controller.pollPosition());
-		bounds 			= new Rectangle(position.x,position.y,w,h);
+		position 		= new Vector3(controller.pollPosition());
+		bounds 			= new Rectangle(controller.pollBounds());
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+file)));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x,position.y);

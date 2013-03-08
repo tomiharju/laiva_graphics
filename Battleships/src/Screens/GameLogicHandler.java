@@ -1,6 +1,7 @@
 package Screens;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import Core.NativeFunctions;
 import ObjectControllers.WorldController;
@@ -34,8 +35,8 @@ public class GameLogicHandler extends Thread{
 	}
 	
 	
-	public static void sendAttackCoordinates(Vector2 pos,int weapontype){
-		System.out.println("Firing at "+pos.toString()+ " with "+weapontype);
+	public static void sendAttackCoordinates(Vector3 position,int weapontype){
+		System.out.println("Firing at "+position.toString()+ " with "+weapontype);
 		//nativeConnector.sendAttackAction(pos.x,pos.y, weapontype);
 	}
 	public static void changePlayerView(){

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipPlacementView;
@@ -20,22 +21,22 @@ import ObjectRenderers.WorldRenderer;
 public class ShipObject extends ModelObject{
 
 	public enum ShipType{
-		ROWBOAT(10,10,10,"rowboat.png"),
-		MOTORBOAT(20,10,20,"motorboat.png"),
-		BATTLESHIP(50,10,50,"battleship.jpg");
+		ROWBOAT(1,1,10,"rowboat.png"),
+		MOTORBOAT(2,1,20,"motorboat.png"),
+		BATTLESHIP(5,1,50,"battleship.png");
 		private int lenght,width,hp;
 		private String file;
-		private ShipType(int l,int w,int h,String f){
+		private ShipType(int l,int w,int hp,String f){
 			lenght=l;
 			width=w;
-			hp=h;
+			hp=hp;
 			file=f;
 		}
 	
-		private int getLenght(){
+		public int getLenght(){
 			return lenght;
 		}
-		private int getWidth(){
+		public int getWidth(){
 			return width;
 		}
 		private String getFile(){
@@ -53,8 +54,8 @@ public class ShipObject extends ModelObject{
 	public ShipObject(ShipType ship,ShipController controller,ShipRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		position		= new Vector2(controller.pollPosition());
-		bounds 			= new Rectangle(position.x,position.y,ship.getWidth()*WorldRenderer.ppux,ship.getLenght()*WorldRenderer.ppuy);
+		position		= new Vector3(controller.pollPosition());
+		bounds 			= new Rectangle(controller.pollBounds());
 		
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+ship.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());

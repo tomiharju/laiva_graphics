@@ -1,5 +1,8 @@
 package ObjectControllers;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+
 import ObjectModels.WorldObject;
 
 
@@ -12,7 +15,8 @@ public class WorldController extends ObjectController{
 		private ShipPlacementView shipView;
 		private ShootingMapView mapView;
 		private ObjectController active_view;
-		public WorldController(){
+		public WorldController(float x, float y, float w, float h){
+			super(x,y,w,h);
 			
 		}
 		public void initialize(){
@@ -47,16 +51,16 @@ public class WorldController extends ObjectController{
 			}
 		}
 		
-		public void touchDown(float x,float y){
-			active_view.handleInputDown(x, y);
+		public void touchDown(Vector3 touchPoint){
+			active_view.handleInputDown(touchPoint);
 			
 		}
-		public void touchUp(float x,float y){
-			active_view.handleInputUp(x, y);
+		public void touchUp(Vector3 pos){
+			active_view.handleInputUp(pos);
 	
 		}
-		public void touchDragged(float x,float y){
-			active_view.handleInputDrag(x, y);
+		public void touchDragged(Vector3 pos){
+			active_view.handleInputDrag(pos);
 		
 		}
 		

@@ -3,18 +3,21 @@ package ObjectControllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class ShipController extends ObjectController {
 	
-	
+	Rectangle clear_bounds;
+	Rectangle sea_bounds;
 
 	
-	public ShipController(float x, float y){
+	public ShipController(float x, float y,float w, float h){
+		super(x,y,w,h);
 		ShipPlacementView.shipControllers.add(this);
+		clear_bounds=new Rectangle();
+		sea_bounds=new Rectangle(0,2.5f,10,10);
 		
-		position 		= new Vector2(x,y);
-		hidePosition 	= new Vector2(Gdx.graphics.getWidth(),position.y); 
-		visiblePosition = new Vector2(position);
+	
 	}
 
 	public Vector2 getRelativePosition(){
@@ -24,12 +27,12 @@ public class ShipController extends ObjectController {
 		
 	}
 	@Override
-	public void handleInputUp(float x,float y) {
+	public void handleInputUp(Vector3 pos) {
 		boolean legalmove=true;
 		for(ShipController sc:ShipPlacementView.shipControllers){
 			if(!sc.equals(this)){
-				Rectangle clear_bounds = new Rectangle(x-object.getBounds().getWidth()/2,y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
-				Rectangle sea_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
+				clear_bounds = new Rectangle(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
+				sea_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
 				if(sc.getObject().getBounds().overlaps(clear_bounds) || !sea_bounds.contains(clear_bounds))
 					legalmove=false;
 			}
@@ -37,26 +40,27 @@ public class ShipController extends ObjectController {
 		}
 		
 		if(legalmove){
-			setPosition(new Vector2(x,y));
+			setPosition(new Vector3(pos));
 		}
 		
 	}
 
 	@Override
-	public void handleInputDrag(float x, float y) {
+	public void handleInputDrag(Vector3 pos) {
 		boolean legalmove=true;
 		for(ShipController sc:ShipPlacementView.shipControllers){
 			if(!sc.equals(this)){
-				Rectangle clear_bounds = new Rectangle(x-object.getBounds().getWidth()/2,y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
-				Rectangle sea_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
+				clear_bounds.set(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
 				if(sc.getObject().getBounds().overlaps(clear_bounds) || !sea_bounds.contains(clear_bounds))
 					legalmove=false;
+				
 			}
 				
 		}
 		
 		if(legalmove){
-			setPosition(new Vector2(x,y));
+			System.out.println("legal move, moving");
+			setPosition(new Vector3(pos));
 		}
 		
 		
@@ -72,7 +76,7 @@ public class ShipController extends ObjectController {
 	}
 
 	@Override
-	public void handleInputDown(float x, float y) {
+	public void handleInputDown(Vector3 pos) {
 		// TODO Auto-generated method stub
 		
 	}

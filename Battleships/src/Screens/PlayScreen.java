@@ -9,25 +9,33 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Plane;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 public class PlayScreen implements Screen, InputProcessor{
-
-		private boolean paused;
-		private WorldObject 		world;
-		private WorldController		controller;
-		private WorldRenderer		renderer;
-		private GameLogicHandler 	logicHandler;
+	
+		OrthographicCamera 	guiCam;
+		Vector3 			touchPoint;
+		boolean paused;
+		WorldObject 		world;
+		WorldController		controller;
+		WorldRenderer		renderer;
+		GameLogicHandler 	logicHandler;
 		
-		private float				update_interval;
-		private final float			FPS=80;
+		float				update_interval;
+		final float			FPS=80;
 	
 	public PlayScreen(NativeFunctions connector){
 		
-		controller		= 	new WorldController();
+		guiCam 			=  	new OrthographicCamera(10,15);
+		guiCam.position.set(5,7.5f,0f);
+		guiCam.update();
+		touchPoint		=	new Vector3();
+		controller		= 	new WorldController(0,0,0,0);
 		renderer		=	new WorldRenderer();
 		world 			= 	new WorldObject(controller,renderer);
 		controller.initialize();//Required to set other controllers in worldcontroller
@@ -114,20 +122,24 @@ public class PlayScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		controller.touchDown(screenX,Gdx.graphics.getHeight()- screenY);
+		guiCam.unproject(touchPoint.set(screenX,screenY,0));
+		controller.touchDown(touchPoint);
 		return false;
 		
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		controller.touchUp(screenX,Gdx.graphics.getHeight()- screenY);
+		guiCam.unproject(touchPoint.set(screenX,screenY,0));
+		controller.touchUp(touchPoint);
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		controller.touchDragged(screenX,Gdx.graphics.getHeight()- screenY);
+		guiCam.unproject(touchPoint.set(screenX,screenY,0));
+		System.out.println(touchPoint.toString());
+		controller.touchDragged(touchPoint);
 		return false;
 	}
 

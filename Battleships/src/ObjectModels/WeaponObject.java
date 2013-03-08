@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipController;
@@ -16,8 +17,8 @@ import ObjectRenderers.WorldRenderer;
 
 public class WeaponObject extends ModelObject {
 	public enum WeaponType{
-		CANNON("cannon.png",10,10),
-		TORPEDO("cannon.png",10,10),
+		CANNON("cannon.png",1,11),
+		TORPEDO("cannon.png",5,1),
 		CROSSHAIR("crosshair.png",10,10);
 		private String file;
 		private int height;
@@ -30,10 +31,10 @@ public class WeaponObject extends ModelObject {
 		private String getFile(){
 			return file;
 		}
-		private int getWidth(){
+		public int getWidth(){
 			return width;
 		}
-		private int getHeight(){
+		public int getHeight(){
 			return height;
 		}
 		private int getWeaponNumber(){
@@ -48,8 +49,8 @@ public class WeaponObject extends ModelObject {
 		setController(controller);
 		setRenderer(renderer);
 		
-		position		= new Vector2(controller.pollPosition());
-		bounds 			= new Rectangle(position.x,position.y,weapon.getWidth()*WorldRenderer.ppux,weapon.getHeight()*WorldRenderer.ppuy);
+		position		= new Vector3(controller.pollPosition());
+		bounds 			= new Rectangle(controller.pollBounds());
 		
 		
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+weapon.getFile())));
