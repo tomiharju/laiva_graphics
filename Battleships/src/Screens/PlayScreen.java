@@ -26,8 +26,7 @@ public class PlayScreen implements Screen, InputProcessor{
 		WorldRenderer		renderer;
 		GameLogicHandler 	logicHandler;
 		
-		float				update_interval;
-		final float			FPS=80;
+	
 	
 	public PlayScreen(NativeFunctions connector){
 		
@@ -42,6 +41,8 @@ public class PlayScreen implements Screen, InputProcessor{
 			
 		logicHandler 	= new GameLogicHandler((WorldController)world.getController(),world,connector);
 		logicHandler.run();
+		
+		paused			=false;
 		Gdx.input.setInputProcessor(this);
 	}
 	
@@ -52,15 +53,15 @@ public class PlayScreen implements Screen, InputProcessor{
 	public void render(float delta) {
 		
 		
-		
-		if((update_interval+=Gdx.graphics.getDeltaTime())>(1/FPS))
-		if(!paused){
-			Gdx.gl.glClearColor(0f,.0f,.0f,1);
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			world.update();				//Update all game objects
-			renderer.draw();			//Render all game objects
-			update_interval=0;
-		}
+			if(!paused){
+				
+				Gdx.gl.glClearColor(0f,.0f,.0f,1);
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
+				world.update();	
+				renderer.draw();	
+			
+			}
+	
 	}
 
 	@Override
@@ -138,7 +139,6 @@ public class PlayScreen implements Screen, InputProcessor{
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		guiCam.unproject(touchPoint.set(screenX,screenY,0));
-		System.out.println(touchPoint.toString());
 		controller.touchDragged(touchPoint);
 		return false;
 	}

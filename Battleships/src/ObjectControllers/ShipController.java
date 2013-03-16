@@ -28,7 +28,7 @@ public class ShipController extends ObjectController {
 	}
 	@Override
 	public void handleInputUp(Vector3 pos) {
-		boolean legalmove=true;
+		/*boolean legalmove=true;
 		for(ShipController sc:ShipPlacementView.shipControllers){
 			if(!sc.equals(this)){
 				clear_bounds = new Rectangle(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
@@ -42,7 +42,7 @@ public class ShipController extends ObjectController {
 		if(legalmove){
 			setPosition(new Vector3(pos));
 		}
-		
+		*/
 	}
 
 	@Override
@@ -67,11 +67,10 @@ public class ShipController extends ObjectController {
 	
 	
 	public void hide(){
-		visiblePosition.set(position);
-		position.add(hidePosition);
+		object.setHidden();
 	}
 	public void show(){
-		position.set(visiblePosition);
+		object.setVisible();
 	}
 
 	@Override

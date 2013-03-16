@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 
 import Commands.FireCommand;
-import Commands.HideCommand;
+import Commands.ShowMapCommand;
+import Commands.ShowShipCommand;
 import ObjectModels.GuiObject;
 import ObjectModels.ShipObject;
 
@@ -45,15 +46,18 @@ public class ShootingMapView extends ObjectController {
 	
 		
 		button_fire 		= new GuiObject(new GuiController(5,1.5f,1.5f,1.5f,new FireCommand(this)),new GuiRenderer(),"button_fire.png");
-		arrow_left 			= new GuiObject(new GuiController(2,1.5f,1.5f,1.5f,new HideCommand(this)),new GuiRenderer(),"arrow_left.png");
+		arrow_left 			= new GuiObject(new GuiController(2,1.5f,1.5f,1.5f,new ShowShipCommand(this)),new GuiRenderer(),"arrow_left.png");
 		guiControllers.add((GuiController) button_fire.getController());
 		guiControllers.add((GuiController) arrow_left.getController());
 	}
 	
 	public void fire(){
-		if(selected_weapon!=null)
-			System.out.println();
-			//GameLogicHandler.sendAttackCoordinates( activeController.position,((WeaponObject) selected_weapon.getObject()).getWeapon());
+		if(selected_weapon!=null){
+		
+			GameLogicHandler.sendAttackCoordinates( activeController.position,((WeaponObject) selected_weapon.getObject()).getWeaponType());
+		}
+		else
+			System.out.println("Please select a weapon");
 	}
 	
 	
@@ -70,13 +74,13 @@ public class ShootingMapView extends ObjectController {
 	}
 	@Override
 	public void handleInputDown(Vector3 pos) {
-	
-			for(WeaponController wc:weaponControllers){
+		for(WeaponController wc:weaponControllers){
 				if(wc.getObject().getBounds().contains(pos.x,pos.y)){
-					if(((WeaponObject) wc.getObject()).getWeapon().ordinal()==2)//Check if its crosshair type.
+					if(((WeaponObject) wc.getObject()).getWeaponType()==2)//Check if its crosshair type.
 						activeController = wc;
 					
 					selected_weapon=wc;
+					selected_weapon.select();
 					break;
 				}
 				
@@ -105,7 +109,7 @@ public class ShootingMapView extends ObjectController {
 	}
 	public void hide(){
 		
-		position.set(hidePosition);
+		object.setHidden();
 		for(WeaponController sc:weaponControllers)
 			sc.hide();
 		for(GuiController gc:guiControllers)
@@ -113,7 +117,7 @@ public class ShootingMapView extends ObjectController {
 	}
 	public void show(){
 		
-		position.set(visiblePosition);
+		object.setVisible();
 		for(WeaponController sc:weaponControllers)
 			sc.show();
 		for(GuiController gc:guiControllers)

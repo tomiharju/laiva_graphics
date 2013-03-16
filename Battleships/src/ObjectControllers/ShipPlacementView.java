@@ -3,7 +3,7 @@ package ObjectControllers;
 import java.util.ArrayList;
 
 import Commands.ReadyCommand;
-import Commands.HideCommand;
+import Commands.ShowMapCommand;
 import ObjectModels.GuiObject;
 import ObjectModels.ShipObject;
 
@@ -38,7 +38,7 @@ public class ShipPlacementView extends ObjectController {
 	
 
 		button_ready 		= new GuiObject(new GuiController(5,1.5f,1.5f,1.5f,new ReadyCommand(this)), new GuiRenderer(),"button_ready.png");
-		arrow_right 		= new GuiObject(new GuiController(8,1.5f,1.5f,1.5f,new HideCommand(this)), new GuiRenderer(),"arrow_right.png");
+		arrow_right 		= new GuiObject(new GuiController(8,1.5f,1.5f,1.5f,new ShowMapCommand(this)), new GuiRenderer(),"arrow_right.png");
 		guiControllers.add((GuiController) button_ready.getController());
 		guiControllers.add((GuiController) arrow_right.getController());
 	}
@@ -57,7 +57,7 @@ public class ShipPlacementView extends ObjectController {
 	}
 
 	public void hide() {
-		position.set(hidePosition);
+		object.setHidden();
 		for (ShipController sc : shipControllers)
 			sc.hide();
 		for (GuiController gc : guiControllers)
@@ -65,8 +65,7 @@ public class ShipPlacementView extends ObjectController {
 	}
 
 	public void show() {
-		
-		position.set(visiblePosition);
+		object.setVisible();
 		for (ShipController sc :shipControllers)
 			sc.show();
 		for (GuiController gc : guiControllers)

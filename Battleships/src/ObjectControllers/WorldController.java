@@ -31,43 +31,36 @@ public class WorldController extends ObjectController{
 			state=1;
 		}
 		
-		public void changePlayerView(){
-			if(state==2)
-				state=1;
-			else
-				state=2;
-			
-			switch(state){
-				case SHIP_VIEW:{
-					shipView.show();
-					mapView.hide();
-					active_view=shipView;
-				break;
-			}
-				case MAP_VIEW:{
-					mapView.show();
-					shipView.hide();
-					active_view=mapView;
-				break;
-			}
-				
-			}
+		public void lockToShipView(){
+			shipView.show();
+			mapView.hide();
+			active_view=shipView;
 		}
+		public void lockToMapView(){
+			mapView.show();
+			shipView.hide();
+			active_view=mapView;
+		}
+	
 		
 		
 		public void calculateDamageTaken(Vector3 point, int weapon_type){
-			int radius=0;
+			float radius=0;
 			for(WeaponType w : WeaponType.values())
 				if(w.ordinal()==weapon_type){
 					radius = w.getRadius();
+					System.out.println("Radius "+radius);
 				}
 			for(ShipController sc : ShipPlacementView.shipControllers){
+				System.out.println("Bounds at "+sc.getObject().getBounds().toString());
+				
 				if(sc.position.dst(point)<radius){
 					((ShipObject) sc.getObject()).dealDamage(
-							new DamageCalculator(point,radius,(ShipObject) sc.getObject()).start());
+							new DamageCalculator(point,radius,(ShipObject) sc.getObject()).run());
 				}
 					
 			}
+			System.out.println("Calculation finished");
 		}
 		
 		

@@ -1,6 +1,7 @@
 package ObjectRenderers;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import ObjectModels.ModelObject;
@@ -8,7 +9,7 @@ import ObjectModels.ModelObject;
 public abstract class ObjectRenderer {
 	
 	protected ModelObject object;
-	
+	protected Sprite graphics;
 	
 
 	public ModelObject getObject() {
@@ -22,7 +23,7 @@ public abstract class ObjectRenderer {
 
 
 	public abstract void draw();
-		
+	public abstract void addGraphics(Sprite s);
 	
 
 }

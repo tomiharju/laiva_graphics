@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -19,8 +20,8 @@ public class WorldRenderer extends ObjectRenderer{
 	public static OrthographicCamera cam;
 	public static SpriteBatch batch;
 	public static float ppux,ppuy;
-	static final float VIEWPORT_WIDTH=10;
-	static final float VIEWPORT_HEIGHT=15;
+	static final float VIEWPORT_WIDTH=10; //*100meters
+	static final float VIEWPORT_HEIGHT=15;//*100meters
 	
 	private ShapeRenderer debugrenderer;
 	
@@ -75,6 +76,12 @@ public class WorldRenderer extends ObjectRenderer{
 	@Override
 	public ModelObject getObject() {
 		return object;
+	}
+
+	@Override
+	public void addGraphics(Sprite s) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

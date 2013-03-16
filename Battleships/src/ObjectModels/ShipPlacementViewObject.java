@@ -30,6 +30,7 @@ public class ShipPlacementViewObject extends ModelObject {
 		sprite.setPosition(position.x,position.y);
 		
 		WorldObject.objects.add(this);
+		renderer.addGraphics(sprite);
 		
 	}
 	

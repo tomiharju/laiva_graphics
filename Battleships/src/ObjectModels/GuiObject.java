@@ -27,6 +27,7 @@ public class GuiObject extends ModelObject {
 		sprite.setPosition(position.x,position.y);
 		
 		WorldObject.objects.add(this);
+		this.renderer.addGraphics(sprite);
 	}
 	@Override
 	public void update() {
@@ -48,6 +49,7 @@ public class GuiObject extends ModelObject {
 	public void setRenderer(ObjectRenderer renderer) {
 		this.renderer=(GuiRenderer)renderer;
 		this.renderer.setObject(this);
+		
 		
 	}
 

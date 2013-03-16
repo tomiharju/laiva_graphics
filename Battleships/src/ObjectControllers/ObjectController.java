@@ -13,18 +13,14 @@ public abstract class ObjectController {
 	
 	protected ModelObject object;
 	protected Vector3 position;
-	protected Vector3 hidePosition;
-	protected Vector3 visiblePosition;
 	protected Rectangle bounds;
 	protected boolean orientation_changed;
 	protected boolean selected;
-	
+	protected boolean isHidden;
 	
 	public ObjectController(float x, float y,float width, float height){
 		position = new Vector3(x,y,0);
-		hidePosition 	= new Vector3(Gdx.graphics.getWidth(),position.y,0); 
-		visiblePosition = new Vector3(position);
-		bounds = new Rectangle(x-width/2,y-height/2,width,height);
+		bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
 	}
 	
 	
@@ -37,22 +33,23 @@ public abstract class ObjectController {
 	public void setObject(ModelObject object) {
 		this.object = object;
 	}
-	public Vector3 pollPosition(){
+	public Vector3 pollPosition() {
 		return position;
 	}
-	public Rectangle pollBounds(){
+	public Rectangle pollBounds() {
 		return bounds;
 	}
-	public boolean pollOrientation(){
+	public boolean pollOrientation() {
 		return orientation_changed;
 	}
-	public void setPosition(Vector3 vector3){
+	public void setPosition(Vector3 vector3) {
 		position=vector3;
 	}
-	public boolean pollSelection(){
+	public boolean pollSelection() {
 		return selected;
 	}
 	public void select(){
+		System.out.println("Selected "+object.toString());
 		selected=true;
 	}
 	public void deSelect(){

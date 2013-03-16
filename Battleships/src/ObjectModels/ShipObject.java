@@ -49,7 +49,7 @@ public class ShipObject extends ModelObject{
 	
 	
 	private int hitpoints;
-	
+	private int maxHitpoints;
 	
 	
 	
@@ -64,13 +64,15 @@ public class ShipObject extends ModelObject{
 		sprite.setPosition(position.x,position.y);
 		
 		WorldObject.objects.add(this);
-		hitpoints=ship.getHp();
-		
+		maxHitpoints=hitpoints=ship.getHp();
+		this.renderer.addGraphics(sprite);
+		System.out.println("Shipbounds at creation "+bounds.toString());
 	}
 
 	
 	public void dealDamage(int dmg){
 		hitpoints-=dmg;
+		System.out.println("Damage taken: "+(hitpoints/maxHitpoints)*100);
 		
 	}
 	
@@ -104,6 +106,7 @@ public class ShipObject extends ModelObject{
 	public void setRenderer(ObjectRenderer renderer) {
 		this.renderer=(ShipRenderer)renderer;
 		this.renderer.setObject(this);
+	
 		
 	}
 

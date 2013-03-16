@@ -18,21 +18,21 @@ import ObjectRenderers.WorldRenderer;
 public class WeaponObject extends ModelObject {
 	
 	public enum WeaponType{
-		CANNON("cannon.png",1),
-		TORPEDO("cannon.png",1),
+		CANNON("cannon.png",1),			//Basic cannon, radius of 10m x 10m
+		TORPEDO("cannon.png",1.5f),
 		CROSSHAIR("crosshair.png",1);
 		
 		private String file;
-		private int radius;
+		private float radius;
 		
-		private WeaponType(String f,int r){
+		private WeaponType(String f,float r){
 			file=f;
 			radius=r;
 		}
 		private String getFile(){
 			return file;
 		}
-		public int getRadius(){
+		public float getRadius(){
 			return radius;
 		}
 	
@@ -54,19 +54,21 @@ public class WeaponObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x, position.y);
 		WorldObject.objects.add(this);
-		
+		this.renderer.addGraphics(sprite);
 		this.weapon=weapon;
+		
 	}
 	
-	public WeaponType getWeapon(){
-		return weapon; 
+	public int getWeaponType(){
+		return weapon.ordinal(); 
 	}
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),1f);
+		position=controller.pollPosition();
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
+		
 		
 	}
 

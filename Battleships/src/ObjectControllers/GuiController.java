@@ -23,15 +23,12 @@ public class GuiController extends ObjectController {
 	
 	@Override
 	public void hide() {
-		visiblePosition.set(position);
-		position.add(hidePosition);
-		
+		object.setHidden();
 	}
 
 	@Override
 	public void show() {
-		position.set(visiblePosition);
-		
+		object.setVisible();
 	}
 
 	@Override

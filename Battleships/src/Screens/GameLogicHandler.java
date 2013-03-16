@@ -35,19 +35,31 @@ public class GameLogicHandler extends Thread{
 	
 	
 	public static void sendAttackCoordinates(Vector3 position,int weapontype){
+	
 		System.out.println("Firing at "+position.toString()+ " with "+weapontype);
+		
+		controller.lockToShipView();
+		controller.calculateDamageTaken(position, weapontype);
+		controller.lockToMapView();
+	
 		//nativeConnector.sendAttackAction(pos.x,pos.y, weapontype);
 	}
+	
+	public static void lockShipView(){
+		controller.lockToShipView();
+	}
+	public static void lockMapView(){
+		controller.lockToMapView();
+	}
+	
 	public static void sendImReady(){
 		//nativeConnector.sendReadyNotification();
 	}
 	
 	public static void receiveFirecoordinates(){
-		
+		controller.lockToShipView();
 	}
-	public static void changePlayerView(){
-		controller.changePlayerView();
-	}
+	
 	
 	
 	

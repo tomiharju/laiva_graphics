@@ -33,16 +33,12 @@ public class WeaponController extends ObjectController{
 	
 	@Override
 	public void hide() {
-		visiblePosition.set(position);
-		position.add(hidePosition);
-		
+		object.setHidden();
 	}
 
 	@Override
 	public void show() {
-		position.set(visiblePosition);
-	
-		
+		object.setVisible();
 	}
 
 	@Override
@@ -70,6 +66,7 @@ public class WeaponController extends ObjectController{
 		
 		if(legalmove){
 			setPosition(new Vector3(pos));
+			
 			
 		}
 		

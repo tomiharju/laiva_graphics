@@ -14,7 +14,7 @@ public abstract class ModelObject {
 	protected Sprite sprite;
 	protected Rectangle bounds;
 	protected Vector3 position;
-	
+	protected boolean visible;
 	
 	
 	
@@ -27,7 +27,15 @@ public abstract class ModelObject {
 	}
 	
 	
-
+	public boolean isVisible(){
+		return visible;
+	}
+	public void setVisible(){
+		visible = true;
+	}
+	public void setHidden(){
+		visible = false;
+	}
 	public ObjectController getController() {
 		return controller;
 	}
