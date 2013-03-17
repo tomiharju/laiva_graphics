@@ -19,7 +19,7 @@ public class WeaponController extends ObjectController{
 		ShootingMapView.weaponControllers.add(this);
 		clear_bounds=new Rectangle();
 		map_bounds=new Rectangle(0,2.5f,10,10);
-	
+		System.out.println("Creating weapon "+bounds.toString());
 		
 	}
 	
@@ -56,18 +56,11 @@ public class WeaponController extends ObjectController{
 	@Override
 	public void handleInputDrag(Vector3 pos) {
 		boolean legalmove=true;
-			
 			clear_bounds.set(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());	
 			if(!map_bounds.contains(clear_bounds))
 					legalmove=false;
-			
-				
-		
-		
 		if(legalmove){
 			setPosition(new Vector3(pos));
-			
-			
 		}
 		
 		

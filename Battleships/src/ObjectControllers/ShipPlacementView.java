@@ -37,8 +37,13 @@ public class ShipPlacementView extends ObjectController {
 		
 	
 
-		button_ready 		= new GuiObject(new GuiController(5,1.5f,1.5f,1.5f,new ReadyCommand(this)), new GuiRenderer(),"button_ready.png");
-		arrow_right 		= new GuiObject(new GuiController(8,1.5f,1.5f,1.5f,new ShowMapCommand(this)), new GuiRenderer(),"arrow_right.png");
+		button_ready 		= 	new GuiObject(
+								new GuiController(5,1.5f,1.5f,1.5f,new ReadyCommand(this)), 
+								new GuiRenderer(),"button_ready.png");
+		arrow_right 		= 	new GuiObject(
+								new GuiController(8,1.5f,1.5f,1.5f,new ShowMapCommand(this)), 
+								new GuiRenderer(),"arrow_right.png");
+		
 		guiControllers.add((GuiController) button_ready.getController());
 		guiControllers.add((GuiController) arrow_right.getController());
 	}

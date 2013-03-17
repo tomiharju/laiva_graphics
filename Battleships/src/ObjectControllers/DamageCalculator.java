@@ -15,9 +15,9 @@ public class DamageCalculator{
 
 
 	Rectangle ship_bounds;
-	int hits_total;
+	float hits_total;
 	Vector3 center,hit_marker;
-	float duration;
+	long startTime;
 	boolean running;
 	float radius;
 	
@@ -25,19 +25,19 @@ public class DamageCalculator{
 	public DamageCalculator(Vector3 point,float radius,ShipObject ship){
 		this.radius = radius;
 		ship_bounds	= new Rectangle(ship.getBounds());
-		System.out.println("Ship bounds are "+ship_bounds.toString());
 		center 		= new Vector3(point);
 		hit_marker 	= new Vector3();
 	}
 	
-	public int run() {
+	public float run() {
 		
-		duration=System.currentTimeMillis();
+		startTime=System.currentTimeMillis();
 		float radius_factor=radius;
-		for(float i = 0 ; i<=radius ; i+=0.1){	//10 circles in 1 unit
+		for(float i = radius ; i>=0 ; i-=0.1){	//10 circles in 1 unit
 			for(int a = 0 ; a<=360 ; a+=2){
 				float x = (float) (center.x+Math.cos(Math.toRadians(a))*radius_factor);
 				float y = (float) (center.y+Math.sin(Math.toRadians(a))*radius_factor);
+			
 				hit_marker.set(x, y, 0);
 				if(ship_bounds.contains(hit_marker.x,hit_marker.y))
 						hits_total++;
@@ -45,8 +45,11 @@ public class DamageCalculator{
 			}
 			radius_factor-=0.1;
 		}
-		float finaltime = System.currentTimeMillis()-duration;
-		System.out.println("Algorithm took "+finaltime+" seconds.");
+		long finalTime = System.currentTimeMillis();
+		System.out.println("Start time was "+startTime);
+		System.out.println("Final time is " + finalTime);
+		System.out.println("Algoritm took "+ (finalTime-startTime) + " milliseconds.");
+		
 		System.out.println("Total hits "+ hits_total);
 		return hits_total;
 	}

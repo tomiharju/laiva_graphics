@@ -29,7 +29,7 @@ public class ShipObject extends ModelObject{
 		private ShipType(int l,int w,String f){
 			lenght=l;
 			width=w;
-			hp=l*w*10000;
+			hp=l*w*2*1084;	//Damage is based on ship size, 1084 is the dmg done by direct hit.
 			file=f;
 		}
 		public int getHp(){
@@ -48,8 +48,8 @@ public class ShipObject extends ModelObject{
 	}
 	
 	
-	private int hitpoints;
-	private int maxHitpoints;
+	private float hitpoints;
+	private float maxHitpoints;
 	
 	
 	
@@ -59,20 +59,25 @@ public class ShipObject extends ModelObject{
 		position		= new Vector3(controller.pollPosition());
 		bounds 			= new Rectangle(controller.pollBounds());
 		
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+ship.getFile())));
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/ships/"+ship.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x,position.y);
 		
 		WorldObject.objects.add(this);
-		maxHitpoints=hitpoints=ship.getHp();
+		hitpoints=ship.getHp();
+		maxHitpoints=hitpoints;
 		this.renderer.addGraphics(sprite);
-		System.out.println("Shipbounds at creation "+bounds.toString());
 	}
 
 	
-	public void dealDamage(int dmg){
+	public void dealDamage(float dmg){
 		hitpoints-=dmg;
-		System.out.println("Damage taken: "+(hitpoints/maxHitpoints)*100);
+		System.out.println("Hitpoints left: "+(hitpoints/maxHitpoints)*100 + "%");
+		if(hitpoints<=0){
+			System.out.println("Ship Destroyed!");
+			//render.drawSmoke();
+		}
+			
 		
 	}
 	
@@ -81,15 +86,6 @@ public class ShipObject extends ModelObject{
 		position.set(controller.pollPosition());
 		bounds.x=position.x-bounds.width/2;
 		bounds.y=position.y-bounds.height/2;
-		if(controller.pollOrientation()){
-			float temp;
-			temp = bounds.width;
-			bounds.width=bounds.height;
-			bounds.height=temp;
-			sprite.rotate90(true);
-			sprite.setSize(bounds.getWidth(),bounds.getHeight());
-			controller.orientationConfirmed();
-		}
 		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
 		
 		

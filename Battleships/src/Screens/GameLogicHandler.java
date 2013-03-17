@@ -1,5 +1,6 @@
 package Screens;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -34,13 +35,9 @@ public class GameLogicHandler extends Thread{
 	}
 	
 	
-	public static void sendAttackCoordinates(Vector3 position,int weapontype){
+	public static void sendAttackCoordinates(Rectangle bounds,int weapontype){
+		controller.calculateDamageTaken(bounds, weapontype);
 	
-		System.out.println("Firing at "+position.toString()+ " with "+weapontype);
-		
-		controller.lockToShipView();
-		controller.calculateDamageTaken(position, weapontype);
-		controller.lockToMapView();
 	
 		//nativeConnector.sendAttackAction(pos.x,pos.y, weapontype);
 	}

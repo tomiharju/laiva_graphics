@@ -26,35 +26,30 @@ import com.badlogic.gdx.math.Vector3;
 
 public class ShootingMapView extends ObjectController {
 	public static ArrayList<WeaponController> weaponControllers;
-	public	ArrayList<GuiController> guiControllers;
+	public ArrayList<GuiController> guiControllers;
 	private ShipPlacementView _placementController;
 	
 
-	private WeaponController activeController;
-	private WeaponController selected_weapon;
+	
+	private WeaponObject 		selected_weapon;
 	
 	//Gui objects
 	private GuiObject button_fire;
 	private GuiObject arrow_left;
-	
+	private GuiObject crosshair;
 	
 	public ShootingMapView(float x, float y, float w, float h){
 		super(x,y,w,h);
 		weaponControllers 	= new ArrayList<WeaponController>();
 		guiControllers 		= new ArrayList<GuiController>();
-		activeController	= null;
+		crosshair			= null;
 	
-		
-		button_fire 		= new GuiObject(new GuiController(5,1.5f,1.5f,1.5f,new FireCommand(this)),new GuiRenderer(),"button_fire.png");
-		arrow_left 			= new GuiObject(new GuiController(2,1.5f,1.5f,1.5f,new ShowShipCommand(this)),new GuiRenderer(),"arrow_left.png");
-		guiControllers.add((GuiController) button_fire.getController());
-		guiControllers.add((GuiController) arrow_left.getController());
 	}
 	
 	public void fire(){
-		if(selected_weapon!=null){
-		
-			GameLogicHandler.sendAttackCoordinates( activeController.position,((WeaponObject) selected_weapon.getObject()).getWeaponType());
+		if(selected_weapon!=null && !selected_weapon.equals(crosshair)){
+			((WeaponRenderer) selected_weapon.getRenderer()).animate(crosshair.getPosition());
+			GameLogicHandler.sendAttackCoordinates(crosshair.getBounds(),((WeaponObject) selected_weapon).getWeaponType());
 		}
 		else
 			System.out.println("Please select a weapon");
@@ -62,39 +57,56 @@ public class ShootingMapView extends ObjectController {
 	
 	
 	public void createWeapons(){
-		float[][] p={{2,13},{4,13},{4,7}};
+		float[][] p={{1,14},{2,14},{4,7}};
 		for(WeaponType weapon : WeaponType.values()){
-			new WeaponObject(weapon,new WeaponController(p[weapon.ordinal()][0],p[weapon.ordinal()][1],1,1),new WeaponRenderer());
+			new WeaponObject(weapon,
+			new WeaponController(p[weapon.ordinal()][0],p[weapon.ordinal()][1],1,1),
+			new WeaponRenderer());				
+			
 		}
+	}
+	public void createGuiObjects(){
+		button_fire 		= 	new GuiObject(
+								new GuiController(5,1.5f,1.5f,1.5f,new FireCommand(this)),
+								new GuiRenderer(),"button_fire.png");
 		
+		arrow_left 			= 	new GuiObject(
+								new GuiController(2,1.5f,1.5f,1.5f,new ShowShipCommand(this)),
+								new GuiRenderer(),"arrow_left.png");
+		crosshair	=			new GuiObject(
+								new GuiController(4f,5f,1f,1f,null),
+								new GuiRenderer(),"crosshair.png");
 		
+		guiControllers.add((GuiController) button_fire.getController());
+		guiControllers.add((GuiController) arrow_left.getController());
+		guiControllers.add((GuiController) crosshair.getController());
 	}
 	public void linkSeaController(ObjectController cont){
 		_placementController=(ShipPlacementView) cont;
 	}
 	@Override
 	public void handleInputDown(Vector3 pos) {
-		for(WeaponController wc:weaponControllers){
-				if(wc.getObject().getBounds().contains(pos.x,pos.y)){
-					if(((WeaponObject) wc.getObject()).getWeaponType()==2)//Check if its crosshair type.
-						activeController = wc;
-					
-					selected_weapon=wc;
-					selected_weapon.select();
+		for(WeaponController wc : weaponControllers){
+			if(wc.getObject().getBounds().contains(pos.x,pos.y)){
+					crosshair.getController().deSelect();
+					selected_weapon=(WeaponObject) wc.getObject();
+					selected_weapon.getController().select();
 					break;
+					}
+					
 				}
-				
-		}
-			
-	
-			for (GuiController c : guiControllers)
+			for (GuiController c : guiControllers){
 				if (c.getObject().getBounds().contains(pos.x, pos.y)) {
+					if(c.equals(crosshair.getController())){
+						crosshair.getController().select();
+						break;
+					}
+					else
+						crosshair.getController().deSelect();
 					c.executeCommand();
 					break;
 					}
-			
-		
-		
+			}
 	}
 	@Override
 	public void handleInputUp(Vector3 pos) {
@@ -103,12 +115,10 @@ public class ShootingMapView extends ObjectController {
 	}
 	@Override
 	public void handleInputDrag(Vector3 pos) {
-		if(activeController!=null)
-			activeController.handleInputDrag(pos);
-		
+		if(crosshair.getController().isSelected())
+			crosshair.getController().handleInputDrag(pos);
 	}
 	public void hide(){
-		
 		object.setHidden();
 		for(WeaponController sc:weaponControllers)
 			sc.hide();
@@ -116,17 +126,11 @@ public class ShootingMapView extends ObjectController {
 			gc.hide();
 	}
 	public void show(){
-		
 		object.setVisible();
 		for(WeaponController sc:weaponControllers)
 			sc.show();
 		for(GuiController gc:guiControllers)
 			gc.show();
-		
-		
 	
 	}
-
-	
-
 }

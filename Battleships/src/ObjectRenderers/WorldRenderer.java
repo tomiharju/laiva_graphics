@@ -18,7 +18,7 @@ public class WorldRenderer extends ObjectRenderer{
 	
 	public static ArrayList<ObjectRenderer> renderers;
 	public static OrthographicCamera cam;
-	public static SpriteBatch batch;
+	public SpriteBatch batch;
 	public static float ppux,ppuy;
 	static final float VIEWPORT_WIDTH=10; //*100meters
 	static final float VIEWPORT_HEIGHT=15;//*100meters
@@ -29,9 +29,8 @@ public class WorldRenderer extends ObjectRenderer{
 	public WorldRenderer(){
 		renderers 	= new ArrayList<ObjectRenderer>();
 		batch 		= new SpriteBatch();
-		batch.enableBlending();
-		setupCamera();
 		
+		setupCamera();
 		debugrenderer= new ShapeRenderer();
 		
 	}
@@ -48,13 +47,14 @@ public class WorldRenderer extends ObjectRenderer{
 		
 	}
 	
-	public void draw(){
+	
+	public void render(){
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		debugrenderer.setProjectionMatrix(cam.combined);
 		batch.begin();
 		for(ObjectRenderer o: renderers)
-			o.draw();
+			o.draw(batch);
 		batch.end();
 	
 		debugrenderer.begin(ShapeType.Rectangle);
@@ -66,6 +66,10 @@ public class WorldRenderer extends ObjectRenderer{
 		}
 		
 		debugrenderer.end();
+	}
+	
+	public void draw(SpriteBatch batch){
+		
 	}
 	@Override
 	public void setObject(ModelObject object) {

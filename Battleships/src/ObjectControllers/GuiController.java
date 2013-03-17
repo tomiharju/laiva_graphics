@@ -17,7 +17,8 @@ public class GuiController extends ObjectController {
 	}
 	
 	public void executeCommand(){
-		command.execute();
+		if(command!=null)
+			command.execute();
 	}
 	
 	
@@ -45,7 +46,7 @@ public class GuiController extends ObjectController {
 
 	@Override
 	public void handleInputDrag(Vector3 pos) {
-		// TODO Auto-generated method stub
+		position.set(pos);
 		
 	}
 

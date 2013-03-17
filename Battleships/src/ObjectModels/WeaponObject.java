@@ -18,9 +18,9 @@ import ObjectRenderers.WorldRenderer;
 public class WeaponObject extends ModelObject {
 	
 	public enum WeaponType{
-		CANNON("cannon.png",1),			//Basic cannon, radius of 10m x 10m
-		TORPEDO("cannon.png",1.5f),
-		CROSSHAIR("crosshair.png",1);
+		CANNON("30mmHE.png",0.5f),			//Basic cannon, radius of 10m x 10m
+		TORPEDO("missile.png",1.0f);
+		
 		
 		private String file;
 		private float radius;
@@ -49,14 +49,13 @@ public class WeaponObject extends ModelObject {
 		position		= new Vector3(controller.pollPosition());
 		bounds 			= new Rectangle(controller.pollBounds());
 		
-		
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+weapon.getFile())));
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/weapons/"+weapon.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x, position.y);
 		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
 		this.weapon=weapon;
-		
+		((WeaponRenderer) renderer).createAnimation(weapon);
 	}
 	
 	public int getWeaponType(){

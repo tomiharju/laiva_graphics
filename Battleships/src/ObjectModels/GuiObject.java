@@ -22,7 +22,7 @@ public class GuiObject extends ModelObject {
 		
 		position 		= new Vector3(controller.pollPosition());
 		bounds 			= new Rectangle(controller.pollBounds());
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/"+file)));
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/guiobjects/"+file)));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x,position.y);
 		

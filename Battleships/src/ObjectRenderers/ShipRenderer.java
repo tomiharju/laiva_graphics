@@ -1,6 +1,7 @@
 package ObjectRenderers;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ShipRenderer extends ObjectRenderer{
 
@@ -9,9 +10,9 @@ public class ShipRenderer extends ObjectRenderer{
 		
 	}
 	@Override
-	public void draw() {
+	public void draw(SpriteBatch batch) {
 		if(object.isVisible())
-			graphics.draw(WorldRenderer.batch);
+			graphics.draw(batch);
 		else
 			return;
 	}

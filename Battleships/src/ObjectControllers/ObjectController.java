@@ -20,7 +20,7 @@ public abstract class ObjectController {
 	
 	public ObjectController(float x, float y,float width, float height){
 		position = new Vector3(x,y,0);
-		bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
+		bounds = new Rectangle(x - width / 2 , y - height / 2 , width, height);
 	}
 	
 	
@@ -49,7 +49,6 @@ public abstract class ObjectController {
 		return selected;
 	}
 	public void select(){
-		System.out.println("Selected "+object.toString());
 		selected=true;
 	}
 	public void deSelect(){
@@ -66,11 +65,9 @@ public abstract class ObjectController {
 	public void handleInputUp(Vector3 pos){};
 	public void handleInputDrag(Vector3 pos){};
 	public void changeOrientation(){
-		orientation_changed=true;
+		object.rotate90();
 	}
-	public void orientationConfirmed(){
-		orientation_changed=false;
-	}
+	
 	
 	
 	
