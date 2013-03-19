@@ -20,24 +20,21 @@ public class ShootingMapViewObject extends ModelObject{
 	public ShootingMapViewObject(ShootingMapView controller, MapRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		position 		= new Vector3(controller.pollPosition());
-		bounds 			= new Rectangle(controller.pollBounds());
-		
+		position 		= controller.pollPosition();
+		bounds 			= controller.pollBounds();
 		
 		
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/radarTextureRippled.png")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
-		sprite.setPosition(position.x,position.y);
-		
+		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
+	
 		WorldObject.objects.add(this);
 		renderer.addGraphics(sprite);
 	}
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),0.5f);
-		bounds.x=position.x;
-		bounds.y=position.y;
-		sprite.setPosition(position.x, position.y);
+		
+	
 	}
 
 	@Override

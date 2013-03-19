@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import ObjectModels.ShipObject;
-import ObjectModels.WeaponObject.WeaponType;
+
 
 public class DamageCalculator{
 
@@ -24,7 +24,7 @@ public class DamageCalculator{
 	
 	public DamageCalculator(Vector3 point,float radius,ShipObject ship){
 		this.radius = radius;
-		ship_bounds	= new Rectangle(ship.getBounds());
+		ship_bounds	= new Rectangle(ship.getController().pollBounds());
 		center 		= new Vector3(point);
 		hit_marker 	= new Vector3();
 	}

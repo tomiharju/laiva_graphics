@@ -20,21 +20,18 @@ public class GuiObject extends ModelObject {
 		setController(controller);
 		setRenderer(renderer);
 		
-		position 		= new Vector3(controller.pollPosition());
-		bounds 			= new Rectangle(controller.pollBounds());
+		position 		= controller.pollPosition();
+		bounds 			= controller.pollBounds();
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/guiobjects/"+file)));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
-		sprite.setPosition(position.x,position.y);
-		
+		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
+	
 		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
 	}
 	@Override
 	public void update() {
-		position.lerp(controller.pollPosition(),0.5f);
-		bounds.x=position.x-bounds.width/2;
-		bounds.y=position.y-bounds.height/2;
-		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
+		
 		
 	}
 

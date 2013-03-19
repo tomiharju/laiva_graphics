@@ -49,8 +49,9 @@ public class ShipPlacementView extends ObjectController {
 	}
 
 	public void createShips() {
+		float values[] = {1,3,5};
 		for(ShipType ship : ShipType.values()){
-			new ShipObject(ship,new ShipController(1,8,ship.getLenght(),ship.getWidth()),new ShipRenderer());
+			new ShipObject(ship,new ShipController(values[ship.ordinal()],8,ship.getLenght(),ship.getWidth()),new ShipRenderer());
 		}
 		
 		
@@ -81,9 +82,9 @@ public class ShipPlacementView extends ObjectController {
 	public void handleInputDown(Vector3 pos) {
 		
 			for (ShipController c : shipControllers)
-				if (c.getObject().getBounds().contains(pos.x,pos.y)) {
+				if (c.pollBounds().contains(pos.x,pos.y)) {
 					if (c.isSelected())
-						c.changeOrientation();
+						c.rotate90();
 
 				activeController = c;
 				c.select();
@@ -91,7 +92,7 @@ public class ShipPlacementView extends ObjectController {
 		
 		
 			for (GuiController c : guiControllers)
-				if (c.getObject().getBounds().contains(pos.x, pos.y)) {
+				if (c.pollBounds().contains(pos.x, pos.y)) {
 					c.executeCommand();
 					}
 		

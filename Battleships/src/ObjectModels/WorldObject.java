@@ -32,8 +32,8 @@ public class WorldObject extends ModelObject {
 
 		
 		objects 			= new ArrayList<ModelObject>();
-		shipPlacementView_o = new ShipPlacementViewObject(new ShipPlacementView(0,2.5f,10,10), new SeaRenderer());
-		shootingMapView_o 	= new ShootingMapViewObject(new ShootingMapView(0,2.5f,10,10),new MapRenderer());
+		shipPlacementView_o = new ShipPlacementViewObject(new ShipPlacementView(5,7.5f,10,10), new SeaRenderer());
+		shootingMapView_o 	= new ShootingMapViewObject(new ShootingMapView(5,7.5f,10,10),new MapRenderer());
 		((ShipPlacementView) shipPlacementView_o.controller).createShips();
 		((ShootingMapView) shootingMapView_o.controller).createWeapons();
 		((ShootingMapView) shootingMapView_o.controller).createGuiObjects();

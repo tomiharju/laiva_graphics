@@ -6,8 +6,9 @@ import com.badlogic.gdx.math.Vector3;
 
 import ObjectModels.ShipObject;
 import ObjectModels.WeaponObject;
+import ObjectModels.WeaponObject.Weapon;
 import ObjectModels.WorldObject;
-import ObjectModels.WeaponObject.WeaponType;
+
 
 
 public class WorldController extends ObjectController{
@@ -47,15 +48,12 @@ public class WorldController extends ObjectController{
 		
 		public void calculateDamageTaken(Rectangle bounds, int weapon_type){
 			float radius=0;
-			for(WeaponType w : WeaponType.values())
+			for(Weapon w : Weapon.values())
 				if(w.ordinal()==weapon_type){
 					radius = w.getRadius();
-					System.out.println("Radius "+radius);
-				}
+					}
 			for(ShipController sc : ShipPlacementView.shipControllers){
-				System.out.println("Bounds at "+sc.getObject().getBounds().toString());
-				
-				if(bounds.overlaps(sc.getObject().getBounds())){
+				if(bounds.overlaps(sc.pollBounds())){
 					float centerx = bounds.getX()+bounds.getWidth()/2;
 					float centery = bounds.getY()+bounds.getHeight()/2;
 					((ShipObject) sc.getObject()).dealDamage(

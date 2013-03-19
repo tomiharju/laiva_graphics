@@ -1,6 +1,7 @@
 package ObjectControllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -33,21 +34,22 @@ public abstract class ObjectController {
 	public void setObject(ModelObject object) {
 		this.object = object;
 	}
+	public void setPosition(Vector3 vector3) {
+		position.set(vector3);
+		bounds.x=position.x-bounds.width/2;
+		bounds.y=position.y-bounds.height/2;
+		Sprite sprite = object.getSprite();
+		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
+	}
+
 	public Vector3 pollPosition() {
 		return position;
 	}
 	public Rectangle pollBounds() {
 		return bounds;
 	}
-	public boolean pollOrientation() {
-		return orientation_changed;
-	}
-	public void setPosition(Vector3 vector3) {
-		position=vector3;
-	}
-	public boolean pollSelection() {
-		return selected;
-	}
+
+
 	public void select(){
 		selected=true;
 	}
@@ -57,15 +59,33 @@ public abstract class ObjectController {
 	public boolean isSelected(){
 		return selected;
 	}
-	
+	public void setBounds(float w,float h){
+		bounds.height=w;
+		bounds.width=h;
+		object.getSprite().setSize(bounds.getWidth(),bounds.getHeight());
+	}
+	public void setBounds(float x){
+		bounds.height=x;
+		bounds.width=x;
+		object.getSprite().setSize(bounds.getWidth(),bounds.getHeight());
+	}
 	
 	public void hide(){};
 	public void show(){};
 	public void handleInputDown(Vector3 touchPoint){};
 	public void handleInputUp(Vector3 pos){};
 	public void handleInputDrag(Vector3 pos){};
-	public void changeOrientation(){
-		object.rotate90();
+	public void rotate90(){
+		float temp;
+		temp = bounds.width;
+		bounds.width=bounds.height;
+		bounds.height=temp;
+		
+		Sprite sprite = object.getSprite();
+		sprite.rotate90(true);
+		sprite.setSize(bounds.width,bounds.height);
+		setPosition(position);
+		
 	}
 	
 	

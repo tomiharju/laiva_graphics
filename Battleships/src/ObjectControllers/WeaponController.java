@@ -17,19 +17,12 @@ public class WeaponController extends ObjectController{
 	public WeaponController(float x, float y,float w, float h){
 		super(x,y,w,h);
 		ShootingMapView.weaponControllers.add(this);
-		clear_bounds=new Rectangle();
 		map_bounds=new Rectangle(0,2.5f,10,10);
-		System.out.println("Creating weapon "+bounds.toString());
+		clear_bounds = new Rectangle();
 		
 	}
 	
 	
-	public Vector2 getRelativePosition(){
-		Vector2 relPos = new Vector2();
-		relPos.set(position.x, (float) (position.y-Gdx.graphics.getHeight()*0.2));
-		return relPos;
-		
-	}
 	
 	@Override
 	public void hide() {
@@ -56,12 +49,13 @@ public class WeaponController extends ObjectController{
 	@Override
 	public void handleInputDrag(Vector3 pos) {
 		boolean legalmove=true;
-			clear_bounds.set(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());	
-			if(!map_bounds.contains(clear_bounds))
-					legalmove=false;
-		if(legalmove){
-			setPosition(new Vector3(pos));
-		}
+		clear_bounds.set(pos.x-bounds.width/2,pos.y-bounds.height/2,bounds.height,bounds.width);
+		if(!map_bounds.contains(clear_bounds))
+			legalmove=false;
+		
+		if(legalmove)
+			setPosition(pos);
+	
 		
 		
 	}

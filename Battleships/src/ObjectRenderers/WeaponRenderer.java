@@ -1,6 +1,7 @@
 package ObjectRenderers;
 
-import ObjectModels.WeaponObject.WeaponType;
+import ObjectModels.WeaponObject.Weapon;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,7 @@ public class WeaponRenderer extends ObjectRenderer {
 		WorldRenderer.renderers.add(this);
 	}
 	
-	public void createAnimation(WeaponType weapon){
+	public void createAnimation(Weapon weapon){
 	
 		animate			= false;
 		stateTime		= 0;

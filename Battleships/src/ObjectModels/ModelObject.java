@@ -45,24 +45,14 @@ public abstract class ModelObject {
 	public ObjectRenderer getRenderer() {
 		return renderer;
 	}
-	public void rotate90(){
-		float temp;
-		temp = bounds.width;
-		bounds.width=bounds.height;
-		bounds.height=temp;
-		sprite.rotate90(true);
-		sprite.setSize(bounds.getWidth(),bounds.getHeight());
-		
-	}
+	
 
 	public abstract void setRenderer(ObjectRenderer renderer);
 
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
 	}
-	public Rectangle getBounds(){
-		return bounds;
-	}
+	
 	public Vector3 getPosition(){
 		return position;
 	}

@@ -17,7 +17,7 @@ import ObjectRenderers.WorldRenderer;
 
 public class WeaponObject extends ModelObject {
 	
-	public enum WeaponType{
+	public enum Weapon{
 		CANNON("30mmHE.png",0.5f),			//Basic cannon, radius of 10m x 10m
 		TORPEDO("missile.png",1.0f);
 		
@@ -25,7 +25,8 @@ public class WeaponObject extends ModelObject {
 		private String file;
 		private float radius;
 		
-		private WeaponType(String f,float r){
+		
+		private Weapon(String f,float r){
 			file=f;
 			radius=r;
 		}
@@ -40,34 +41,29 @@ public class WeaponObject extends ModelObject {
 	}
 	
 	
-	private WeaponType weapon;
+	private Weapon weapon;
 	
-	public WeaponObject(WeaponType weapon,ObjectController controller, ObjectRenderer renderer){
+	public WeaponObject(Weapon weapon,ObjectController controller, ObjectRenderer renderer){
 		setController(controller);
 		setRenderer(renderer);
-		
-		position		= new Vector3(controller.pollPosition());
-		bounds 			= new Rectangle(controller.pollBounds());
+		position 		= controller.pollPosition();
+		bounds 			= controller.pollBounds();
 		
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/weapons/"+weapon.getFile())));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
-		sprite.setPosition(position.x, position.y);
+		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
+	
 		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
 		this.weapon=weapon;
 		((WeaponRenderer) renderer).createAnimation(weapon);
 	}
 	
-	public int getWeaponType(){
-		return weapon.ordinal(); 
+	public Weapon getWeapon(){
+		return weapon;
 	}
 	@Override
 	public void update() {
-		position=controller.pollPosition();
-		bounds.x=position.x-bounds.width/2;
-		bounds.y=position.y-bounds.height/2;
-		sprite.setPosition(position.x-sprite.getWidth()/2, position.y-sprite.getHeight()/2);
-		
 		
 	}
 

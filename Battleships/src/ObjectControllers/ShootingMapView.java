@@ -12,7 +12,8 @@ import ObjectModels.ShipObject;
 import ObjectModels.ModelObject;
 import ObjectModels.WeaponObject;
 import ObjectModels.ShipObject.ShipType;
-import ObjectModels.WeaponObject.WeaponType;
+import ObjectModels.WeaponObject.Weapon;
+
 
 import ObjectRenderers.GuiRenderer;
 import ObjectRenderers.ShipRenderer;
@@ -31,7 +32,7 @@ public class ShootingMapView extends ObjectController {
 	
 
 	
-	private WeaponObject 		selected_weapon;
+	private WeaponController 	selected_weapon;
 	
 	//Gui objects
 	private GuiObject button_fire;
@@ -48,8 +49,8 @@ public class ShootingMapView extends ObjectController {
 	
 	public void fire(){
 		if(selected_weapon!=null && !selected_weapon.equals(crosshair)){
-			((WeaponRenderer) selected_weapon.getRenderer()).animate(crosshair.getPosition());
-			GameLogicHandler.sendAttackCoordinates(crosshair.getBounds(),((WeaponObject) selected_weapon).getWeaponType());
+			((WeaponRenderer) selected_weapon.getObject().getRenderer()).animate(crosshair.getPosition());
+			GameLogicHandler.sendAttackCoordinates(crosshair.getController().pollBounds(),((WeaponObject) selected_weapon.getObject()).getWeapon().ordinal());
 		}
 		else
 			System.out.println("Please select a weapon");
@@ -58,7 +59,7 @@ public class ShootingMapView extends ObjectController {
 	
 	public void createWeapons(){
 		float[][] p={{1,14},{2,14},{4,7}};
-		for(WeaponType weapon : WeaponType.values()){
+		for(Weapon weapon : Weapon.values()){
 			new WeaponObject(weapon,
 			new WeaponController(p[weapon.ordinal()][0],p[weapon.ordinal()][1],1,1),
 			new WeaponRenderer());				
@@ -87,16 +88,17 @@ public class ShootingMapView extends ObjectController {
 	@Override
 	public void handleInputDown(Vector3 pos) {
 		for(WeaponController wc : weaponControllers){
-			if(wc.getObject().getBounds().contains(pos.x,pos.y)){
+			if(wc.pollBounds().contains(pos.x,pos.y)){
 					crosshair.getController().deSelect();
-					selected_weapon=(WeaponObject) wc.getObject();
-					selected_weapon.getController().select();
+					selected_weapon=(WeaponController)wc;
+					selected_weapon.select();
+					crosshair.getController().setBounds(((WeaponObject) selected_weapon.getObject()).getWeapon().getRadius());
 					break;
 					}
 					
 				}
 			for (GuiController c : guiControllers){
-				if (c.getObject().getBounds().contains(pos.x, pos.y)) {
+				if (c.pollBounds().contains(pos.x, pos.y)) {
 					if(c.equals(crosshair.getController())){
 						crosshair.getController().select();
 						break;

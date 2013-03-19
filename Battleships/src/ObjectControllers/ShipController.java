@@ -28,21 +28,7 @@ public class ShipController extends ObjectController {
 	}
 	@Override
 	public void handleInputUp(Vector3 pos) {
-		/*boolean legalmove=true;
-		for(ShipController sc:ShipPlacementView.shipControllers){
-			if(!sc.equals(this)){
-				clear_bounds = new Rectangle(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
-				sea_bounds =  new Rectangle(0,(float) (Gdx.graphics.getHeight()*0.2),Gdx.graphics.getWidth(),(float) (Gdx.graphics.getHeight()*0.6));
-				if(sc.getObject().getBounds().overlaps(clear_bounds) || !sea_bounds.contains(clear_bounds))
-					legalmove=false;
-			}
-				
-		}
 		
-		if(legalmove){
-			setPosition(new Vector3(pos));
-		}
-		*/
 	}
 
 	@Override
@@ -50,8 +36,8 @@ public class ShipController extends ObjectController {
 		boolean legalmove=true;
 		for(ShipController sc:ShipPlacementView.shipControllers){
 			if(!sc.equals(this)){
-				clear_bounds.set(pos.x-object.getBounds().getWidth()/2,pos.y-object.getBounds().getHeight()/2,object.getBounds().getWidth(),object.getBounds().getHeight());
-				if(sc.getObject().getBounds().overlaps(clear_bounds) || !sea_bounds.contains(clear_bounds))
+				clear_bounds.set(pos.x-bounds.width/2,pos.y-bounds.height/2,bounds.width,bounds.height);
+				if(sc.pollBounds().overlaps(clear_bounds) || !sea_bounds.contains(clear_bounds))
 					legalmove=false;
 				
 			}
@@ -59,7 +45,7 @@ public class ShipController extends ObjectController {
 		}
 		
 		if(legalmove){
-			setPosition(new Vector3(pos));
+			setPosition(pos);
 		}
 		
 		
