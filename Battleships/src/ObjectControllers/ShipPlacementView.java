@@ -49,9 +49,9 @@ public class ShipPlacementView extends ObjectController {
 	}
 
 	public void createShips() {
-		float values[] = {1,3,5};
+		float values[] = {12,10,8,6,4};
 		for(ShipType ship : ShipType.values()){
-			new ShipObject(ship,new ShipController(values[ship.ordinal()],8,ship.getLenght(),ship.getWidth()),new ShipRenderer());
+			new ShipObject(ship,new ShipController(3,values[ship.ordinal()],ship.getLenght(),ship.getWidth()),new ShipRenderer());
 		}
 		
 		

@@ -46,10 +46,8 @@ public class DamageCalculator{
 			radius_factor-=0.1;
 		}
 		long finalTime = System.currentTimeMillis();
-		System.out.println("Start time was "+startTime);
-		System.out.println("Final time is " + finalTime);
-		System.out.println("Algoritm took "+ (finalTime-startTime) + " milliseconds.");
 		
+		System.out.println("Algoritm took "+ (finalTime-startTime) + " milliseconds.");
 		System.out.println("Total hits "+ hits_total);
 		return hits_total;
 	}

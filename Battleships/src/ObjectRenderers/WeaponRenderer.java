@@ -31,7 +31,7 @@ public class WeaponRenderer extends ObjectRenderer {
 		animate			= false;
 		stateTime		= 0;
 		explosionSheet 	= new Texture(Gdx.files.internal("data/explosion/exp"+weapon.ordinal()+".png"));     
-		
+	
         TextureRegion[][] tmp = TextureRegion.split(explosionSheet, explosionSheet.getWidth() / 
         		4,explosionSheet.getHeight() / 4);                               
         explosionFrames = new TextureRegion[4 * 4];

@@ -11,12 +11,13 @@ public class GuiController extends ObjectController {
 
 	private Command command;
 	Rectangle map_bounds;
+	Rectangle clear_bounds;
 	
 	public GuiController(float x, float y,float w, float h,Command command){
 		super(x,y,w,h);
 		this.command=command;
 		map_bounds=new Rectangle(0,2.5f,10,10);		
-		
+		clear_bounds=new Rectangle();
 	}
 	
 	public void executeCommand(){
@@ -50,7 +51,8 @@ public class GuiController extends ObjectController {
 	@Override
 	public void handleInputDrag(Vector3 pos) {
 		boolean legalmove=true;
-		if(!map_bounds.contains(bounds))
+		clear_bounds.set(pos.x-bounds.width/2,pos.y-bounds.height/2,bounds.width,bounds.height);
+		if(!map_bounds.contains(clear_bounds))
 			legalmove=false;
 		if(legalmove){
 			setPosition(pos);

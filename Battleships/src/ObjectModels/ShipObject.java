@@ -21,24 +21,27 @@ import ObjectRenderers.WorldRenderer;
 public class ShipObject extends ModelObject{
 
 	public enum ShipType{
-		ROWBOAT(1,1,"rowboat.png"),
-		MOTORBOAT(2,1,"motorboat.png"),
-		BATTLESHIP(5,1,"battleship.png");
-		private int lenght,width,hp;
+		//Lenght, Width, sprite 
+		ASSAULTBOAT(1,1,"assaultboat.png"),
+		MOTORBOAT(1.5f,1,"hydrofoil.png"),
+		FRIGATE(2.5f,1,"frigate.png"),
+		BATTLESHIP(4,1,"battleship.png"),
+		OILER(3.5f,1.5f,"battleship.png");
+		private float lenght,width,hp;
 		private String file;
-		private ShipType(int l,int w,String f){
+		private ShipType(float l,float w,String f){
 			lenght=l;
 			width=w;
 			hp=l*w*2*1084;	//Damage is based on ship size, 1084 is the dmg done by direct hit.
 			file=f;
 		}
-		public int getHp(){
+		public float getHp(){
 			return hp;
 		}
-		public int getLenght(){
+		public float getLenght(){
 			return lenght;
 		}
-		public int getWidth(){
+		public float getWidth(){
 			return width;
 		}
 		private String getFile(){
@@ -50,7 +53,8 @@ public class ShipObject extends ModelObject{
 	
 	private float hitpoints;
 	private float maxHitpoints;
-	
+	private float hpPercentage;
+	private boolean destroyed=false;
 	
 	
 	public ShipObject(ShipType ship,ShipController controller,ShipRenderer renderer){
@@ -66,19 +70,25 @@ public class ShipObject extends ModelObject{
 		WorldObject.objects.add(this);
 		hitpoints=ship.getHp();
 		maxHitpoints=hitpoints;
+		hpPercentage=100;
 		this.renderer.addGraphics(sprite);
 	}
 
 	
 	public void dealDamage(float dmg){
 		hitpoints-=dmg;
-		System.out.println("Hitpoints left: "+(hitpoints/maxHitpoints)*100 + "%");
-		if(hitpoints<=0){
-			System.out.println("Ship Destroyed!");
+		hpPercentage=(hitpoints/maxHitpoints)*100;
+		
+		
+		if(hpPercentage<=20){
+			destroyed=true;
 			//render.drawSmoke();
 		}
 			
 		
+	}
+	public boolean isDestroyed(){
+		return destroyed;
 	}
 	
 	@Override

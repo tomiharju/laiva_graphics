@@ -18,10 +18,13 @@ public abstract class ObjectController {
 	protected boolean orientation_changed;
 	protected boolean selected;
 	protected boolean isHidden;
-	
+	protected Rectangle clear_bounds;
+	protected Rectangle area_bounds;
 	public ObjectController(float x, float y,float width, float height){
 		position = new Vector3(x,y,0);
 		bounds = new Rectangle(x - width / 2 , y - height / 2 , width, height);
+		clear_bounds = new Rectangle();
+		area_bounds=new Rectangle(0,2.5f,10,10);
 	}
 	
 	
@@ -60,13 +63,17 @@ public abstract class ObjectController {
 		return selected;
 	}
 	public void setBounds(float w,float h){
-		bounds.height=w;
-		bounds.width=h;
+		bounds.width=w;
+		bounds.height=h;
+		position.x=bounds.x+bounds.width/2;
+	    position.y=bounds.y+bounds.height/2;
 		object.getSprite().setSize(bounds.getWidth(),bounds.getHeight());
 	}
 	public void setBounds(float x){
 		bounds.height=x;
 		bounds.width=x;
+		position.x=bounds.x+bounds.width/2;
+	    position.y=bounds.y+bounds.height/2;
 		object.getSprite().setSize(bounds.getWidth(),bounds.getHeight());
 	}
 	
@@ -75,18 +82,7 @@ public abstract class ObjectController {
 	public void handleInputDown(Vector3 touchPoint){};
 	public void handleInputUp(Vector3 pos){};
 	public void handleInputDrag(Vector3 pos){};
-	public void rotate90(){
-		float temp;
-		temp = bounds.width;
-		bounds.width=bounds.height;
-		bounds.height=temp;
-		
-		Sprite sprite = object.getSprite();
-		sprite.rotate90(true);
-		sprite.setSize(bounds.width,bounds.height);
-		setPosition(position);
-		
-	}
+	public void rotate90(){};
 	
 	
 	

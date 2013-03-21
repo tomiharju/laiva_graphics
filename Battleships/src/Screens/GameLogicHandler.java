@@ -35,8 +35,8 @@ public class GameLogicHandler extends Thread{
 	}
 	
 	
-	public static void sendAttackCoordinates(Rectangle bounds,int weapontype){
-		controller.calculateDamageTaken(bounds, weapontype);
+	public static void sendAttackCoordinates(Vector3 point,int weapontype){
+		controller.calculateDamageTaken(point, weapontype);
 		//nativeConnector.sendAttackAction(pos.x,pos.y, weapontype);
 	}
 	
