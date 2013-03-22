@@ -1,7 +1,7 @@
 package Core;
 
 
-import Screens.PlayScreen;
+import GameLogic.PlayScreen;
 
 
 import com.badlogic.gdx.Game;

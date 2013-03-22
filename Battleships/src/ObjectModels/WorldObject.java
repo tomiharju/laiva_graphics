@@ -2,6 +2,7 @@ package ObjectModels;
 
 import java.util.ArrayList;
 
+import GameLogic.GameLogicHandler;
 import ObjectControllers.ShootingMapView;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipPlacementView;
@@ -13,7 +14,6 @@ import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
 
 import ObjectRenderers.WorldRenderer;
-import Screens.GameLogicHandler;
 
 public class WorldObject extends ModelObject {
 

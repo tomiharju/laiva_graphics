@@ -1,6 +1,6 @@
 package ObjectControllers;
 
-import Screens.GameLogicHandler;
+import GameLogic.GameLogicHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;

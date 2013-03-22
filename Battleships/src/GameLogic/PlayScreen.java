@@ -1,4 +1,4 @@
-package Screens;
+package GameLogic;
 
 import Core.NativeFunctions;
 import ObjectControllers.WorldController;
@@ -40,7 +40,7 @@ public class PlayScreen implements Screen, InputProcessor{
 		controller.initialize();//Required to set other controllers in worldcontroller
 			
 		logicHandler 	= new GameLogicHandler((WorldController)world.getController(),world,connector);
-		logicHandler.run();
+		
 		
 		paused			=false;
 		Gdx.input.setInputProcessor(this);

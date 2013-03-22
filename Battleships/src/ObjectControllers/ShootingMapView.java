@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import Commands.FireCommand;
 import Commands.ShowMapCommand;
 import Commands.ShowShipCommand;
+import GameLogic.GameLogicHandler;
+import GameLogic.Turn;
 import ObjectModels.GuiObject;
 import ObjectModels.ShipObject;
 
@@ -17,7 +19,6 @@ import ObjectRenderers.GuiRenderer;
 import ObjectRenderers.ShipRenderer;
 
 import ObjectRenderers.WeaponRenderer;
-import Screens.GameLogicHandler;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -44,12 +45,20 @@ public class ShootingMapView extends ObjectController {
 	}
 
 	public void fire() {
-		if (selected_weapon != null && !selected_weapon.equals(crosshair)) {
+		if (selected_weapon != null) {
 			((WeaponRenderer) selected_weapon.getObject().getRenderer())
 					.animate(crosshair.getPosition());
+			
+			Vector3 target = crosshair.getController().pollPosition();
+			int weapon = ((WeaponObject) selected_weapon.getObject()).getWeapon().ordinal();
+			
+			
+			GameLogicHandler.sendTurn(new Turn(Turn.TURN_SHOOT,target.x,target.y,weapon));
+			
+			/*
 			GameLogicHandler.sendAttackCoordinates(crosshair.getController()
 					.pollPosition(), ((WeaponObject) selected_weapon
-					.getObject()).getWeapon().ordinal());
+					.getObject()).getWeapon().ordinal());*/
 		} else
 			System.out.println("Please select a weapon");
 	}

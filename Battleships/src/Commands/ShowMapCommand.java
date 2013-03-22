@@ -1,7 +1,7 @@
 package Commands;
 
+import GameLogic.GameLogicHandler;
 import ObjectControllers.ObjectController;
-import Screens.GameLogicHandler;
 
 public class ShowMapCommand implements Command{
 	private ObjectController controller;

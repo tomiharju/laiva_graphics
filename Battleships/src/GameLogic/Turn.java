@@ -1,0 +1,29 @@
+package GameLogic;
+
+public class Turn {
+	
+	
+	public final static int TURN_READY = 0;
+	public final static int TURN_SHOOT = 1;
+	public final static int TURN_START = 2;
+	public final static int TURN_WAIT  = 3;
+	public final static int RECEIVE_RESULT = 4;
+	public final static int RECEIVE_FIRE = 5;
+	
+	public float x;
+	public float y;
+	public int weapon;
+	public int type;
+	
+	public Turn(int type,float x, float y, int weapon){
+		this.type=type;
+		this.x=x;
+		this.y=y;
+		this.weapon=weapon;
+	}
+	public Turn(int type){
+		this.type=type;
+	}
+	
+
+}
