@@ -25,8 +25,8 @@ public class ShipObject extends ModelObject{
 		ASSAULTBOAT(1,1,"assaultboat.png"),
 		MOTORBOAT(1.5f,1,"hydrofoil.png"),
 		FRIGATE(2.5f,1,"frigate.png"),
-		BATTLESHIP(4,1,"battleship.png"),
-		OILER(3.5f,1.5f,"battleship.png");
+		BATTLESHIP(5,2,"cruiser.png"),
+		OILER(3.5f,1.5f,"oiler.png");
 		private float lenght,width,hp;
 		private String file;
 		private ShipType(float l,float w,String f){

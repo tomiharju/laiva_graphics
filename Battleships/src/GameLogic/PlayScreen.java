@@ -42,7 +42,7 @@ public class PlayScreen implements Screen, InputProcessor{
 		logicHandler 	= new GameLogicHandler((WorldController)world.getController(),world,connector);
 		
 		
-		paused			=false;
+		paused			= false;
 		Gdx.input.setInputProcessor(this);
 	}
 	

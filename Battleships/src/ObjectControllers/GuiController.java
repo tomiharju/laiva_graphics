@@ -22,7 +22,7 @@ public class GuiController extends ObjectController {
 	
 	public void executeCommand(){
 		if(command!=null)
-			command.execute();
+			command.execute(this);
 	}
 	
 	

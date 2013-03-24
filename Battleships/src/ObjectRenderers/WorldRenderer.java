@@ -55,6 +55,7 @@ public class WorldRenderer extends ObjectRenderer{
 		batch.begin();
 		for(ObjectRenderer o: renderers)
 			o.draw(batch);
+		
 		batch.end();
 	
 		debugrenderer.begin(ShapeType.Rectangle);

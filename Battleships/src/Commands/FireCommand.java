@@ -2,6 +2,7 @@ package Commands;
 
 import GameLogic.GameLogicHandler;
 import GameLogic.Turn;
+import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShootingMapView;
 
@@ -11,8 +12,8 @@ public class FireCommand implements Command{
 		this.controller=controller;
 	}
 	@Override
-	public void execute() {
-		if(!GameLogicHandler.locked)
+	public void execute(GuiController c) {
+		if(!GameLogicHandler.fireButtonLocked)
 			((ShootingMapView) controller).fire();
 		
 	}

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ObjectControllers.ObjectController;
 import ObjectRenderers.ObjectRenderer;
+import ObjectRenderers.WorldRenderer;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -25,7 +27,10 @@ public abstract class ModelObject {
 	public Sprite getSprite(){
 		return sprite;
 	}
-	
+	public void dispose(){
+		WorldRenderer.renderers.remove(this.getRenderer());
+		WorldObject.objects.remove(this);
+	}
 	
 	public boolean isVisible(){
 		return visible;

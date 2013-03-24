@@ -71,6 +71,8 @@ public class ShootingMapView extends ObjectController {
 					new WeaponRenderer());
 
 		}
+		selected_weapon = weaponControllers.get(0);
+		selected_weapon.select();
 	}
 
 	public void createGuiObjects() {
@@ -94,9 +96,8 @@ public class ShootingMapView extends ObjectController {
 	@Override
 	public void handleInputDown(Vector3 pos) {
 		for (WeaponController wc : weaponControllers) {
-			wc.deSelect();
 			if (wc.pollBounds().contains(pos.x, pos.y)) {
-				crosshair.getController().deSelect();
+				selected_weapon.deSelect();
 				selected_weapon = (WeaponController) wc;
 				selected_weapon.select();
 				crosshair.getController().setBounds(
@@ -108,11 +109,6 @@ public class ShootingMapView extends ObjectController {
 		}
 		for (GuiController c : guiControllers) {
 			if (c.pollBounds().contains(pos.x, pos.y)) {
-				if (c.equals(crosshair.getController())) {
-					crosshair.getController().select();
-					break;
-				} else
-					crosshair.getController().deSelect();
 				c.executeCommand();
 				break;
 			}
@@ -126,8 +122,7 @@ public class ShootingMapView extends ObjectController {
 
 	@Override
 	public void handleInputDrag(Vector3 pos) {
-		if (crosshair.getController().isSelected())
-			crosshair.getController().handleInputDrag(pos);
+		crosshair.getController().handleInputDrag(pos);
 	}
 
 	public void hide() {

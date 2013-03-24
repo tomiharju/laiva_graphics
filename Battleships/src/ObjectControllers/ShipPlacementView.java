@@ -20,7 +20,7 @@ public class ShipPlacementView extends ObjectController {
 
 	private ShootingMapView _shootingController;
 	public static ArrayList<ShipController> shipControllers;
-	public	ArrayList<GuiController> guiControllers;
+	public ArrayList<GuiController> guiControllers;
 	private ShipController activeController;
 
 	// Gui objects
@@ -57,9 +57,9 @@ public class ShipPlacementView extends ObjectController {
 		
 	}
 
-	public void linkMapController(ObjectController cont) {
-		_shootingController = (ShootingMapView) cont;
-		_shootingController.linkSeaController(this);
+	public void removeGuiObject(GuiController obj){
+		guiControllers.remove(obj);
+		obj.getObject().dispose();
 	}
 
 	public void hide() {
@@ -88,12 +88,14 @@ public class ShipPlacementView extends ObjectController {
 
 				activeController = c;
 				c.select();
+				break;
 			}
 		
 		
 			for (GuiController c : guiControllers)
 				if (c.pollBounds().contains(pos.x, pos.y)) {
 					c.executeCommand();
+					break;
 					}
 		
 		

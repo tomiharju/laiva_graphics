@@ -37,7 +37,7 @@ public class WorldObject extends ModelObject {
 		((ShipPlacementView) shipPlacementView_o.controller).createShips();
 		((ShootingMapView) shootingMapView_o.controller).createWeapons();
 		((ShootingMapView) shootingMapView_o.controller).createGuiObjects();
-		((ShipPlacementView) shipPlacementView_o.controller).linkMapController(shootingMapView_o.controller);
+	
 
 	}
 

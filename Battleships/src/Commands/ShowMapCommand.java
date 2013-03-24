@@ -1,6 +1,7 @@
 package Commands;
 
 import GameLogic.GameLogicHandler;
+import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
 
 public class ShowMapCommand implements Command{
@@ -9,8 +10,9 @@ public class ShowMapCommand implements Command{
 		this.controller=controller;
 	}
 	@Override
-	public void execute() {
-		GameLogicHandler.lockMapView();
+	public void execute(GuiController c) {
+		if(!GameLogicHandler.mapViewLocked)
+			GameLogicHandler.lockMapView();
 		
 	}
 

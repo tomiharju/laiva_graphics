@@ -33,16 +33,17 @@ public class WeaponRenderer extends ObjectRenderer {
 		explosionSheet 	= new Texture(Gdx.files.internal("data/explosion/exp"+weapon.ordinal()+".png"));     
 	
         TextureRegion[][] tmp = TextureRegion.split(explosionSheet, explosionSheet.getWidth() / 
-        		4,explosionSheet.getHeight() / 4);                               
-        explosionFrames = new TextureRegion[4 * 4];
+        		6,explosionSheet.getHeight() / 5);     
+       
+        explosionFrames = new TextureRegion[6 * 5];
         int index = 0;
-        for (int i = 0; i <4; i++) {
-                for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 6; j++) {
                        explosionFrames[index++] = tmp[i][j];
                       
                 }
         }
-       explosionAnimation = new Animation(0.1f, explosionFrames); 
+       explosionAnimation = new Animation(0.05f, explosionFrames); 
    }
 	@Override
 	public void draw(SpriteBatch batch) {

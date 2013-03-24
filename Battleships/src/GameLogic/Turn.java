@@ -7,13 +7,14 @@ public class Turn {
 	public final static int TURN_SHOOT = 1;
 	public final static int TURN_START = 2;
 	public final static int TURN_WAIT  = 3;
-	public final static int RECEIVE_RESULT = 4;
-	public final static int RECEIVE_FIRE = 5;
+	public final static int TURN_RESULT = 4;
+	public final static int TURN_BEGINNING = 5;
 	
 	public float x;
 	public float y;
 	public int weapon;
 	public int type;
+	public float[][] hits;
 	
 	public Turn(int type,float x, float y, int weapon){
 		this.type=type;
@@ -23,6 +24,9 @@ public class Turn {
 	}
 	public Turn(int type){
 		this.type=type;
+	}
+	public Turn(float[][] hits){
+		this.hits=hits;
 	}
 	
 

@@ -1,6 +1,7 @@
 package Commands;
 
 import GameLogic.GameLogicHandler;
+import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
 
 public class ShowShipCommand implements Command{
@@ -9,8 +10,9 @@ public class ShowShipCommand implements Command{
 		this.controller=controller;
 	}
 	@Override
-	public void execute() {
-		GameLogicHandler.lockShipView();
+	public void execute(GuiController c) {
+		if(!GameLogicHandler.shipViewLocked)
+			GameLogicHandler.lockShipView();
 		
 	}
 }
