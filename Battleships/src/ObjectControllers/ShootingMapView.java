@@ -46,28 +46,19 @@ public class ShootingMapView extends ObjectController {
 
 	public void fire() {
 		if (selected_weapon != null) {
-			((WeaponRenderer) selected_weapon.getObject().getRenderer())
-					.animate(crosshair.getPosition());
-			
 			Vector3 target = crosshair.getController().pollPosition();
 			int weapon = ((WeaponObject) selected_weapon.getObject()).getWeapon().ordinal();
-			
-			
 			GameLogicHandler.sendTurn(new Turn(Turn.TURN_SHOOT,target.x,target.y,weapon));
 			
-			/*
-			GameLogicHandler.sendAttackCoordinates(crosshair.getController()
-					.pollPosition(), ((WeaponObject) selected_weapon
-					.getObject()).getWeapon().ordinal());*/
 		} else
 			System.out.println("Please select a weapon");
 	}
 
 	public void createWeapons() {
-		float[][] p = { { 1, 14 }, { 2, 14 }, { 3, 14 }, { 4, 14 }, { 5, 14 } };
+		float[][] p = { { 1, 14 }, { 3, 14 }, { 5, 14 }, { 7, 14 }, { 9, 14 } };
 		for (Weapon weapon : Weapon.values()) {
 			new WeaponObject(weapon, new WeaponController(
-					p[weapon.ordinal()][0], p[weapon.ordinal()][1], 1, 1),
+					p[weapon.ordinal()][0], p[weapon.ordinal()][1], 2, 2f),
 					new WeaponRenderer());
 
 		}

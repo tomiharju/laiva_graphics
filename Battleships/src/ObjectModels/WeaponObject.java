@@ -11,32 +11,33 @@ import ObjectControllers.ObjectController;
 import ObjectControllers.ShipController;
 import ObjectControllers.WeaponController;
 import ObjectRenderers.ObjectRenderer;
+import ObjectRenderers.ProjectileRenderer;
 import ObjectRenderers.ShipRenderer;
 import ObjectRenderers.WeaponRenderer;
 import ObjectRenderers.WorldRenderer;
 
 public class WeaponObject extends ModelObject {
 	
+	
+
+	
 	public enum Weapon{
-		CANNON("30mmHE.png",0.5f),			//0 Grenade, radius of 5m x 5m
-		MISSILE("missile.png",1.0f),		//1 Homing missile, moves 2unit towards closest ship
-		MORTAR("missile.png",1.0f),			//2 Launches a cluster of mortars 
-		NAVALGUN("missile.png",1.5f),		//3 Massive shell fired from big battleships
-		PHALANX("missile.png",0.5f);		//4 Gattling gun, fires multiple small rounds at an area
+		CANNON(0.5f),			//0 Grenade, radius of 5m x 5m
+		MISSILE(1.0f),		//1 Homing missile, moves 2unit towards closest ship
+		MORTAR(1.0f),			//2 Launches a cluster of mortars 
+		NAVALGUN(1.5f),		//3 Massive shell fired from big battleships
+		PHALANX(0.5f);		//4 Gattling gun, fires multiple small rounds at an area
 		
-		private String file;
+		
 		private float radius;
 		
 		
-		private Weapon(String f,float r){
-			file=f;
+		private Weapon(float r){
 			radius=r;
 		}
-		private String getFile(){
-			return file;
-		}
+		
 		public float getRadius(){
-			return radius;
+			return radius/2;
 		}
 	
 		
@@ -51,14 +52,14 @@ public class WeaponObject extends ModelObject {
 		position 		= controller.pollPosition();
 		bounds 			= controller.pollBounds();
 		
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/weapons/"+weapon.getFile())));
+		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/weapons/w"+weapon.ordinal()+".png")));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
 	
 		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
 		this.weapon=weapon;
-		((WeaponRenderer) renderer).createAnimation(weapon);
+		
 	}
 	
 	public Weapon getWeapon(){

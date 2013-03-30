@@ -15,7 +15,7 @@ public class GameLogicHandler extends Thread {
 
 	private static WorldObject world;
 	private static WorldController controller;
-	private NativeFunctions nativeConnector;
+	private static NativeFunctions nativeConnector;
 
 	public static int state;
 	public static boolean shipViewLocked;
@@ -28,14 +28,14 @@ public class GameLogicHandler extends Thread {
 		this.nativeConnector = con;
 		this.world = w;
 		this.controller = c;
-		
+		nativeConnector.setLogicHandler(this);
 		state = Turn.TURN_BEGINNING;
 		runStateMachine();
 
 	}
 
 	public static void runStateMachine() {
-		System.out.println(state);
+		
 		switch (state) {
 		// Ship placement phase
 		case Turn.TURN_BEGINNING: { 	//Lock to ship view while placing ships.
@@ -61,10 +61,12 @@ public class GameLogicHandler extends Thread {
 		case Turn.TURN_READY:{			//Once you have finished placing ships, lock view and wait for other player
 			shipViewLocked=true;
 			mapViewLocked=true;
+			break;
 		}
 		case Turn.TURN_RESULT:{			//Send damage result to opponent and start a new turn.
 			state=Turn.TURN_START;
 			runStateMachine();
+			break;
 		}
 		}
 
@@ -88,8 +90,7 @@ public class GameLogicHandler extends Thread {
 			float x = turn.x;
 			float y = turn.y;
 			int weapon = turn.weapon;
-			//Controller.drawExplosion()
-			//Controller.calculateDamagetaken();
+			controller.calculateDamageTaken(new Vector3(x,y,0),weapon);
 			break;
 		}
 		case Turn.TURN_RESULT: {
@@ -107,8 +108,9 @@ public class GameLogicHandler extends Thread {
 	}
 
 	public static void sendTurn(Turn turn) {
-		// nativeConnector.sendTurn(turn);
+		nativeConnector.sendTurn(turn);
 		state = turn.type;
+		System.out.println(state);
 		runStateMachine();
 	}
 

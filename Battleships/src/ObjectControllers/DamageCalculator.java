@@ -9,24 +9,31 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import ObjectModels.ShipObject;
+import ObjectModels.WeaponObject;
+import ObjectModels.WeaponObject.Weapon;
+import ObjectRenderers.ShipRenderer;
+import ObjectRenderers.WeaponRenderer;
 
 
 public class DamageCalculator{
 
-
+	ShipObject ship;
+	WeaponObject weapon;
 	Rectangle ship_bounds;
 	float hits_total;
 	Vector3 center,hit_marker;
 	long startTime;
-	boolean running;
 	float radius;
 	
 	
-	public DamageCalculator(Vector3 point,float radius,ShipObject ship){
-		this.radius = radius;
+	public DamageCalculator(Vector3 point,WeaponObject weapon,ShipObject ship){
+		this.weapon = weapon;
+		this.radius = weapon.getWeapon().getRadius();
+		this.ship	= ship;
 		ship_bounds	= new Rectangle(ship.getController().pollBounds());
 		center 		= new Vector3(point);
 		hit_marker 	= new Vector3();
+	
 	}
 	
 	public float run() {
@@ -39,12 +46,14 @@ public class DamageCalculator{
 				float y = (float) (center.y+Math.sin(Math.toRadians(a))*radius_factor);
 			
 				hit_marker.set(x, y, 0);
-				if(ship_bounds.contains(hit_marker.x,hit_marker.y))
-						hits_total++;
+				if(ship_bounds.contains(hit_marker.x,hit_marker.y)){
+					hits_total++;
+				}
 				
 			}
 			radius_factor-=0.1;
 		}
+		
 		long finalTime = System.currentTimeMillis();
 		
 		System.out.println("Algoritm took "+ (finalTime-startTime) + " milliseconds.");

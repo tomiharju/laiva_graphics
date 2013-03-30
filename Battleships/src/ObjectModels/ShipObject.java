@@ -16,6 +16,7 @@ import ObjectControllers.ShipPlacementView;
 import ObjectControllers.ShipController;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.ShipRenderer;
+import ObjectRenderers.WeaponRenderer;
 import ObjectRenderers.WorldRenderer;
 
 public class ShipObject extends ModelObject{
@@ -72,6 +73,7 @@ public class ShipObject extends ModelObject{
 		maxHitpoints=hitpoints;
 		hpPercentage=100;
 		this.renderer.addGraphics(sprite);
+	
 	}
 
 	

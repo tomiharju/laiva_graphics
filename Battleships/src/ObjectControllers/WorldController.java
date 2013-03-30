@@ -8,10 +8,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import ObjectModels.ProjectileObject;
 import ObjectModels.ShipObject;
 import ObjectModels.WeaponObject;
 import ObjectModels.WeaponObject.Weapon;
 import ObjectModels.WorldObject;
+import ObjectRenderers.ProjectileRenderer;
 
 public class WorldController extends ObjectController {
 
@@ -59,32 +61,35 @@ public class WorldController extends ObjectController {
 	}
 
 	public void calculateDamageTaken(Vector3 point, int weapon_type) {
-
-		float radius = 0;
-		int tester=0;
+		WeaponObject weapon = (WeaponObject) ShootingMapView.weaponControllers.get(weapon_type).getObject();
+		float radius =  weapon.getWeapon().getRadius();
+		
 		switch (weapon_type) {
-
+		//HE Grenade
 		case 0: {
-			radius = 0.25f;
+			System.out.println("Shooting Grenade");
+			ProjectileObject projectile = new ProjectileObject(new ProjectileController(5,15f,1,1.5f), new ProjectileRenderer(), weapon_type);
+			projectile.setTarget(point);
+			
 			for (ShipController ship : getShipsInRange(point, radius)) {
 				((ShipObject) ship.getObject())
-						.dealDamage(new DamageCalculator(point, radius,
+						.dealDamage(new DamageCalculator(point, weapon,
 								(ShipObject) ship.getObject()).run());
-				tester++;
+				
 			}
-			System.out.println("Ships hit "+tester);
+		
 			break;
-			// HE Grenade
+			
 		}
 		case 1: {
 			radius = .5f;
 			for (ShipController ship : getShipsInRange(point, radius)) {
 				((ShipObject) ship.getObject())
-						.dealDamage(new DamageCalculator(point, radius,
+						.dealDamage(new DamageCalculator(point, weapon,
 								(ShipObject) ship.getObject()).run());
-				tester++;
+			
 			}
-			System.out.println("Ships hit "+tester);
+		
 			// Homing missile
 			// Get closest ship, direct missile towards that ship 1unit,
 			// calculate dmg done.
@@ -129,6 +134,7 @@ public class WorldController extends ObjectController {
 					}
 				}
 		}
+		
 		return ships_hit;
 
 	}

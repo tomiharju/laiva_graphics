@@ -20,6 +20,7 @@ public abstract class ObjectController {
 	protected boolean isHidden;
 	protected Rectangle clear_bounds;
 	protected Rectangle area_bounds;
+	
 	public ObjectController(float x, float y,float width, float height){
 		position = new Vector3(x,y,0);
 		bounds = new Rectangle(x - width / 2 , y - height / 2 , width, height);
