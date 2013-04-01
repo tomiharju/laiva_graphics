@@ -23,17 +23,14 @@ public class GuiObject extends ModelObject {
 		position 		= controller.pollPosition();
 		bounds 			= controller.pollBounds();
 		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/guiobjects/"+file)));
+		
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
 	
 		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
 	}
-	@Override
-	public void update() {
-		
-		
-	}
+	
 
 	@Override
 	public void setController(ObjectController controller) {
@@ -47,6 +44,13 @@ public class GuiObject extends ModelObject {
 		this.renderer=(GuiRenderer)renderer;
 		this.renderer.setObject(this);
 		
+		
+	}
+
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
 		
 	}
 

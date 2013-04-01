@@ -93,10 +93,7 @@ public class ShipObject extends ModelObject{
 		return destroyed;
 	}
 	
-	@Override
-	public void update() {
-		
-	}
+
 
 	@Override
 	public void setController(ObjectController controller) {
@@ -110,6 +107,13 @@ public class ShipObject extends ModelObject{
 		this.renderer=(ShipRenderer)renderer;
 		this.renderer.setObject(this);
 	
+		
+	}
+
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
 		
 	}
 

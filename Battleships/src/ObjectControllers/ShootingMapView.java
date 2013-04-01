@@ -8,6 +8,7 @@ import Commands.ShowShipCommand;
 import GameLogic.GameLogicHandler;
 import GameLogic.Turn;
 import ObjectModels.GuiObject;
+import ObjectModels.ProjectileObject;
 import ObjectModels.ShipObject;
 
 import ObjectModels.ModelObject;
@@ -16,6 +17,7 @@ import ObjectModels.ShipObject.ShipType;
 import ObjectModels.WeaponObject.Weapon;
 
 import ObjectRenderers.GuiRenderer;
+import ObjectRenderers.ProjectileRenderer;
 import ObjectRenderers.ShipRenderer;
 
 import ObjectRenderers.WeaponRenderer;
@@ -28,7 +30,7 @@ public class ShootingMapView extends ObjectController {
 	public static ArrayList<WeaponController> weaponControllers;
 	public ArrayList<GuiController> guiControllers;
 	private ShipPlacementView _placementController;
-
+	public static ArrayList<ProjectileObject> projectileControllers;
 	private WeaponController selected_weapon;
 
 	// Gui objects
@@ -40,6 +42,7 @@ public class ShootingMapView extends ObjectController {
 		super(x, y, w, h);
 		weaponControllers = new ArrayList<WeaponController>();
 		guiControllers = new ArrayList<GuiController>();
+		projectileControllers = new ArrayList<ProjectileObject>();
 		crosshair = null;
 
 	}
@@ -60,7 +63,7 @@ public class ShootingMapView extends ObjectController {
 			new WeaponObject(weapon, new WeaponController(
 					p[weapon.ordinal()][0], p[weapon.ordinal()][1], 2, 2f),
 					new WeaponRenderer());
-
+			new ProjectileObject(new ProjectileController(5,15,1,1.5f),new ProjectileRenderer(),weapon.ordinal());
 		}
 		selected_weapon = weaponControllers.get(0);
 		selected_weapon.select();
@@ -69,12 +72,12 @@ public class ShootingMapView extends ObjectController {
 	public void createGuiObjects() {
 		button_fire = new GuiObject(new GuiController(5, 1.5f, 1.5f, 1.5f,
 				new FireCommand(this)), new GuiRenderer(), "button_fire.png");
-
-		arrow_left = new GuiObject(new GuiController(2, 1.5f, 1.5f, 1.5f,
-				new ShowShipCommand(this)), new GuiRenderer(), "arrow_left.png");
 		crosshair = new GuiObject(new GuiController(4f, 5f, 1f, 1f, null),
 				new GuiRenderer(), "crosshair.png");
-
+		arrow_left = new GuiObject(new GuiController(2, 1.5f, 1.5f, 1.5f,
+				new ShowShipCommand(this)), new GuiRenderer(), "arrow_left.png");
+	
+		
 		guiControllers.add((GuiController) button_fire.getController());
 		guiControllers.add((GuiController) arrow_left.getController());
 		guiControllers.add((GuiController) crosshair.getController());

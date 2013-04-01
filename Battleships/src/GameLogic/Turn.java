@@ -25,7 +25,7 @@ public class Turn {
 	public Turn(int type){
 		this.type=type;
 	}
-	public Turn(float[][] hits){
+	public Turn(int type, float[][] hits){
 		this.hits=hits;
 	}
 	

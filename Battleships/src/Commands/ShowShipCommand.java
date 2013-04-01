@@ -11,8 +11,10 @@ public class ShowShipCommand implements Command{
 	}
 	@Override
 	public void execute(GuiController c) {
-		if(!GameLogicHandler.shipViewLocked)
+		
+		if(!GameLogicHandler.shipViewLocked){
 			GameLogicHandler.lockShipView();
+		}
 		
 	}
 }

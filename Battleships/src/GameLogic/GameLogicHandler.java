@@ -35,36 +35,44 @@ public class GameLogicHandler extends Thread {
 	}
 
 	public static void runStateMachine() {
-		
+	
 		switch (state) {
 		// Ship placement phase
 		case Turn.TURN_BEGINNING: { 	//Lock to ship view while placing ships.
 			lockShipView();
+			mapViewLocked=true;
+			System.out.println("Current state: Beginning");
 			break;
 		}
 		
 		case Turn.TURN_START: {			//Lock players view to map and allow firing.
 			lockMapView();
+			shipViewLocked=true;
 			fireButtonLocked=false;
+			System.out.println("Current state: Start");
 			break;
 		}
 		case Turn.TURN_WAIT: {			//If opponent starts the game, allow player to freely change views but lock fire button.
 			shipViewLocked=false;
 			mapViewLocked=false;
 			fireButtonLocked=true;
+			System.out.println("Current state: Wait");
 			break;
 		}
 		case Turn.TURN_SHOOT:{			//After shooting, lock fire button to avoid spamming
 			fireButtonLocked=true;
+			System.out.println("Current state: Shoot");
 			break;
 		}
 		case Turn.TURN_READY:{			//Once you have finished placing ships, lock view and wait for other player
 			shipViewLocked=true;
 			mapViewLocked=true;
+			System.out.println("Current state: Ready");
 			break;
 		}
 		case Turn.TURN_RESULT:{			//Send damage result to opponent and start a new turn.
-			state=Turn.TURN_START;
+			state=Turn.TURN_WAIT;
+			System.out.println("Current state: Result");
 			runStateMachine();
 			break;
 		}
@@ -76,16 +84,19 @@ public class GameLogicHandler extends Thread {
 
 		switch (turn.type) {
 		case Turn.TURN_START: {
+			System.out.println("Receiving turn: Start");
 			state=Turn.TURN_START;
 			runStateMachine();
 			break;
 		}
 		case Turn.TURN_WAIT: {
+			System.out.println("Receiving turn: Wait");
 			state=Turn.TURN_WAIT;
 			runStateMachine();
 			break;
 		}
 		case Turn.TURN_SHOOT:{
+			System.out.println("Receiving turn: Shoot");
 			lockShipView();
 			float x = turn.x;
 			float y = turn.y;
@@ -94,6 +105,7 @@ public class GameLogicHandler extends Thread {
 			break;
 		}
 		case Turn.TURN_RESULT: {
+			System.out.println("Receiving turn: Result");
 			state=Turn.TURN_WAIT;
 			runStateMachine();
 			//World.getRenderer.addHitMarker();
@@ -110,25 +122,18 @@ public class GameLogicHandler extends Thread {
 	public static void sendTurn(Turn turn) {
 		nativeConnector.sendTurn(turn);
 		state = turn.type;
-		System.out.println(state);
 		runStateMachine();
 	}
 
-	public static void sendAttackCoordinates(Vector3 point, int weapontype) {
-		controller.calculateDamageTaken(point, weapontype);
-		// nativeConnector.sendAttackAction(pos.x,pos.y, weapontype);
-	}
-
+	
 
 
 	public static void lockShipView() {
 		controller.lockToShipView();
-		mapViewLocked=true;
-	}
+		}
 
 	public static void lockMapView() {
 		controller.lockToMapView();
-		shipViewLocked=true;
 	}
 
 

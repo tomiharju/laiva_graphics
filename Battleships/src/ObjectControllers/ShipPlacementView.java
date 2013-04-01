@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Commands.ReadyCommand;
 import Commands.ShowMapCommand;
 import ObjectModels.GuiObject;
+import ObjectModels.ProjectileObject;
 import ObjectModels.ShipObject;
 
 import ObjectModels.ShipObject.ShipType;
@@ -21,6 +22,7 @@ public class ShipPlacementView extends ObjectController {
 	private ShootingMapView _shootingController;
 	public static ArrayList<ShipController> shipControllers;
 	public ArrayList<GuiController> guiControllers;
+	
 	private ShipController activeController;
 
 	// Gui objects
@@ -33,6 +35,7 @@ public class ShipPlacementView extends ObjectController {
 		super(x,y,w,h);
 		shipControllers 	= new ArrayList<ShipController>();
 		guiControllers 		= new ArrayList<GuiController>();
+	
 		activeController 	= null;
 		
 	

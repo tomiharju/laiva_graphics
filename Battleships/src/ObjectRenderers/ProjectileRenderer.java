@@ -31,7 +31,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 		
 		animate			= false;
 		stateTime		= 0;
-		explosionSheet 	= new Texture(Gdx.files.internal("data/explosion/exp4.png"));     
+		explosionSheet 	= new Texture(Gdx.files.internal("data/explosion/exp0.png"));     
 	
         TextureRegion[][] tmp = TextureRegion.split(explosionSheet, explosionSheet.getWidth() / 
         		6,explosionSheet.getHeight() / 5);     
@@ -45,6 +45,7 @@ public class ProjectileRenderer extends ObjectRenderer {
                 }
         }
        explosionAnimation = new Animation(0.05f, explosionFrames); 
+     
    }
 	
 	
@@ -61,7 +62,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 			batch.draw(currentFrame,(animPos.x-1f),(animPos.y-1f),2,2);
 			if(explosionAnimation.isAnimationFinished(stateTime)){
 				animate=false;
-				//object.dispose();
+				
 			}
 		}
 	}
@@ -75,7 +76,6 @@ public class ProjectileRenderer extends ObjectRenderer {
 		animate=true;
 		stateTime=0;
 		animPos=pos;
-		System.out.println("Drawing explosion");
 	}
 
 }

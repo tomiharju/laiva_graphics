@@ -1,7 +1,6 @@
 package Commands;
 
 import GameLogic.GameLogicHandler;
-import GameLogic.Turn;
 import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShootingMapView;

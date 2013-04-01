@@ -1,19 +1,18 @@
 package ObjectControllers;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import GameLogic.GameLogicHandler;
+import GameLogic.Turn;
 import ObjectModels.ProjectileObject;
 import ObjectModels.ShipObject;
 import ObjectModels.WeaponObject;
-import ObjectModels.WeaponObject.Weapon;
 import ObjectModels.WorldObject;
 import ObjectRenderers.ProjectileRenderer;
+import ObjectRenderers.ShipRenderer;
 
 public class WorldController extends ObjectController {
 
@@ -23,6 +22,7 @@ public class WorldController extends ObjectController {
 	private ShipPlacementView shipView;
 	private ShootingMapView mapView;
 	private ObjectController active_view;
+
 
 	public WorldController(float x, float y, float w, float h) {
 		super(x, y, w, h);
@@ -38,6 +38,8 @@ public class WorldController extends ObjectController {
 		shipView.show();
 		mapView.hide();
 		state = 1;
+		
+		
 	}
 
 	public void lockToShipView() {
@@ -63,13 +65,13 @@ public class WorldController extends ObjectController {
 	public void calculateDamageTaken(Vector3 point, int weapon_type) {
 		WeaponObject weapon = (WeaponObject) ShootingMapView.weaponControllers.get(weapon_type).getObject();
 		float radius =  weapon.getWeapon().getRadius();
-		
+		((ProjectileObject) mapView.projectileControllers.get(weapon_type)).setTarget(point);
+	
 		switch (weapon_type) {
 		//HE Grenade
 		case 0: {
 			System.out.println("Shooting Grenade");
-			ProjectileObject projectile = new ProjectileObject(new ProjectileController(5,15f,1,1.5f), new ProjectileRenderer(), weapon_type);
-			projectile.setTarget(point);
+			
 			
 			for (ShipController ship : getShipsInRange(point, radius)) {
 				((ShipObject) ship.getObject())
@@ -107,14 +109,9 @@ public class WorldController extends ObjectController {
 			// Phalanx CIWS
 			break;
 		}
-
-			
-			
-				
-
-			
 		}
-
+		
+		GameLogicHandler.sendTurn((new Turn(Turn.TURN_RESULT)));
 	}
 
 	public Set<ShipController> getShipsInRange(Vector3 pos, float radius) {

@@ -11,6 +11,7 @@ public class ShowMapCommand implements Command{
 	}
 	@Override
 	public void execute(GuiController c) {
+		
 		if(!GameLogicHandler.mapViewLocked)
 			GameLogicHandler.lockMapView();
 		
