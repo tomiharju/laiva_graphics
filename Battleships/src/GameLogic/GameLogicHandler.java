@@ -30,6 +30,7 @@ public class GameLogicHandler extends Thread {
 		this.world = w;
 		this.controller = c;
 		nativeConnector.setLogicHandler(this);
+		nativeConnector.connect();
 		state = Turn.TURN_BEGINNING;
 		runStateMachine();
 
