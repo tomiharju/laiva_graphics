@@ -65,8 +65,8 @@ public class WorldController extends ObjectController {
 	public void calculateDamageTaken(Vector3 point, int weapon_type) {
 		WeaponObject weapon = (WeaponObject) ShootingMapView.weaponControllers.get(weapon_type).getObject();
 		float radius =  weapon.getWeapon().getRadius();
-		((ProjectileObject) mapView.projectileControllers.get(weapon_type)).setTarget(point);
-	
+		
+		new ProjectileObject(new ProjectileController(5f,12.5f,1f,1.5f),new ProjectileRenderer(),weapon_type).setTarget(point);
 		switch (weapon_type) {
 		//HE Grenade
 		case 0: {
@@ -111,7 +111,7 @@ public class WorldController extends ObjectController {
 		}
 		}
 		
-		GameLogicHandler.sendTurn((new Turn(Turn.TURN_RESULT)));
+		GameLogicHandler.sendResult((new Turn(Turn.TURN_RESULT)));
 	}
 
 	public Set<ShipController> getShipsInRange(Vector3 pos, float radius) {

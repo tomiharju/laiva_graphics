@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import Core.AssetStorage;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipController;
 import ObjectControllers.WeaponController;
@@ -52,7 +53,7 @@ public class WeaponObject extends ModelObject {
 		position 		= controller.pollPosition();
 		bounds 			= controller.pollBounds();
 		
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/weapons/w"+weapon.ordinal()+".png")));
+		sprite 			= new Sprite(AssetStorage.manager.get("data/weapons/w"+weapon.ordinal()+".png",Texture.class));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
 	

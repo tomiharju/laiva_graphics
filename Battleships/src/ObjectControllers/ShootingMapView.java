@@ -30,7 +30,6 @@ public class ShootingMapView extends ObjectController {
 	public static ArrayList<WeaponController> weaponControllers;
 	public ArrayList<GuiController> guiControllers;
 	private ShipPlacementView _placementController;
-	public static ArrayList<ProjectileObject> projectileControllers;
 	private WeaponController selected_weapon;
 
 	// Gui objects
@@ -42,7 +41,6 @@ public class ShootingMapView extends ObjectController {
 		super(x, y, w, h);
 		weaponControllers = new ArrayList<WeaponController>();
 		guiControllers = new ArrayList<GuiController>();
-		projectileControllers = new ArrayList<ProjectileObject>();
 		crosshair = null;
 
 	}
@@ -51,7 +49,7 @@ public class ShootingMapView extends ObjectController {
 		if (selected_weapon != null) {
 			Vector3 target = crosshair.getController().pollPosition();
 			int weapon = ((WeaponObject) selected_weapon.getObject()).getWeapon().ordinal();
-			GameLogicHandler.sendTurn(new Turn(Turn.TURN_SHOOT,target.x,target.y,weapon));
+			GameLogicHandler.sendShoot(new Turn(Turn.TURN_SHOOT,target.x,target.y,weapon));
 			
 		} else
 			System.out.println("Please select a weapon");

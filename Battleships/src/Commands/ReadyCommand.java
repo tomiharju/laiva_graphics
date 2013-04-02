@@ -15,7 +15,7 @@ public class ReadyCommand implements Command{
 	@Override
 	public void execute(GuiController c) {
 		((ShipPlacementView) controller).removeGuiObject(c);
-		GameLogicHandler.sendTurn(new Turn(Turn.TURN_READY));
+		GameLogicHandler.sendReady(new Turn(Turn.TURN_READY));
 		
 	}
 

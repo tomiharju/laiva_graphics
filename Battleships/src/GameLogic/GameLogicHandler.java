@@ -119,9 +119,19 @@ public class GameLogicHandler extends Thread {
 		}
 	}
 
-	public static void sendTurn(Turn turn) {
-		nativeConnector.sendTurn(turn);
-		state = turn.type;
+	public static void sendReady(Turn t) {
+		nativeConnector.sendReady(t);
+		state = t.type;
+		runStateMachine();
+	}
+	public static void sendShoot(Turn t){
+		nativeConnector.sendShoot(t);
+		state = t.type;
+		runStateMachine();
+	}
+	public static void sendResult(Turn t){
+		nativeConnector.sendResult(t);
+		state = t.type;
 		runStateMachine();
 	}
 
@@ -134,6 +144,9 @@ public class GameLogicHandler extends Thread {
 
 	public static void lockMapView() {
 		controller.lockToMapView();
+	}
+	public static void disconnect(){
+		nativeConnector.disconnect();
 	}
 
 

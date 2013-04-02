@@ -34,7 +34,7 @@ public class LoadingScreen implements Screen{
 		         Gdx.files.internal("data/font.png"), false);
 		charSequence = new StringBuilder();
 		charSequence.append(String.valueOf(percentLoaded));
-		//font.setScale(0.05f);
+		font.setScale(0.05f);
 		
 		cam.position.set(VIEWPORT_WIDTH / 2,VIEWPORT_HEIGHT / 2,0);
 		AssetStorage.manager.load("data/LoadingScreen.png",Texture.class);
@@ -49,6 +49,7 @@ public class LoadingScreen implements Screen{
 		loadBackgrounds();
 		loadExplosion();
 		loadShips();
+		loadWeapons();
 		loadGuiObjects();
 		
 	}
@@ -105,12 +106,7 @@ public class LoadingScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0f,.0f,.0f,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT );
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		percentLoaded = (float) Math.ceil(AssetStorage.manager.getProgress()*10);
 		charSequence.delete(0,charSequence.length());
 		

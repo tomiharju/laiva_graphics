@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import Core.AssetStorage;
 import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
 import ObjectRenderers.GuiRenderer;
@@ -22,7 +23,7 @@ public class GuiObject extends ModelObject {
 		
 		position 		= controller.pollPosition();
 		bounds 			= controller.pollBounds();
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/guiobjects/"+file)));
+		sprite 			= new Sprite(AssetStorage.manager.get("data/guiobjects/"+file,Texture.class));
 		
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);

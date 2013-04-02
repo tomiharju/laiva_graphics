@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
+import Core.AssetStorage;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ProjectileController;
 import ObjectControllers.ShipPlacementView;
@@ -24,12 +25,12 @@ public class ProjectileObject extends ModelObject{
 		position 		= controller.pollPosition();
 		bounds 			= controller.pollBounds();
 		
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/weapons/w"+weaponType+".png")));
+		sprite 			= new Sprite(AssetStorage.manager.get("data/weapons/w"+weaponType+".png",Texture.class));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
 		
 		WorldObject.objects.add(this);
-		ShootingMapView.projectileControllers.add(this);
+		
 		this.renderer.addGraphics(sprite);
 		((ProjectileRenderer) this.renderer).createAnimation(0);
 		visible=false;

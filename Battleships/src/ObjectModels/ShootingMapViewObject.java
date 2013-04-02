@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import Core.AssetStorage;
 import ObjectControllers.ShootingMapView;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipController;
@@ -24,7 +25,7 @@ public class ShootingMapViewObject extends ModelObject{
 		bounds 			= controller.pollBounds();
 		
 		
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/radarTextureRippled.png")));
+		sprite 			= new Sprite(AssetStorage.manager.get("data/radarTexture.png",Texture.class));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
 	

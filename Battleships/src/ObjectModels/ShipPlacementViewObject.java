@@ -1,5 +1,6 @@
 package ObjectModels;
 
+import Core.AssetStorage;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipPlacementView;
 import ObjectControllers.ShipController;
@@ -25,7 +26,7 @@ public class ShipPlacementViewObject extends ModelObject {
 		position 		= controller.pollPosition();
 		bounds 			= controller.pollBounds();
 		
-		sprite 			= new Sprite(new Texture(Gdx.files.internal("data/waterTexture.jpg")));
+		sprite 			= new Sprite(AssetStorage.manager.get("data/waterTexture.png",Texture.class));
 		sprite.setSize(bounds.getWidth(),bounds.getHeight());
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
 	
