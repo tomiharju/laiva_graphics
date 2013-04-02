@@ -1,5 +1,6 @@
 package ObjectRenderers;
 
+import GameLogic.GameLogicHandler;
 import ObjectModels.WeaponObject.Weapon;
 
 import com.badlogic.gdx.Gdx;
@@ -62,6 +63,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 			batch.draw(currentFrame,(animPos.x-1f),(animPos.y-1f),2,2);
 			if(explosionAnimation.isAnimationFinished(stateTime)){
 				animate=false;
+				GameLogicHandler.runStateMachine();
 				
 			}
 		}

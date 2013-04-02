@@ -104,6 +104,8 @@ public class GameLogicHandler extends Thread {
 			float y = turn.y;
 			int weapon = turn.weapon;
 			controller.calculateDamageTaken(new Vector3(x,y,0),weapon);
+			state=turn.TURN_START;
+			
 			break;
 		}
 		case Turn.TURN_RESULT: {
