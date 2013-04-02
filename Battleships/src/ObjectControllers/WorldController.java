@@ -131,7 +131,7 @@ public class WorldController extends ObjectController {
 							* radius);
 					hitIndicator.set(x, y, 0);
 					if (sc.pollBounds()
-							.contains(hitIndicator.x, hitIndicator.y)) {
+							.contains(hitIndicator.x, hitIndicator.y) && !ships_hit.contains(sc)) {
 						ships_hit.add(sc);
 						result.add(new Vector2(hitIndicator.x,hitIndicator.y));
 					}
