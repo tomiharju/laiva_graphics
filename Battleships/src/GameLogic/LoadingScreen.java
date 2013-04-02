@@ -1,8 +1,8 @@
 package GameLogic;
 
-import Core.AssetStorage;
 import Core.Main;
 import ObjectRenderers.ObjectRenderer;
+import Utilities.AssetStorage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

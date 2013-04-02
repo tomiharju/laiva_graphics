@@ -1,29 +1,33 @@
 package ObjectControllers;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import GameLogic.GameLogicHandler;
-import GameLogic.Turn;
 import ObjectModels.ProjectileObject;
 import ObjectModels.ShipObject;
 import ObjectModels.WeaponObject;
 import ObjectModels.WorldObject;
 import ObjectRenderers.ProjectileRenderer;
 import ObjectRenderers.ShipRenderer;
+import Utilities.DamageCalculator;
+import Utilities.Turn;
 
 public class WorldController extends ObjectController {
 
-	int state;
+	
 	private final int SHIP_VIEW = 1;
 	private final int MAP_VIEW = 2;
 	private ShipPlacementView shipView;
 	private ShootingMapView mapView;
 	private ObjectController active_view;
-
-
+	private ArrayList<Vector2> result;
+	Set<ShipController> ships_hit; 
 	public WorldController(float x, float y, float w, float h) {
 		super(x, y, w, h);
 
@@ -37,8 +41,9 @@ public class WorldController extends ObjectController {
 		active_view = shipView;
 		shipView.show();
 		mapView.hide();
-		state = 1;
 		
+		ships_hit 	= new HashSet<ShipController>();
+		result 		= new ArrayList<Vector2>();
 		
 	}
 
@@ -71,11 +76,10 @@ public class WorldController extends ObjectController {
 		//HE Grenade
 		case 0: {
 			System.out.println("Shooting Grenade");
-			
-			
-			for (ShipController ship : getShipsInRange(point, radius)) {
+			getShipsInRange(point,radius);
+			for (ShipController ship : ships_hit ) {
 				((ShipObject) ship.getObject())
-						.dealDamage(new DamageCalculator(point, weapon,
+						.dealDamage(new DamageCalculator(point,radius,
 								(ShipObject) ship.getObject()).run());
 				
 			}
@@ -84,10 +88,10 @@ public class WorldController extends ObjectController {
 			
 		}
 		case 1: {
-			radius = .5f;
-			for (ShipController ship : getShipsInRange(point, radius)) {
+			getShipsInRange(point,radius);
+			for (ShipController ship : ships_hit ) {
 				((ShipObject) ship.getObject())
-						.dealDamage(new DamageCalculator(point, weapon,
+						.dealDamage(new DamageCalculator(point, radius,
 								(ShipObject) ship.getObject()).run());
 			
 			}
@@ -111,12 +115,13 @@ public class WorldController extends ObjectController {
 		}
 		}
 		
-		GameLogicHandler.sendResult((new Turn(Turn.TURN_RESULT)));
+		GameLogicHandler.sendResult((new Turn(Turn.TURN_RESULT,result)));
 	}
 
-	public Set<ShipController> getShipsInRange(Vector3 pos, float radius) {
+	public void getShipsInRange(Vector3 pos, float radius) {
 		Vector3 hitIndicator = new Vector3();
-		Set<ShipController> ships_hit = new HashSet<ShipController>();
+		ships_hit.clear();
+		result.clear();
 		for (ShipController sc : ShipPlacementView.shipControllers) {
 			if (!ships_hit.contains(sc))
 				for (int a = 0; a <= 360; a++) {
@@ -128,11 +133,12 @@ public class WorldController extends ObjectController {
 					if (sc.pollBounds()
 							.contains(hitIndicator.x, hitIndicator.y)) {
 						ships_hit.add(sc);
+						result.add(new Vector2(hitIndicator.x,hitIndicator.y));
 					}
 				}
 		}
 		
-		return ships_hit;
+		
 
 	}
 

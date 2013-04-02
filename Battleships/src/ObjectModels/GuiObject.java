@@ -7,12 +7,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import Core.AssetStorage;
 import ObjectControllers.GuiController;
 import ObjectControllers.ObjectController;
 import ObjectRenderers.GuiRenderer;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.ShipRenderer;
+import Utilities.AssetStorage;
 
 public class GuiObject extends ModelObject {
 

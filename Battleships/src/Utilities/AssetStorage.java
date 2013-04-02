@@ -1,4 +1,4 @@
-package Core;
+package Utilities;
 
 import com.badlogic.gdx.assets.AssetManager;
 

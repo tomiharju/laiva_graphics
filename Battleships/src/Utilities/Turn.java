@@ -1,4 +1,8 @@
-package GameLogic;
+package Utilities;
+
+import java.util.ArrayList;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class Turn {
 	
@@ -25,7 +29,7 @@ public class Turn {
 	public Turn(int type){
 		this.type=type;
 	}
-	public Turn(int type, float[][] hits){
+	public Turn(int type, ArrayList<Vector2> result){
 		this.hits=hits;
 	}
 	

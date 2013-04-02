@@ -1,12 +1,12 @@
 package ObjectModels;
 
-import Core.AssetStorage;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipPlacementView;
 import ObjectControllers.ShipController;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.SeaRenderer;
 import ObjectRenderers.WorldRenderer;
+import Utilities.AssetStorage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

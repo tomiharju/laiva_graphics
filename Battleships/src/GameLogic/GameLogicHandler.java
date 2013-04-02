@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import Core.NativeFunctions;
 import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
+import Utilities.Turn;
 
 public class GameLogicHandler extends Thread {
 

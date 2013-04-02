@@ -1,4 +1,4 @@
-package ObjectControllers;
+package Utilities;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -26,9 +26,9 @@ public class DamageCalculator{
 	float radius;
 	
 	
-	public DamageCalculator(Vector3 point,WeaponObject weapon,ShipObject ship){
-		this.weapon = weapon;
-		this.radius = weapon.getWeapon().getRadius();
+	public DamageCalculator(Vector3 point,float radius,ShipObject ship){
+		
+		this.radius = radius;
 		this.ship	= ship;
 		ship_bounds	= new Rectangle(ship.getController().pollBounds());
 		center 		= new Vector3(point);

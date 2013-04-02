@@ -6,7 +6,6 @@ import Commands.FireCommand;
 import Commands.ShowMapCommand;
 import Commands.ShowShipCommand;
 import GameLogic.GameLogicHandler;
-import GameLogic.Turn;
 import ObjectModels.GuiObject;
 import ObjectModels.ProjectileObject;
 import ObjectModels.ShipObject;
@@ -21,6 +20,7 @@ import ObjectRenderers.ProjectileRenderer;
 import ObjectRenderers.ShipRenderer;
 
 import ObjectRenderers.WeaponRenderer;
+import Utilities.Turn;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;

@@ -1,7 +1,7 @@
 package Core;
 
+import Utilities.Turn;
 import GameLogic.GameLogicHandler;
-import GameLogic.Turn;
 
 public interface NativeFunctions {
 	public void setLogicHandler(GameLogicHandler h);

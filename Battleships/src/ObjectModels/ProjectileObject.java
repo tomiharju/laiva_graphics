@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 
-import Core.AssetStorage;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ProjectileController;
 import ObjectControllers.ShipPlacementView;
@@ -13,6 +12,7 @@ import ObjectControllers.ShootingMapView;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.ProjectileRenderer;
 import ObjectRenderers.WeaponRenderer;
+import Utilities.AssetStorage;
 
 public class ProjectileObject extends ModelObject{
 

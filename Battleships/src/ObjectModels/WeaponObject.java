@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import Core.AssetStorage;
 import ObjectControllers.ObjectController;
 import ObjectControllers.ShipController;
 import ObjectControllers.WeaponController;
@@ -16,6 +15,7 @@ import ObjectRenderers.ProjectileRenderer;
 import ObjectRenderers.ShipRenderer;
 import ObjectRenderers.WeaponRenderer;
 import ObjectRenderers.WorldRenderer;
+import Utilities.AssetStorage;
 
 public class WeaponObject extends ModelObject {
 	

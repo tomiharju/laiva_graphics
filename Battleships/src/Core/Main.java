@@ -3,6 +3,7 @@ package Core;
 
 import GameLogic.LoadingScreen;
 import GameLogic.PlayScreen;
+import Utilities.AssetStorage;
 
 
 import com.badlogic.gdx.Game;
