@@ -2,6 +2,7 @@ package ObjectRenderers;
 
 import GameLogic.GameLogicHandler;
 import ObjectModels.WeaponObject.Weapon;
+import Utilities.AssetStorage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,7 +33,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 		
 		animate			= false;
 		stateTime		= 0;
-		explosionSheet 	= new Texture(Gdx.files.internal("data/explosion/exp0.png"));     
+		explosionSheet 	= AssetStorage.manager.get("data/explosion/exp0.png");     
 	
         TextureRegion[][] tmp = TextureRegion.split(explosionSheet, explosionSheet.getWidth() / 
         		6,explosionSheet.getHeight() / 5);     
@@ -64,7 +65,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 			if(explosionAnimation.isAnimationFinished(stateTime)){
 				animate=false;
 				GameLogicHandler.runStateMachine();
-				
+				object.dispose();
 			}
 		}
 	}

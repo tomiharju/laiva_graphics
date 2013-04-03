@@ -42,8 +42,8 @@ public class WorldObject extends ModelObject {
 	}
 
 	public void update() {
-		for (ModelObject o : objects)
-			o.update();
+		for (int i = 0; i < objects.size() ; i++)
+			objects.get(i).update();
 
 	}
 

@@ -53,9 +53,8 @@ public class WorldRenderer extends ObjectRenderer{
 		batch.setProjectionMatrix(cam.combined);
 		debugrenderer.setProjectionMatrix(cam.combined);
 		batch.begin();
-		for(ObjectRenderer o: renderers)
-			o.draw(batch);
-		
+		for (int i = 0; i< renderers.size() ; i++)
+			renderers.get(i).draw(batch);
 		batch.end();
 	
 		debugrenderer.begin(ShapeType.Rectangle);

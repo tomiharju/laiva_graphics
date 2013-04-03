@@ -30,8 +30,8 @@ public class ProjectileObject extends ModelObject{
 		sprite.setPosition(position.x-bounds.width/2, position.y-bounds.height/2);
 		
 		WorldObject.objects.add(this);
-		
 		this.renderer.addGraphics(sprite);
+		
 		((ProjectileRenderer) this.renderer).createAnimation(0);
 		visible=false;
 	}
@@ -48,7 +48,7 @@ public class ProjectileObject extends ModelObject{
 	public void update() {
 		if(visible){
 			
-			speed+=Gdx.graphics.getDeltaTime()/100;
+			speed+=Gdx.graphics.getDeltaTime()/10;
 			position.lerp(target,speed);
 			if(position.dst(target)<1){
 				((ProjectileRenderer) renderer).animateExplosion(position);

@@ -5,8 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import Core.NativeFunctions;
+import ObjectControllers.HitMarkerController;
 import ObjectControllers.WorldController;
+import ObjectModels.HitMarkerObject;
 import ObjectModels.WorldObject;
+import ObjectRenderers.HitMarkerRenderer;
 import Utilities.Turn;
 
 public class GameLogicHandler extends Thread {
@@ -109,11 +112,13 @@ public class GameLogicHandler extends Thread {
 			break;
 		}
 		case Turn.TURN_RESULT: {
-			System.out.println("Receiving turn: Result");
+			System.out.println("Receiving turn: Result -- Total hits "+turn.hits.size());
+			
+			for(Vector2 v : turn.hits)
+				new HitMarkerObject(new HitMarkerController(v.x,v.y,0.5f,0.5f),new HitMarkerRenderer());
 			state=Turn.TURN_WAIT;
 			runStateMachine();
-			//World.getRenderer.addHitMarker();
-			// Draw hits on opponent to radar
+			
 			break;
 		}
 		default:{

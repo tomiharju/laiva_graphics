@@ -3,6 +3,7 @@ package ObjectModels;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import ObjectControllers.ObjectController;
+import ObjectRenderers.HitMarkerRenderer;
 import ObjectRenderers.ObjectRenderer;
 import ObjectRenderers.WorldRenderer;
 
@@ -18,8 +19,7 @@ public abstract class ModelObject {
 	protected Vector3 position;
 	protected boolean visible;
 	
-	
-	
+
 	public abstract void update();
 	
 	

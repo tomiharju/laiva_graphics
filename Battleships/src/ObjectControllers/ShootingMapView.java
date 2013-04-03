@@ -29,7 +29,6 @@ import com.badlogic.gdx.math.Vector3;
 public class ShootingMapView extends ObjectController {
 	public static ArrayList<WeaponController> weaponControllers;
 	public ArrayList<GuiController> guiControllers;
-	private ShipPlacementView _placementController;
 	private WeaponController selected_weapon;
 
 	// Gui objects
@@ -81,10 +80,7 @@ public class ShootingMapView extends ObjectController {
 		guiControllers.add((GuiController) crosshair.getController());
 	}
 
-	public void linkSeaController(ObjectController cont) {
-		_placementController = (ShipPlacementView) cont;
-	}
-
+	
 	@Override
 	public void handleInputDown(Vector3 pos) {
 		for (WeaponController wc : weaponControllers) {
@@ -107,6 +103,11 @@ public class ShootingMapView extends ObjectController {
 		}
 	}
 
+	
+	
+	
+	
+	
 	@Override
 	public void handleInputUp(Vector3 pos) {
 

@@ -9,10 +9,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import GameLogic.GameLogicHandler;
+import ObjectModels.HitMarkerObject;
 import ObjectModels.ProjectileObject;
 import ObjectModels.ShipObject;
 import ObjectModels.WeaponObject;
 import ObjectModels.WorldObject;
+import ObjectRenderers.HitMarkerRenderer;
 import ObjectRenderers.ProjectileRenderer;
 import ObjectRenderers.ShipRenderer;
 import Utilities.DamageCalculator;
@@ -134,6 +136,7 @@ public class WorldController extends ObjectController {
 							.contains(hitIndicator.x, hitIndicator.y) && !ships_hit.contains(sc)) {
 						ships_hit.add(sc);
 						result.add(new Vector2(hitIndicator.x,hitIndicator.y));
+						
 					}
 				}
 		}
