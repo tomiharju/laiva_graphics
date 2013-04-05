@@ -58,9 +58,9 @@ public class WorldRenderer extends ObjectRenderer{
 		batch.end();
 	
 		debugrenderer.begin(ShapeType.Rectangle);
-		for(ObjectRenderer o: renderers){
-			if(o.getObject().getController().isSelected()){
-				Rectangle rect = o.getObject().getController().pollBounds();
+		for (int i = 0; i< renderers.size() ; i++){
+			if(renderers.get(i).getObject().getController().isSelected()){
+				Rectangle rect = renderers.get(i).getObject().getController().pollBounds();
 				debugrenderer.setColor(1, 0, 0, 1);
 				debugrenderer.rect(rect.getX(), rect.getY(), rect.width, rect.height);
 			}

@@ -66,15 +66,13 @@ public abstract class ObjectController {
 	public void setBounds(float w,float h){
 		bounds.width=w;
 		bounds.height=h;
-		position.x=bounds.x+bounds.width/2;
-	    position.y=bounds.y+bounds.height/2;
+		setPosition(position);
 		object.getSprite().setSize(bounds.getWidth(),bounds.getHeight());
 	}
 	public void setBounds(float x){
-		bounds.height=x;
-		bounds.width=x;
-		position.x=bounds.x+bounds.width/2;
-	    position.y=bounds.y+bounds.height/2;
+		bounds.height=x*2;
+		bounds.width=x*2;
+		setPosition(position);
 		object.getSprite().setSize(bounds.getWidth(),bounds.getHeight());
 	}
 	

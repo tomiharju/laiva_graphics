@@ -73,30 +73,36 @@ public class WorldController extends ObjectController {
 		WeaponObject weapon = (WeaponObject) ShootingMapView.weaponControllers.get(weapon_type).getObject();
 		float radius =  weapon.getWeapon().getRadius();
 		
-		new ProjectileObject(new ProjectileController(5f,12.5f,1f,1.5f),new ProjectileRenderer(),weapon_type).setTarget(point);
+		
 		switch (weapon_type) {
 		//HE Grenade
 		case 0: {
-			System.out.println("Shooting Grenade");
-			getShipsInRange(point,radius);
-			for (ShipController ship : ships_hit ) {
-				((ShipObject) ship.getObject())
-						.dealDamage(new DamageCalculator(point,radius,
-								(ShipObject) ship.getObject()).run());
-				
+			new ProjectileObject(new ProjectileController(5f,12.5f,1f,1.5f),new ProjectileRenderer(),weapon_type).setTarget(point,radius);
+			break;
 			}
 		
-			break;
-			
-		}
 		case 1: {
-			getShipsInRange(point,radius);
-			for (ShipController ship : ships_hit ) {
-				((ShipObject) ship.getObject())
-						.dealDamage(new DamageCalculator(point, radius,
-								(ShipObject) ship.getObject()).run());
 			
+			
+			getShipsInRange(point,2);
+			
+			boolean closerTargetFound=false;
+			Vector3 distance_vector = new Vector3(10,10,0);
+			Vector3 gap_vector = new Vector3(0,0,0);
+			Vector3 temp_pos = new Vector3(0,0,0);
+		
+			for (ShipController ship : ships_hit ) {
+				temp_pos.set(ship.pollPosition());
+				gap_vector.set(temp_pos.sub(point));
+				if(gap_vector.len()<distance_vector.len()){
+					distance_vector.set(gap_vector);
+					closerTargetFound=true;
+				}
 			}
+			if(closerTargetFound)
+				point.add(distance_vector);
+			new ProjectileObject(new ProjectileController(5f,12.5f,1f,1.5f),new ProjectileRenderer(),weapon_type).setTarget(point,radius);
+		
 		
 			// Homing missile
 			// Get closest ship, direct missile towards that ship 1unit,
@@ -117,15 +123,23 @@ public class WorldController extends ObjectController {
 		}
 		}
 		
-		GameLogicHandler.sendResult((new Turn(Turn.TURN_RESULT,result)));
+	
 	}
 
-	public void getShipsInRange(Vector3 pos, float radius) {
+	public  void getShipsInRange(Vector3 pos, float radius) {
 		Vector3 hitIndicator = new Vector3();
 		ships_hit.clear();
 		result.clear();
+		
+		
 		for (ShipController sc : ShipPlacementView.shipControllers) {
-			if (!ships_hit.contains(sc))
+			if (!ships_hit.contains(sc)){
+				hitIndicator.set(pos.x, pos.y, 0);
+				if(sc.pollBounds().contains(hitIndicator.x, hitIndicator.y)){
+					result.add(new Vector2(hitIndicator.x,hitIndicator.y));
+					ships_hit.add(sc);
+					continue;
+				}
 				for (int a = 0; a <= 360; a++) {
 					float x = (float) (pos.x + Math.cos(Math.toRadians(a))
 							* radius);
@@ -135,10 +149,9 @@ public class WorldController extends ObjectController {
 					if (sc.pollBounds()
 							.contains(hitIndicator.x, hitIndicator.y) && !ships_hit.contains(sc)) {
 						ships_hit.add(sc);
-						result.add(new Vector2(hitIndicator.x,hitIndicator.y));
-						
 					}
 				}
+		}
 		}
 		
 		

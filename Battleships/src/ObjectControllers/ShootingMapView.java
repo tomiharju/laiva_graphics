@@ -29,6 +29,7 @@ import com.badlogic.gdx.math.Vector3;
 public class ShootingMapView extends ObjectController {
 	public static ArrayList<WeaponController> weaponControllers;
 	public ArrayList<GuiController> guiControllers;
+	public static ArrayList<HitMarkerController> markerControllers;
 	private WeaponController selected_weapon;
 
 	// Gui objects
@@ -39,6 +40,7 @@ public class ShootingMapView extends ObjectController {
 	public ShootingMapView(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		weaponControllers = new ArrayList<WeaponController>();
+		markerControllers = new ArrayList<HitMarkerController>();
 		guiControllers = new ArrayList<GuiController>();
 		crosshair = null;
 
@@ -60,7 +62,7 @@ public class ShootingMapView extends ObjectController {
 			new WeaponObject(weapon, new WeaponController(
 					p[weapon.ordinal()][0], p[weapon.ordinal()][1], 2, 2f),
 					new WeaponRenderer());
-			new ProjectileObject(new ProjectileController(5,15,1,1.5f),new ProjectileRenderer(),weapon.ordinal());
+		
 		}
 		selected_weapon = weaponControllers.get(0);
 		selected_weapon.select();
@@ -69,7 +71,7 @@ public class ShootingMapView extends ObjectController {
 	public void createGuiObjects() {
 		button_fire = new GuiObject(new GuiController(5, 1.5f, 1.5f, 1.5f,
 				new FireCommand(this)), new GuiRenderer(), "button_fire.png");
-		crosshair = new GuiObject(new GuiController(4f, 5f, 1f, 1f, null),
+		crosshair = new GuiObject(new GuiController(5f, 7.5f, 1f, 1f, null),
 				new GuiRenderer(), "crosshair.png");
 		arrow_left = new GuiObject(new GuiController(2, 1.5f, 1.5f, 1.5f,
 				new ShowShipCommand(this)), new GuiRenderer(), "arrow_left.png");
@@ -88,9 +90,6 @@ public class ShootingMapView extends ObjectController {
 				selected_weapon.deSelect();
 				selected_weapon = (WeaponController) wc;
 				selected_weapon.select();
-				crosshair.getController().setBounds(
-						((WeaponObject) selected_weapon.getObject())
-								.getWeapon().getRadius());
 				
 			}
 
@@ -124,6 +123,8 @@ public class ShootingMapView extends ObjectController {
 			sc.hide();
 		for (GuiController gc : guiControllers)
 			gc.hide();
+		for (HitMarkerController gc : markerControllers)
+			gc.hide();
 	}
 
 	public void show() {
@@ -131,6 +132,8 @@ public class ShootingMapView extends ObjectController {
 		for (WeaponController sc : weaponControllers)
 			sc.show();
 		for (GuiController gc : guiControllers)
+			gc.show();
+		for (HitMarkerController gc : markerControllers)
 			gc.show();
 
 	}

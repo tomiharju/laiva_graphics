@@ -51,11 +51,16 @@ public class LoadingScreen implements Screen{
 		loadShips();
 		loadWeapons();
 		loadGuiObjects();
+		loadEffects();
 		
 	}
 	
 	public void loadExplosion(){
 		AssetStorage.manager.load("data/explosion/exp0.png",Texture.class);
+	}
+	public void loadEffects(){
+		AssetStorage.manager.load("data/effects/smokesheet.png",Texture.class);
+		AssetStorage.manager.load("data/effects/oceansheet.png",Texture.class);
 	}
 	public void loadShips(){
 		AssetStorage.manager.load("data/ships/assaultboat.png",Texture.class);

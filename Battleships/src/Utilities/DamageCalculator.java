@@ -24,7 +24,7 @@ public class DamageCalculator{
 	Vector3 center,hit_marker;
 	long startTime;
 	float radius;
-	
+	private boolean hitMarkerAdded;
 	
 	public DamageCalculator(Vector3 point,float radius,ShipObject ship){
 		
@@ -33,7 +33,7 @@ public class DamageCalculator{
 		ship_bounds	= new Rectangle(ship.getController().pollBounds());
 		center 		= new Vector3(point);
 		hit_marker 	= new Vector3();
-	
+		hitMarkerAdded = false;
 	}
 	
 	public float run() {
@@ -48,6 +48,7 @@ public class DamageCalculator{
 				hit_marker.set(x, y, 0);
 				if(ship_bounds.contains(hit_marker.x,hit_marker.y)){
 					hits_total++;
+				
 				}
 				
 			}

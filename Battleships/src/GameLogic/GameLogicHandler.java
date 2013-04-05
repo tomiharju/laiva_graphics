@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import Core.NativeFunctions;
+import Core.ConnectionHandler;
 import ObjectControllers.HitMarkerController;
 import ObjectControllers.WorldController;
 import ObjectModels.HitMarkerObject;
@@ -19,7 +19,7 @@ public class GameLogicHandler extends Thread {
 
 	private static WorldObject world;
 	private static WorldController controller;
-	private static NativeFunctions nativeConnector;
+	private static ConnectionHandler nativeConnector;
 
 	public static int state;
 	public static boolean shipViewLocked;
@@ -28,19 +28,19 @@ public class GameLogicHandler extends Thread {
 	
 	
 	public GameLogicHandler(WorldController c, WorldObject w,
-			NativeFunctions con) {
+			ConnectionHandler con) {
 		this.nativeConnector = con;
 		this.world = w;
 		this.controller = c;
 		nativeConnector.setLogicHandler(this);
-		nativeConnector.connect();
+		
 		state = Turn.TURN_BEGINNING;
 		runStateMachine();
 
 	}
 
 	public static void runStateMachine() {
-	
+		System.out.println("State is now "+state);
 		switch (state) {
 		// Ship placement phase
 		case Turn.TURN_BEGINNING: { 	//Lock to ship view while placing ships.
@@ -107,18 +107,18 @@ public class GameLogicHandler extends Thread {
 			float y = turn.y;
 			int weapon = turn.weapon;
 			controller.calculateDamageTaken(new Vector3(x,y,0),weapon);
-			state=turn.TURN_START;
-			
+			state=Turn.TURN_START;
+		
 			break;
 		}
 		case Turn.TURN_RESULT: {
 			System.out.println("Receiving turn: Result -- Total hits "+turn.hits.size());
 			
 			for(Vector2 v : turn.hits)
-				new HitMarkerObject(new HitMarkerController(v.x,v.y,0.5f,0.5f),new HitMarkerRenderer());
+				new HitMarkerObject(new HitMarkerController(v.x,v.y,0.25f,0.25f),new HitMarkerRenderer());
 			state=Turn.TURN_WAIT;
 			runStateMachine();
-			
+	
 			break;
 		}
 		default:{
@@ -129,18 +129,21 @@ public class GameLogicHandler extends Thread {
 	}
 
 	public static void sendReady(Turn t) {
+		System.out.println("Sending turn ready");
 		nativeConnector.sendReady(t);
 		state = t.type;
 		runStateMachine();
 	}
 	public static void sendShoot(Turn t){
+		System.out.println("Sending turn shoot");
 		nativeConnector.sendShoot(t);
 		state = t.type;
 		runStateMachine();
 	}
 	public static void sendResult(Turn t){
+		
 		nativeConnector.sendResult(t);
-		state = t.type;
+		
 		runStateMachine();
 	}
 
@@ -155,6 +158,7 @@ public class GameLogicHandler extends Thread {
 		controller.lockToMapView();
 	}
 	public static void disconnect(){
+		System.out.println("Disconnecting");
 		nativeConnector.disconnect();
 	}
 

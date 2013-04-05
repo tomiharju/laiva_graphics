@@ -1,6 +1,6 @@
 package GameLogic;
 
-import Core.NativeFunctions;
+import Core.ConnectionHandler;
 import ObjectControllers.WorldController;
 import ObjectModels.WorldObject;
 import ObjectRenderers.WorldRenderer;
@@ -28,7 +28,7 @@ public class PlayScreen implements Screen, InputProcessor{
 		
 	
 	
-	public PlayScreen(NativeFunctions connector){
+	public PlayScreen(ConnectionHandler connector){
 		
 		guiCam 			=  	new OrthographicCamera(10,15);
 		guiCam.position.set(5,7.5f,0f);

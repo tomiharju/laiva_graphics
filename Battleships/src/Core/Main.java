@@ -12,10 +12,10 @@ import com.badlogic.gdx.Screen;
 
 public class Main extends Game{
 	
-	public NativeFunctions nativeConnector;
+	public ConnectionHandler nativeConnector;
 	
 	
-	public Main(NativeFunctions c){
+	public Main(ConnectionHandler c){
 		this.nativeConnector=c;
 		new AssetStorage();
 		//c.connectGame(this);

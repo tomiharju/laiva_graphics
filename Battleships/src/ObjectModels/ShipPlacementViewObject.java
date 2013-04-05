@@ -32,7 +32,7 @@ public class ShipPlacementViewObject extends ModelObject {
 	
 		WorldObject.objects.add(this);
 		renderer.addGraphics(sprite);
-		
+	
 	}
 	
 	

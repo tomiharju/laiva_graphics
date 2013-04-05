@@ -86,7 +86,7 @@ public class ShipObject extends ModelObject{
 		
 		if(hpPercentage<=20){
 			destroyed=true;
-			//render.drawSmoke();
+			((ShipRenderer) renderer).animateSmoke(position);
 		}
 			
 		

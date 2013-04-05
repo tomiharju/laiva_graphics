@@ -30,6 +30,7 @@ public class Turn {
 		this.type=type;
 	}
 	public Turn(int type, ArrayList<Vector2> result){
+		this.type=type;
 		this.hits=result;
 	}
 	
