@@ -158,8 +158,7 @@ public class GameLogicHandler extends Thread {
 		controller.lockToMapView();
 	}
 	public static void disconnect(){
-		System.out.println("Disconnecting");
-		nativeConnector.disconnect();
+		
 	}
 
 

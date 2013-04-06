@@ -23,7 +23,7 @@ public class WeaponObject extends ModelObject {
 
 	
 	public enum Weapon{
-		CANNON(0.5f),			//0 Grenade, radius of 5m x 5m
+		GRENADE(0.5f),			//0 Grenade, radius of 5m x 5m
 		MISSILE(1.0f),		//1 Homing missile, moves 2unit towards closest ship
 		MORTAR(1.0f),			//2 Launches a cluster of mortars 
 		NAVALGUN(1.5f),		//3 Massive shell fired from big battleships

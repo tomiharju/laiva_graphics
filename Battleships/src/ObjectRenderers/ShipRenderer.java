@@ -27,23 +27,22 @@ public class ShipRenderer extends ObjectRenderer{
 	}
 public void createAnimation(){
 		
-		animate			= false;
-		stateTime		= 0;
-		smokeSheet 	= AssetStorage.manager.get("data/effects/smokesheet.png");     
-	
-        TextureRegion[][] tmp = TextureRegion.split(smokeSheet, smokeSheet.getWidth() / 
-        		4,smokeSheet.getHeight() / 3);     
-       
-        smokeFrames = new TextureRegion[4 * 3];
-        int index = 0;
-        for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 4; j++) {
-                	smokeFrames[index++] = tmp[i][j];
-                      
-                }
-        }
-        smokeAnimation = new Animation(0.05f, smokeFrames); 
-     
+	animate			= false;
+	stateTime		= 0;
+	smokeSheet 	= AssetStorage.manager.get("data/effects/smokesheet.png");     
+
+    TextureRegion[][] tmp = TextureRegion.split(smokeSheet, smokeSheet.getWidth() / 
+    		5,smokeSheet.getHeight() / 5);     
+   
+    smokeFrames = new TextureRegion[5 * 5];
+    int index = 0;
+    for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+            	smokeFrames[index++] = tmp[i][j];
+                  
+            }
+    }
+    smokeAnimation = new Animation(0.05f, smokeFrames); 
    }
 	
 	

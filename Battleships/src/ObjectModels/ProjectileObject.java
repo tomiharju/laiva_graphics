@@ -22,14 +22,20 @@ import ObjectRenderers.WeaponRenderer;
 import Utilities.AssetStorage;
 import Utilities.DamageCalculator;
 import Utilities.Turn;
+import WeaponStrategies.GrenadeStrategy;
+import WeaponStrategies.MissileStrategy;
+import WeaponStrategies.MortarStrategy;
+import WeaponStrategies.NalvalGunStrategy;
+import WeaponStrategies.PhalanxStrategy;
+import WeaponStrategies.WeaponStrategy;
 
 public class ProjectileObject extends ModelObject {
 
-	private Vector3 target;
-	private Vector3 secondaryTarget;
 	private ArrayList<Vector2> result;
 	private Set<ShipController> ships_hit;
 	private float radius;
+	private WeaponStrategy strategy;
+
 	public ProjectileObject(ObjectController controller,
 			ObjectRenderer renderer, int weaponType) {
 		setController(controller);
@@ -47,20 +53,40 @@ public class ProjectileObject extends ModelObject {
 		this.renderer.addGraphics(sprite);
 
 		((ProjectileRenderer) this.renderer).createAnimation(0);
-		visible = false;
+		setVisible();
+		setStrategy(weaponType);
 	}
 
-	public void setTarget(Vector3 target,float radius) {
-		setVisible();
-		this.target = target;
+	public void setStrategy(int weapon_type) {
+		switch (weapon_type) {
+		case 0:
+			strategy = new GrenadeStrategy();
+			break;
+		case 1:
+			strategy = new MissileStrategy();
+			break;
+		case 2:
+			strategy = new MortarStrategy();
+			break;
+		case 3:
+			strategy = new NalvalGunStrategy();
+			break;
+		case 4:
+			strategy = new PhalanxStrategy();
+			break;
+
+		}
+	}
+
+	public void setTarget(Vector3 target, float radius) {
+		strategy.setTarget(target);
 		this.radius = radius;
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		ships_hit = new HashSet<ShipController>();
 		result = new ArrayList<Vector2>();
 	}
-	public void setSecondaryTarget(Vector3 target){
-		secondaryTarget=target;
-	}
+
+	
 
 	public void dealDamage(Vector3 point, float radius) {
 		getShipsInRange(position, radius);
@@ -101,26 +127,22 @@ public class ProjectileObject extends ModelObject {
 				}
 			}
 		}
-		GameLogicHandler.sendResult((new Turn(Turn.TURN_RESULT,result)));
+		GameLogicHandler.sendResult((new Turn(Turn.TURN_RESULT, result)));
 	}
 
 	@Override
 	public void update() {
-		if (visible) {
-			position.x += ((target.x - position.x) * 0.4f)
-					* Gdx.graphics.getDeltaTime() * 2;
-			position.y += ((target.y - position.y) * 0.6f)
-					* Gdx.graphics.getDeltaTime() * 2;
-			sprite.setRotation((float) Math.toDegrees(Math.atan2(target.y
-					- position.y, target.x - position.x)
+		if(isVisible()){
+		sprite.setRotation((float) Math.toDegrees(Math.atan2(strategy.getPos().y
+					- position.y, strategy.getPos().x - position.x)
 					- Math.PI / 2));
-			if (position.dst(target) < 0.2f) {
+		if (strategy.update(position)) {
 				dealDamage(position, radius);
 				setHidden();
 			}
 			controller.setPosition(position);
+		
 		}
-
 	}
 
 	@Override

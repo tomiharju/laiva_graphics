@@ -35,7 +35,7 @@ public class ShipObject extends ModelObject{
 		private ShipType(float l,float w,String f){
 			lenght=l;
 			width=w;
-			hp=l*w*2*1084;	//Damage is based on ship size, 1084 is the dmg done by direct hit.
+			hp=l*w*1084;	//Damage is based on ship size, 1084 is the dmg done by direct hit.
 			file=f;
 		}
 		public float getHp(){

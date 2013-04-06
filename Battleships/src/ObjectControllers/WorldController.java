@@ -29,7 +29,7 @@ public class WorldController extends ObjectController {
 	private ShootingMapView mapView;
 	private ObjectController active_view;
 	private ArrayList<Vector2> result;
-	Set<ShipController> ships_hit; 
+	
 	public WorldController(float x, float y, float w, float h) {
 		super(x, y, w, h);
 
@@ -44,7 +44,7 @@ public class WorldController extends ObjectController {
 		shipView.show();
 		mapView.hide();
 		
-		ships_hit 	= new HashSet<ShipController>();
+	
 		result 		= new ArrayList<Vector2>();
 		
 	}
@@ -83,30 +83,7 @@ public class WorldController extends ObjectController {
 		
 		case 1: {
 			
-			
-			getShipsInRange(point,2);
-			
-			boolean closerTargetFound=false;
-			Vector3 distance_vector = new Vector3(10,10,0);
-			Vector3 gap_vector = new Vector3(0,0,0);
-			Vector3 temp_pos = new Vector3(0,0,0);
-		
-			for (ShipController ship : ships_hit ) {
-				temp_pos.set(ship.pollPosition());
-				gap_vector.set(temp_pos.sub(point));
-				if(gap_vector.len()<distance_vector.len()){
-					distance_vector.set(gap_vector);
-					closerTargetFound=true;
-				}
-			}
-			if(closerTargetFound)
-				point.add(distance_vector);
 			new ProjectileObject(new ProjectileController(5f,12.5f,1f,1.5f),new ProjectileRenderer(),weapon_type).setTarget(point,radius);
-		
-		
-			// Homing missile
-			// Get closest ship, direct missile towards that ship 1unit,
-			// calculate dmg done.
 			break;
 		}
 		case 2: {
@@ -126,37 +103,7 @@ public class WorldController extends ObjectController {
 	
 	}
 
-	public  void getShipsInRange(Vector3 pos, float radius) {
-		Vector3 hitIndicator = new Vector3();
-		ships_hit.clear();
-		result.clear();
-		
-		
-		for (ShipController sc : ShipPlacementView.shipControllers) {
-			if (!ships_hit.contains(sc)){
-				hitIndicator.set(pos.x, pos.y, 0);
-				if(sc.pollBounds().contains(hitIndicator.x, hitIndicator.y)){
-					result.add(new Vector2(hitIndicator.x,hitIndicator.y));
-					ships_hit.add(sc);
-					continue;
-				}
-				for (int a = 0; a <= 360; a++) {
-					float x = (float) (pos.x + Math.cos(Math.toRadians(a))
-							* radius);
-					float y = (float) (pos.y + Math.sin(Math.toRadians(a))
-							* radius);
-					hitIndicator.set(x, y, 0);
-					if (sc.pollBounds()
-							.contains(hitIndicator.x, hitIndicator.y) && !ships_hit.contains(sc)) {
-						ships_hit.add(sc);
-					}
-				}
-		}
-		}
-		
-		
 
-	}
 
 	public void touchDown(Vector3 touchPoint) {
 		active_view.handleInputDown(touchPoint);

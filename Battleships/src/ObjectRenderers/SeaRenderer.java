@@ -22,29 +22,9 @@ public class SeaRenderer extends ObjectRenderer {
 
 	public SeaRenderer() {
 		WorldRenderer.renderers.add(this);
-		
 	}
 
-	public void createAnimation() {
-		
-		animate = false;
-		stateTime = 0;
-		seaSheet = AssetStorage.manager.get("data/effects/oceansheet.png");
-
-		TextureRegion[][] tmp = TextureRegion.split(seaSheet,
-				seaSheet.getWidth() / 4, seaSheet.getHeight() / 4);
-
-		seaFrames = new TextureRegion[4 * 4];
-		int index = 0;
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				seaFrames[index++] = tmp[i][j];
-
-			}
-		}
-		seaAnimation = new Animation(0.15f, seaFrames);
-		
-	}
+	
 
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -59,9 +39,6 @@ public class SeaRenderer extends ObjectRenderer {
 	public void addGraphics(Sprite s) {
 		graphics = s;
 
-	}
-	public void animateSea(){
-		animPos = object.getPosition();
 	}
 
 }

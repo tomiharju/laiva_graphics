@@ -60,7 +60,6 @@ public class LoadingScreen implements Screen{
 	}
 	public void loadEffects(){
 		AssetStorage.manager.load("data/effects/smokesheet.png",Texture.class);
-		AssetStorage.manager.load("data/effects/oceansheet.png",Texture.class);
 	}
 	public void loadShips(){
 		AssetStorage.manager.load("data/ships/assaultboat.png",Texture.class);
