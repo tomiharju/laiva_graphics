@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.core.ConnectionHandler;
+import com.sohvastudios.battleships.game.core.NativeActions;
 import com.sohvastudios.battleships.game.objectControllers.WorldController;
 import com.sohvastudios.battleships.game.objectModels.WorldObject;
 import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 
+<<<<<<< HEAD
 public class PlayScreen implements Screen, InputProcessor {
 
 	OrthographicCamera guiCam;
@@ -37,6 +39,35 @@ public class PlayScreen implements Screen, InputProcessor {
 				(WorldController) world.getController(), world, connector);
 
 		paused = false;
+=======
+public class PlayScreen implements Screen, InputProcessor{
+	
+		OrthographicCamera 	guiCam;
+		Vector3 			touchPoint;
+		boolean paused;
+		WorldObject 		world;
+		WorldController		controller;
+		WorldRenderer		renderer;
+		GameLogicHandler 	logicHandler;
+		
+	
+	
+	public PlayScreen(ConnectionHandler connector, NativeActions actions){
+		
+		guiCam 			=  	new OrthographicCamera(10,15);
+		guiCam.position.set(5,7.5f,0f);
+		guiCam.update();
+		touchPoint		=	new Vector3();
+		controller		= 	new WorldController(0,0,0,0);
+		renderer		=	new WorldRenderer();
+		world 			= 	new WorldObject(controller,renderer);
+		controller.initialize();//Required to set other controllers in worldcontroller
+			
+		logicHandler 	= new GameLogicHandler((WorldController)world.getController(),world,connector, actions);
+		
+		
+		paused			= false;
+>>>>>>> Changes reflecting core project.
 		Gdx.input.setInputProcessor(this);
 	}
 

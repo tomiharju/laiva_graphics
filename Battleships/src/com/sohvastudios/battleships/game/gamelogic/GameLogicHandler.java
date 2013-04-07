@@ -2,7 +2,9 @@ package com.sohvastudios.battleships.game.gamelogic;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.sohvastudios.battleships.game.core.ConfirmListener;
 import com.sohvastudios.battleships.game.core.ConnectionHandler;
+import com.sohvastudios.battleships.game.core.NativeActions;
 import com.sohvastudios.battleships.game.objectControllers.HitMarkerController;
 import com.sohvastudios.battleships.game.objectControllers.WorldController;
 import com.sohvastudios.battleships.game.objectModels.HitMarkerObject;
@@ -14,6 +16,7 @@ public class GameLogicHandler extends Thread {
 
 	private static WorldController controller;
 	private static ConnectionHandler nativeConnector;
+	private static NativeActions nativeActions;
 
 	public static int state;
 	public static boolean shipViewLocked;
@@ -21,9 +24,10 @@ public class GameLogicHandler extends Thread {
 	public static boolean fireButtonLocked;
 
 	public GameLogicHandler(WorldController c, WorldObject w,
-			ConnectionHandler con) {
+			ConnectionHandler con, NativeActions nativeActions) {
 		this.nativeConnector = con;
 		this.controller = c;
+		this.nativeActions = nativeActions;
 		nativeConnector.setLogicHandler(this);
 
 		state = Turn.TURN_BEGINNING;
@@ -154,6 +158,30 @@ public class GameLogicHandler extends Thread {
 	public static void lockMapView() {
 		controller.lockToMapView();
 	}
+<<<<<<< HEAD
+=======
+	public static void disconnect(){
+		
+	}
+	
+	public static void opponentLeft() {
+		nativeActions.createConfirmDialog(
+				"Opponent has left the game", 
+				"Leave game or wait for reconnect?", 
+				"Leave game",
+				"Wait",
+				new ConfirmListener() {			
+					@Override
+					public void yes() {
+						nativeConnector.leave();
+					}		
+					@Override
+					public void no() {
+						// TODO Auto-generated method stub	
+					}
+				});
+	}
+>>>>>>> Changes reflecting core project.
 
 	public static void disconnect() {
 
