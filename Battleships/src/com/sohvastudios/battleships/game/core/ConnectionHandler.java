@@ -14,12 +14,4 @@ public interface ConnectionHandler {
 	public void leave();
 	public void matchMake();
 	public void join(CharSequence room);
-<<<<<<< HEAD
-
-	
-	
-	
-
-=======
->>>>>>> Changes reflecting core project.
 }

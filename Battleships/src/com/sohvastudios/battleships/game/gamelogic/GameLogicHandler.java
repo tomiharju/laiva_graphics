@@ -158,11 +158,6 @@ public class GameLogicHandler extends Thread {
 	public static void lockMapView() {
 		controller.lockToMapView();
 	}
-<<<<<<< HEAD
-=======
-	public static void disconnect(){
-		
-	}
 	
 	public static void opponentLeft() {
 		nativeActions.createConfirmDialog(
@@ -180,16 +175,6 @@ public class GameLogicHandler extends Thread {
 						// TODO Auto-generated method stub	
 					}
 				});
-	}
->>>>>>> Changes reflecting core project.
-
-	public static void disconnect() {
-
-	}
-
-	public void opponentLeft() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

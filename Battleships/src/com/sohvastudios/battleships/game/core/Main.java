@@ -12,20 +12,13 @@ import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class Main extends Game{
 	
-<<<<<<< HEAD
-	public NativeActions nativeConnector;
+	public NativeActions nativeActions;
+	public ConnectionHandler connectionHandler;
 	
 	
 	public Main(NativeActions nativeActions){
-		this.nativeConnector=nativeActions;
-=======
-	public ConnectionHandler nativeConnector;
-	public NativeActions nativeActions;
-	
-	
-	public Main(NativeActions a){
-		this.nativeActions = a;
->>>>>>> Changes reflecting core project.
+		this.nativeActions = nativeActions;
+
 		new AssetStorage();
 		//c.connectGame(this);
 		
@@ -36,14 +29,14 @@ public class Main extends Game{
 	}
 	
 	public void loadGame(ConnectionHandler connectionHandler) {
-		nativeConnector = connectionHandler;
+		this.connectionHandler = connectionHandler;
 	}
 	
 	public void changeScreen(Screen s){
 		setScreen(s);
 	}
 	public void startGame(){
-		setScreen(new PlayScreen(nativeConnector, nativeActions));
+		setScreen(new PlayScreen(connectionHandler, nativeActions));
 	}
 }
 
