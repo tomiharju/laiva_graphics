@@ -12,11 +12,11 @@ import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class Main extends Game{
 	
-	public ConnectionHandler nativeConnector;
+	public NativeActions nativeConnector;
 	
 	
-	public Main(ConnectionHandler c){
-		this.nativeConnector=c;
+	public Main(NativeActions nativeActions){
+		this.nativeConnector=nativeActions;
 		new AssetStorage();
 		//c.connectGame(this);
 		

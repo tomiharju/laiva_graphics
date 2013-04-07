@@ -11,6 +11,10 @@ public interface ConnectionHandler {
 	public void sendResult(Turn t);
 	public void connect();
 	public void disconnect();
+	public void leave();
+	public void matchMake();
+	public void join(CharSequence room);
+
 	
 	
 	

@@ -1,31 +1,45 @@
 package com.sohvastudios.battleships.game.weaponStrategies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 public class PhalanxStrategy implements WeaponStrategy {
 
+	private Vector3 currentTarget;
+
+	public PhalanxStrategy() {
+		currentTarget = new Vector3();
+	}
+
 	@Override
 	public boolean update(Vector3 position) {
-		// TODO Auto-generated method stub
-		return true;
+		position.x += ((currentTarget.x - position.x) * 0.4f)
+				* Gdx.graphics.getDeltaTime() * 2;
+		position.y += ((currentTarget.y - position.y) * 0.6f)
+				* Gdx.graphics.getDeltaTime() * 2;
+		if (position.dst(currentTarget) < 0.2f) {
+			return true;
+		}
+
+		return false;
+
 	}
 
 	@Override
 	public Vector3 setTarget(Vector3 target) {
-		// TODO Auto-generated method stub
+		currentTarget.set(target);
 		return null;
 	}
 
 	@Override
 	public void getShipsInRange(Vector3 target, float radius) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public Vector3 getPos() {
-		// TODO Auto-generated method stub
-		return null;
+		return currentTarget;
 	}
-
 }
+

@@ -3,23 +3,30 @@ package com.sohvastudios.battleships.game.objectRenderers;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MapRenderer extends ObjectRenderer{
+public class MapRenderer extends ObjectRenderer {
 
 	
-	public MapRenderer(){
+	private Sprite sweepGraphics;
+	
+	public MapRenderer() {
 		WorldRenderer.renderers.add(this);
 		
 	}
+
 	@Override
 	public void draw(SpriteBatch batch) {
-		if(object.isVisible())
+		if (object.isVisible()) {
 			graphics.draw(batch);
-		else
+			sweepGraphics.draw(batch);
+		} else
 			return;
 	}
+
 	@Override
 	public void addGraphics(Sprite s) {
-		graphics=s;
-		
+		graphics = s;
+	}
+	public void addSweepGraphics(Sprite s){
+		sweepGraphics=s;
 	}
 }

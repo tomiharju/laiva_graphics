@@ -4,18 +4,18 @@ import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 import com.sohvastudios.battleships.game.objectControllers.GuiController;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 
+public class ShowShipCommand implements Command {
 
-public class ShowShipCommand implements Command{
-	private ObjectController controller;
-	public ShowShipCommand(ObjectController controller){
-		this.controller=controller;
+	public ShowShipCommand(ObjectController controller) {
+
 	}
+
 	@Override
 	public void execute(GuiController c) {
-		
-		if(!GameLogicHandler.shipViewLocked){
+
+		if (!GameLogicHandler.shipViewLocked) {
 			GameLogicHandler.lockShipView();
 		}
-		
+
 	}
 }

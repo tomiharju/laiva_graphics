@@ -3,11 +3,11 @@ package com.sohvastudios.battleships.game.weaponStrategies;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
-public class MortarStrategy implements WeaponStrategy {
+public class NavalGunStrategy implements WeaponStrategy{
 
 	private Vector3 currentTarget;
 
-	public MortarStrategy() {
+	public NavalGunStrategy() {
 		currentTarget = new Vector3();
 	}
 

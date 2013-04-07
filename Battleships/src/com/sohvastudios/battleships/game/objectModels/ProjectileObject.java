@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -14,17 +13,15 @@ import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.ProjectileController;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
 import com.sohvastudios.battleships.game.objectControllers.ShipPlacementView;
-import com.sohvastudios.battleships.game.objectControllers.ShootingMapView;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
-import com.sohvastudios.battleships.game.objectRenderers.WeaponRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 import com.sohvastudios.battleships.game.utilities.DamageCalculator;
 import com.sohvastudios.battleships.game.utilities.Turn;
 import com.sohvastudios.battleships.game.weaponStrategies.GrenadeStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.MissileStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.MortarStrategy;
-import com.sohvastudios.battleships.game.weaponStrategies.NalvalGunStrategy;
+import com.sohvastudios.battleships.game.weaponStrategies.NavalGunStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.PhalanxStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.WeaponStrategy;
 
@@ -69,10 +66,12 @@ public class ProjectileObject extends ModelObject {
 			strategy = new MortarStrategy();
 			break;
 		case 3:
-			strategy = new NalvalGunStrategy();
+			strategy = new NavalGunStrategy();
 			break;
 		case 4:
 			strategy = new PhalanxStrategy();
+			break;
+		default:
 			break;
 
 		}
