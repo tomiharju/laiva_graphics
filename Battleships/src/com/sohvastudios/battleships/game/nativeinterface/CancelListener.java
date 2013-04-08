@@ -1,4 +1,4 @@
-package com.sohvastudios.battleships.game.core;
+package com.sohvastudios.battleships.game.nativeinterface;
 
 public interface CancelListener {
 	public void cancel();

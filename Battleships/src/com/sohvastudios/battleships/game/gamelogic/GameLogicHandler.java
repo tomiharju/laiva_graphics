@@ -1,10 +1,11 @@
 package com.sohvastudios.battleships.game.gamelogic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.core.ConfirmListener;
-import com.sohvastudios.battleships.game.core.ConnectionHandler;
-import com.sohvastudios.battleships.game.core.NativeActions;
+import com.sohvastudios.battleships.game.nativeinterface.ConfirmListener;
+import com.sohvastudios.battleships.game.nativeinterface.ConnectionHandler;
+import com.sohvastudios.battleships.game.nativeinterface.NativeActions;
 import com.sohvastudios.battleships.game.objectControllers.HitMarkerController;
 import com.sohvastudios.battleships.game.objectControllers.WorldController;
 import com.sohvastudios.battleships.game.objectModels.HitMarkerObject;
@@ -169,6 +170,7 @@ public class GameLogicHandler extends Thread {
 					@Override
 					public void yes() {
 						nativeConnector.leave();
+						Gdx.app.exit();
 					}		
 					@Override
 					public void no() {
