@@ -1,4 +1,4 @@
-package com.sohvastudios.battleships.game.core;
+package com.sohvastudios.battleships.game.nativeinterface;
 
 import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 import com.sohvastudios.battleships.game.utilities.Turn;
