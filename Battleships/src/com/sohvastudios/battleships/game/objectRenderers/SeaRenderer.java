@@ -1,30 +1,26 @@
 package com.sohvastudios.battleships.game.objectRenderers;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SeaRenderer extends ObjectRenderer {
 
-	Animation seaAnimation;
-	Texture seaSheet;
-	TextureRegion[] seaFrames;
-	TextureRegion currentFrame;
+	public static ArrayList<ObjectRenderer> objectsAtSea;
+	
 
+	
 	public SeaRenderer() {
-		WorldRenderer.renderers.add(this);
+		objectsAtSea = new ArrayList<ObjectRenderer>();
+		objectsAtSea.add(this);
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		if (object.isVisible()) {
-			graphics.draw(batch);
-		} else
-			return;
+		graphics.draw(batch);
+		
 	}
-
 	@Override
 	public void addGraphics(Sprite s) {
 		graphics = s;

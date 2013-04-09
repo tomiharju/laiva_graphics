@@ -21,7 +21,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 	private Vector3 animPos;
 
 	public ProjectileRenderer() {
-		WorldRenderer.renderers.add(this);
+		SeaRenderer.objectsAtSea.add(this);
 	}
 
 	public void createAnimation(int weaponType) {

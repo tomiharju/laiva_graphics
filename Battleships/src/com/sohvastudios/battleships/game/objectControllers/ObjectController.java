@@ -14,13 +14,17 @@ public abstract class ObjectController {
 	protected boolean selected;
 	protected boolean isHidden;
 	protected Rectangle clear_bounds;
-	protected Rectangle area_bounds;
-
+	protected Rectangle area_bounds_sea;
+	protected Rectangle area_bounds_radar;
+	
 	public ObjectController(float x, float y, float width, float height) {
-		position = new Vector3(x, y, 0);
-		bounds = new Rectangle(x - width / 2, y - height / 2, width, height);
-		clear_bounds = new Rectangle();
-		area_bounds = new Rectangle(0, 2.5f, 10, 10);
+		position 			= new Vector3(x, y, 0);
+		bounds				= new Rectangle(x - width / 2, y - height / 2, width, height);
+		clear_bounds 		= new Rectangle();
+		area_bounds_sea 	= new Rectangle(0,0f, 10, 10);
+		area_bounds_radar 	= new Rectangle(5,0,5,5);
+	}
+	public ObjectController(){
 	}
 
 	public ModelObject getObject() {
@@ -90,6 +94,11 @@ public abstract class ObjectController {
 	};
 
 	public void rotate90() {
+	}
+
+	public void handleDoubleTap(Vector3 touchPoint) {
+		// TODO Auto-generated method stub
+		
 	};
 
 }

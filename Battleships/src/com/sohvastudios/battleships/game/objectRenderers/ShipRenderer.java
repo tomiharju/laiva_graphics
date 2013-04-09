@@ -20,7 +20,7 @@ public class ShipRenderer extends ObjectRenderer {
 	private Vector3 animPos;
 
 	public ShipRenderer() {
-		WorldRenderer.renderers.add(this);
+		SeaRenderer.objectsAtSea.add(this);
 		createAnimation();
 	}
 

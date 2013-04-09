@@ -54,7 +54,6 @@ public class HitMarkerObject extends ModelObject {
 	}
 
 	public void resetAlpha() {
-		System.out.println("Resetting alpha");
 		alpha = 1f;
 	}
 

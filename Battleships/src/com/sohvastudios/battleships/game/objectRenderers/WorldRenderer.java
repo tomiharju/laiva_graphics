@@ -2,7 +2,6 @@ package com.sohvastudios.battleships.game.objectRenderers;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,8 +11,10 @@ public class WorldRenderer extends ObjectRenderer {
 
 	public static ArrayList<ObjectRenderer> renderers;
 	public static OrthographicCamera cam;
+	public static OrthographicCamera seaCam;
+	public static OrthographicCamera radarCam;
 	public SpriteBatch batch;
-	public static float ppux, ppuy;
+	
 	static final float VIEWPORT_WIDTH = 10; // *100meters
 	static final float VIEWPORT_HEIGHT = 15;// *100meters
 
@@ -22,34 +23,43 @@ public class WorldRenderer extends ObjectRenderer {
 	public WorldRenderer() {
 		renderers = new ArrayList<ObjectRenderer>();
 		batch = new SpriteBatch();
-
 		setupCamera();
-		
-
 	}
 
 	public void setupCamera() {
-
-		cam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT); // Dimension
-																		// of
-																		// the
-																		// world,
-																		// 10x15(km)
-		// cam.setToOrtho(true,Gdx.graphics.getWidth(),
-		// Gdx.graphics.getHeight());
+		cam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT); 
 		cam.position.set(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
-
-		ppux = Gdx.graphics.getWidth() / 100;
-		ppuy = Gdx.graphics.getHeight() / 100;
-
+		
+		seaCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+		seaCam.position.set(5f,2.5f,0);
+		
+		
+		radarCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+		radarCam.position.set(0,7.5f,0);
+		
 	}
 
 	public void render() {
 		cam.update();
-		batch.setProjectionMatrix(cam.combined);
+		seaCam.update();
+		radarCam.update();
 		batch.begin();
+		
+		
+		batch.setProjectionMatrix(seaCam.combined);
+		for (int i = 0; i < SeaRenderer.objectsAtSea.size(); i++)
+			SeaRenderer.objectsAtSea.get(i).draw(batch);
+		
+		batch.setProjectionMatrix(radarCam.combined);
+		
+		for (int i = 0; i < RadarRenderer.objectsAtRadar.size(); i++)
+			RadarRenderer.objectsAtRadar.get(i).draw(batch);
+		
+		batch.setProjectionMatrix(cam.combined);
+		
 		for (int i = 0; i < renderers.size(); i++)
 			renderers.get(i).draw(batch);
+		
 		batch.end();
 
 	

@@ -12,6 +12,7 @@ public class GuiRenderer extends ObjectRenderer{
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
+		batch.setProjectionMatrix(WorldRenderer.cam.combined);
 		if(object.isVisible())
 			graphics.draw(batch);
 		else

@@ -17,15 +17,20 @@ public class GuiObject extends ModelObject {
 
 		position = controller.pollPosition();
 		bounds = controller.pollBounds();
+		
 		sprite = new Sprite(AssetStorage.manager.get("data/guiobjects/" + file,
 				Texture.class));
 
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
-
-		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
+		setVisible();
+		WorldObject.objects.add(this);
+	}
+	public GuiObject(ObjectController controller){
+		System.out.println("Another constructor");
+		setController(controller);
 	}
 
 	@Override

@@ -19,9 +19,9 @@ public class GameLogicHandler extends Thread {
 	private static NativeActions nativeActions;
 
 	public static int state;
-	public static boolean shipViewLocked;
-	public static boolean mapViewLocked;
-	public static boolean fireButtonLocked;
+
+	public static boolean shipsLocked;
+	public static boolean ableToFire;
 
 	public GameLogicHandler(WorldController c, WorldObject w,
 			ConnectionHandler con, NativeActions nativeActions) {
@@ -39,38 +39,33 @@ public class GameLogicHandler extends Thread {
 		System.out.println("State is now " + state);
 		switch (state) {
 		// Ship placement phase
-		case Turn.TURN_BEGINNING: { // Lock to ship view while placing ships.
-			lockShipView();
-			mapViewLocked = true;
+		case Turn.TURN_BEGINNING: { //
+			ableToFire	=	false;
+			shipsLocked	=	false;
 			System.out.println("Current state: Beginning");
 			break;
 		}
 
-		case Turn.TURN_START: { // Lock players view to map and allow firing.
-			lockMapView();
-			shipViewLocked = true;
-			fireButtonLocked = false;
+		case Turn.TURN_START: { // 
+			ableToFire 	= 	true;
+			shipsLocked =	true;
 			System.out.println("Current state: Start");
 			break;
 		}
-		case Turn.TURN_WAIT: { // If opponent starts the game, allow player to
-								// freely change views but lock fire button.
-			shipViewLocked = false;
-			mapViewLocked = false;
-			fireButtonLocked = true;
+		case Turn.TURN_WAIT: { // 
+			ableToFire = false;
 			System.out.println("Current state: Wait");
 			break;
 		}
-		case Turn.TURN_SHOOT: { // After shooting, lock fire button to avoid
-								// spamming
-			fireButtonLocked = true;
+		case Turn.TURN_SHOOT: { // 
+								// 
+			ableToFire = false;
 			System.out.println("Current state: Shoot");
 			break;
 		}
 		case Turn.TURN_READY: { // Once you have finished placing ships, lock
 								// view and wait for other player
-			shipViewLocked = true;
-			mapViewLocked = true;
+			ableToFire = false;
 			System.out.println("Current state: Ready");
 			break;
 		}
@@ -115,9 +110,12 @@ public class GameLogicHandler extends Thread {
 			System.out.println("Receiving turn: Result -- Total hits "
 					+ turn.hits.size());
 
-			for (Vector2 v : turn.hits)
-				new HitMarkerObject(new HitMarkerController(v.x, v.y, 0.25f,
+			for (Vector2 v : turn.hits){
+				Vector2 scaledHit = v;
+				scaledHit.div(2);
+				new HitMarkerObject(new HitMarkerController(scaledHit.x, scaledHit.y, 0.25f,
 						0.25f), new HitMarkerRenderer());
+			}
 			state = Turn.TURN_WAIT;
 			runStateMachine();
 
@@ -152,11 +150,11 @@ public class GameLogicHandler extends Thread {
 	}
 
 	public static void lockShipView() {
-		controller.lockToShipView();
+	
 	}
 
 	public static void lockMapView() {
-		controller.lockToMapView();
+		
 	}
 	
 	public static void opponentLeft() {

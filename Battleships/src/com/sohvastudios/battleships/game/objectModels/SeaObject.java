@@ -3,14 +3,14 @@ package com.sohvastudios.battleships.game.objectModels;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
-import com.sohvastudios.battleships.game.objectControllers.ShipPlacementView;
+import com.sohvastudios.battleships.game.objectControllers.SeaController;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.SeaRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
-public class ShipPlacementViewObject extends ModelObject {
+public class SeaObject extends ModelObject {
 
-	public ShipPlacementViewObject(ShipPlacementView controller,
+	public SeaObject(SeaController controller,
 			SeaRenderer renderer) {
 
 		setController(controller);
@@ -35,7 +35,7 @@ public class ShipPlacementViewObject extends ModelObject {
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller = (ShipPlacementView) controller;
+		this.controller = (SeaController) controller;
 		this.controller.setObject(this);
 
 	}

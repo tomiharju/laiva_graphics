@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.ProjectileController;
+import com.sohvastudios.battleships.game.objectControllers.SeaController;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
-import com.sohvastudios.battleships.game.objectControllers.ShipPlacementView;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
@@ -102,7 +102,7 @@ public class ProjectileObject extends ModelObject {
 		ships_hit.clear();
 		result.clear();
 
-		for (ShipController sc : ShipPlacementView.shipControllers) {
+		for (ShipController sc : SeaController.shipControllers) {
 			if (!ships_hit.contains(sc)) {
 				hitIndicator.set(pos.x, pos.y, 0);
 				if (sc.pollBounds().contains(hitIndicator.x, hitIndicator.y)) {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
+import com.sohvastudios.battleships.game.objectModels.WeaponObject.Weapon;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ShipRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
@@ -12,9 +13,11 @@ public class ShipObject extends ModelObject {
 
 	public enum ShipType {
 		// Lenght, Width, sprite
-		ASSAULTBOAT(1, 1, "assaultboat.png"), MOTORBOAT(1.5f, 1,
-				"hydrofoil.png"), FRIGATE(2.5f, 1, "frigate.png"), BATTLESHIP(
-				5, 2, "cruiser.png"), OILER(3.5f, 1.5f, "oiler.png");
+		ASSAULTBOAT(1, 1, "assaultboat.png"),
+		HYDROFOIL(1.5f, 1,"hydrofoil.png"), 
+		FRIGATE(2.5f, 1, "frigate.png"), 
+		BATTLESHIP(5, 2, "cruiser.png"),
+		OILER(3.5f, 1.5f, "oiler.png");
 
 		private float lenght, width, hp;
 		private String file;
@@ -49,7 +52,9 @@ public class ShipObject extends ModelObject {
 	private float maxHitpoints;
 	private float hpPercentage;
 	private boolean destroyed = false;
-
+	
+	public Weapon shipWeapon;
+	
 	public ShipObject(ShipType ship, ShipController controller,
 			ShipRenderer renderer) {
 		setController(controller);
@@ -69,12 +74,31 @@ public class ShipObject extends ModelObject {
 		hpPercentage = 100;
 		this.renderer.addGraphics(sprite);
 
+		installWeapon(ship.ordinal());
+	}
+	public void installWeapon(int shiptype){
+		switch(shiptype){
+		case 0:
+			shipWeapon = Weapon.GRENADE;
+			break;
+		case 1:
+			shipWeapon = Weapon.MISSILE;
+			break;
+		case 2:
+			shipWeapon = Weapon.MORTAR;
+			break;
+		case 3:
+			shipWeapon = Weapon.NAVALGUN;
+			break;
+		case 4:
+			shipWeapon = Weapon.PHALANX;
+			break;
+		}
 	}
 
 	public void dealDamage(float dmg) {
 		hitpoints -= dmg;
 		hpPercentage = (hitpoints / maxHitpoints) * 100;
-
 		if (hpPercentage <= 20) {
 			destroyed = true;
 			((ShipRenderer) renderer).animateSmoke(position);

@@ -6,7 +6,7 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
-import com.sohvastudios.battleships.game.objectControllers.ShipPlacementView;
+import com.sohvastudios.battleships.game.objectControllers.SeaController;
 
 public class MissileStrategy implements WeaponStrategy {
 
@@ -64,7 +64,7 @@ public class MissileStrategy implements WeaponStrategy {
 
 		ships_hit.clear();
 
-		for (ShipController sc : ShipPlacementView.shipControllers) {
+		for (ShipController sc : SeaController.shipControllers) {
 			if (!ships_hit.contains(sc)) {
 				if (target.dst(sc.pollPosition()) < radius)
 					ships_hit.add(sc);

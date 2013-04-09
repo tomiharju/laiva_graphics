@@ -21,6 +21,7 @@ public abstract class ModelObject {
 	public Sprite getSprite() {
 		return sprite;
 	}
+	
 
 	public void dispose() {
 		WorldRenderer.renderers.remove(this.getRenderer());

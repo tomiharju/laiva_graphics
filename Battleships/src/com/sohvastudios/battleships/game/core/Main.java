@@ -18,9 +18,8 @@ public class Main extends Game{
 	
 	public Main(NativeActions nativeActions){
 		this.nativeActions = nativeActions;
-
 		new AssetStorage();
-		//c.connectGame(this);
+
 		
 	}
 	@Override
