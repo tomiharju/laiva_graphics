@@ -55,6 +55,7 @@ public class GameLogicHandler extends Thread {
 		}
 		case Turn.TURN_WAIT: { // 
 			ableToFire = false;
+			shipsLocked =	true;
 			System.out.println("Current state: Wait");
 			break;
 		}
