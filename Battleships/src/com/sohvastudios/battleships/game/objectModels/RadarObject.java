@@ -13,7 +13,7 @@ import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class RadarObject extends ModelObject {
 
-	private final int SWEEP_INTERVAL = 3;
+	private final int SWEEP_INTERVAL = 2;
 	private final double SWEEP_STEP_INTERVAL = 0.033f;
 	private float sweeptime;
 	private float sweepStepTime;

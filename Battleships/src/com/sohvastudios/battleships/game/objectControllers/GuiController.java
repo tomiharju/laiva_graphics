@@ -28,7 +28,7 @@ public class GuiController extends ObjectController {
 	}
 	
 	public void createGuiElements(){
-		new GuiObject(new GuiController(2, 1.5f, 1.5f, 1.5f,
+		new GuiObject(new GuiController(2, 1.5f, 3f, 1.5f,
 				new ReadyCommand()), new GuiRenderer(), "button_ready.png");
 		
 	}

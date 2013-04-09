@@ -76,12 +76,18 @@ public class LoadingScreen implements Screen {
 	}
 
 	public void loadGuiObjects() {
-		AssetStorage.manager.load("data/guiobjects/arrow_left.png",
-				Texture.class);
-		AssetStorage.manager.load("data/guiobjects/arrow_right.png",
-				Texture.class);
-		AssetStorage.manager.load("data/guiobjects/button_fire.png",
-				Texture.class);
+		AssetStorage.manager.load("data/guiobjects/wicon-1.png",
+				Texture.class);	
+		AssetStorage.manager.load("data/guiobjects/wicon0.png",
+				Texture.class);	
+		AssetStorage.manager.load("data/guiobjects/wicon1.png",
+				Texture.class);	
+		AssetStorage.manager.load("data/guiobjects/wicon2.png",
+				Texture.class);	
+		AssetStorage.manager.load("data/guiobjects/wicon3.png",
+				Texture.class);	
+		AssetStorage.manager.load("data/guiobjects/wicon4.png",
+				Texture.class);	
 		AssetStorage.manager.load("data/guiobjects/button_ready.png",
 				Texture.class);
 		AssetStorage.manager.load("data/guiobjects/crosshair.png",

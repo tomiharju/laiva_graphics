@@ -98,7 +98,9 @@ public abstract class ObjectController {
 
 	public void handleDoubleTap(Vector3 touchPoint) {
 		// TODO Auto-generated method stub
-		
 	};
+	public void handleLongPress(Vector3 touchPoint){
+		
+	}
 
 }

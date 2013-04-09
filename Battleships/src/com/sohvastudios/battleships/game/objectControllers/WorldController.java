@@ -124,8 +124,7 @@ public class WorldController extends ObjectController {
 			mapView.handleDoubleTap(touchPoint);
 		}
 		else if(p.y<5 && p.x<5){
-			System.out.println("Sending touch to gui..doubletap");
-			guiView.handleInputDown(p);
+			guiView.handleDoubleTap(p);
 		}
 	}
 
@@ -139,6 +138,19 @@ public class WorldController extends ObjectController {
 			mapView.handleInputDrag(touchPoint);
 		}
 
+	}
+	public void touchLong(Vector3 p){
+		if(p.y>5){
+			shipView.handleLongPress(p);
+			
+		}
+		else if(p.y<5 && p.x>5){
+			mapView.handleLongPress(p);
+		}
+		else if(p.y<5 && p.x<5){
+		
+			guiView.handleLongPress(p);
+		}
 	}
 
 }

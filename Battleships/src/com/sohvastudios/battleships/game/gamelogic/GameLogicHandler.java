@@ -3,6 +3,7 @@ package com.sohvastudios.battleships.game.gamelogic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.sohvastudios.battleships.game.nativeinterface.CancelListener;
 import com.sohvastudios.battleships.game.nativeinterface.ConfirmListener;
 import com.sohvastudios.battleships.game.nativeinterface.ConnectionHandler;
 import com.sohvastudios.battleships.game.nativeinterface.NativeActions;
@@ -20,7 +21,7 @@ public class GameLogicHandler extends Thread {
 	private static NativeActions nativeActions;
 
 	public static int state;
-
+	private static boolean dialogOpen;
 	public static boolean shipsLocked;
 	public static boolean ableToFire;
 
@@ -41,6 +42,7 @@ public class GameLogicHandler extends Thread {
 		switch (state) {
 		// Ship placement phase
 		case Turn.TURN_BEGINNING: { //
+			nativeActions.createToast("Place your ships", 1);
 			ableToFire	=	false;
 			shipsLocked	=	false;
 			System.out.println("Current state: Beginning");
@@ -48,12 +50,18 @@ public class GameLogicHandler extends Thread {
 		}
 
 		case Turn.TURN_START: { // 
+			nativeActions.createToast("Your turn", 5000);
 			ableToFire 	= 	true;
 			shipsLocked =	true;
 			System.out.println("Current state: Start");
 			break;
 		}
 		case Turn.TURN_WAIT: { // 
+			nativeActions.createProgressDialog("Waiting", "Waiting for opponent to shoot", false, new CancelListener() {
+				@Override
+				public void cancel() {}
+			});
+			dialogOpen=true;
 			ableToFire = false;
 			shipsLocked =	true;
 			System.out.println("Current state: Wait");
@@ -65,14 +73,14 @@ public class GameLogicHandler extends Thread {
 			System.out.println("Current state: Shoot");
 			break;
 		}
-		case Turn.TURN_READY: { // Once you have finished placing ships, lock
-								// view and wait for other player
+		case Turn.TURN_READY: { // 
+								// 
 			ableToFire = false;
 			System.out.println("Current state: Ready");
 			break;
 		}
-		case Turn.TURN_RESULT: { // Send damage result to opponent and start a
-									// new turn.
+		case Turn.TURN_RESULT: { 	
+									
 			state = Turn.TURN_WAIT;
 			System.out.println("Current state: Result");
 			runStateMachine();
@@ -99,7 +107,8 @@ public class GameLogicHandler extends Thread {
 		}
 		case Turn.TURN_SHOOT: {
 			System.out.println("Receiving turn: Shoot");
-			lockShipView();
+			nativeActions.dismissProgressDialog();
+			dialogOpen=false;
 			float x = turn.x;
 			float y = turn.y;
 			int weapon = turn.weapon;
@@ -168,6 +177,8 @@ public class GameLogicHandler extends Thread {
 				new ConfirmListener() {			
 					@Override
 					public void yes() {
+						if(dialogOpen)
+							nativeActions.dismissProgressDialog();
 						nativeConnector.leave();
 						Gdx.app.exit();
 					}		
