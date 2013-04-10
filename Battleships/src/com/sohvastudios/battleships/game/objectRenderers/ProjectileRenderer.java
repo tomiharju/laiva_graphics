@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class ProjectileRenderer extends ObjectRenderer {
@@ -56,7 +55,6 @@ public class ProjectileRenderer extends ObjectRenderer {
 			batch.draw(currentFrame, (animPos.x - 1f), (animPos.y - 1f), 2, 2);
 			if (explosionAnimation.isAnimationFinished(stateTime)) {
 				animate = false;
-				GameLogicHandler.runStateMachine();
 				object.dispose();
 			}
 		}

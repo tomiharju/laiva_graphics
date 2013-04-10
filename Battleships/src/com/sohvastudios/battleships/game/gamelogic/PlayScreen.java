@@ -8,8 +8,9 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.nativeinterface.ConnectionHandler;
-import com.sohvastudios.battleships.game.nativeinterface.NativeActions;
+import com.sohvastudios.battleships.game.interfaces.ConnectionHandler;
+import com.sohvastudios.battleships.game.interfaces.LogicHandler;
+import com.sohvastudios.battleships.game.interfaces.NativeActions;
 import com.sohvastudios.battleships.game.objectControllers.WorldController;
 import com.sohvastudios.battleships.game.objectModels.WorldObject;
 import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
@@ -22,7 +23,8 @@ public class PlayScreen implements Screen, GestureListener{
 		WorldObject 		world;
 		WorldController		controller;
 		WorldRenderer		renderer;
-		GameLogicHandler 	logicHandler;
+		
+		public static LogicHandler logicHandler;
 		
 	
 	
@@ -30,7 +32,6 @@ public class PlayScreen implements Screen, GestureListener{
 		
 		guiCam 			=  	new OrthographicCamera(10,15);
 		guiCam.position.set(5,7.5f,0f);
-		guiCam.update();
 		touchPoint		=	new Vector3();
 		controller		= 	new WorldController(0,0,0,0);
 		renderer		=	new WorldRenderer();
@@ -47,6 +48,7 @@ public class PlayScreen implements Screen, GestureListener{
 
 	@Override
 	public void render(float delta) {
+		guiCam.update();
 		if (!paused) {
 			Gdx.gl.glClearColor(0f, .0f, .0f, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);

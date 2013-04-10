@@ -7,8 +7,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.sohvastudios.battleships.game.gamelogic.LoadingScreen;
 import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
-import com.sohvastudios.battleships.game.nativeinterface.ConnectionHandler;
-import com.sohvastudios.battleships.game.nativeinterface.NativeActions;
+import com.sohvastudios.battleships.game.interfaces.ConnectionHandler;
+import com.sohvastudios.battleships.game.interfaces.NativeActions;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 

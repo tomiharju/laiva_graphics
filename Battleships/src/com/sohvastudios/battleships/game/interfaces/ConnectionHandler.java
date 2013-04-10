@@ -1,14 +1,16 @@
-package com.sohvastudios.battleships.game.nativeinterface;
+package com.sohvastudios.battleships.game.interfaces;
 
+import java.util.ArrayList;
+
+import com.badlogic.gdx.math.Vector2;
 import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
-import com.sohvastudios.battleships.game.utilities.Turn;
 
 
 public interface ConnectionHandler {
 	public void setLogicHandler(GameLogicHandler h);
-	public void sendReady(Turn t);
-	public void sendShoot(Turn t);
-	public void sendResult(Turn t);
+	public void sendReady();
+	public void sendShoot(float x,float y, int weapon);
+	public void sendResult(ArrayList<Vector2> result);
 	public void connect();
 	public void disconnect();
 	public void leave();

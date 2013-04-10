@@ -76,16 +76,9 @@ public class LoadingScreen implements Screen {
 	}
 
 	public void loadGuiObjects() {
-		AssetStorage.manager.load("data/guiobjects/arrow_left.png",
-				Texture.class);
-		AssetStorage.manager.load("data/guiobjects/arrow_right.png",
-				Texture.class);
-		AssetStorage.manager.load("data/guiobjects/button_fire.png",
-				Texture.class);
-		AssetStorage.manager.load("data/guiobjects/button_ready.png",
-				Texture.class);
-		AssetStorage.manager.load("data/guiobjects/crosshair.png",
-				Texture.class);
+		AssetStorage.manager.load("data/guiobjects/button_fire.png",Texture.class);
+		AssetStorage.manager.load("data/guiobjects/button_ready.png",Texture.class);
+		AssetStorage.manager.load("data/guiobjects/crosshair.png",Texture.class);
 		AssetStorage.manager.load("data/hitmarker.png", Texture.class);
 	}
 
@@ -107,15 +100,12 @@ public class LoadingScreen implements Screen {
 		Gdx.gl.glClearColor(0f, .0f, .0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		percentLoaded = (float) Math
-				.ceil(AssetStorage.manager.getProgress() * 10);
+		percentLoaded = (float) Math.ceil(AssetStorage.manager.getProgress() * 10);
 		charSequence.delete(0, charSequence.length());
-
 		charSequence.append(String.valueOf(percentLoaded));
 		charSequence.append("%");
 		if (AssetStorage.manager.update()) {
-			if (Gdx.input.isTouched())
-				main.startGame();
+			main.startGame();
 		}
 
 		cam.update();
