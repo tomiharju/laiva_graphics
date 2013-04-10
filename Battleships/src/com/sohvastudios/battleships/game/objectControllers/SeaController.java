@@ -25,7 +25,7 @@ public class SeaController extends ObjectController {
 		super(x, y, w, h);
 		shipControllers = new ArrayList<ShipController>();
 		activeController = null;
-		weaponDescription = new GuiObject(new GuiController(2.5f,2.5f,5,5,new DisposeCommand()),new GuiRenderer(),"wicon-1.png");
+		weaponDescription =null;
 	}
 
 	public void createShips() {

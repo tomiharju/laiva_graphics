@@ -35,7 +35,7 @@ public class WorldObject extends ModelObject {
 		
 		objects 			= new ArrayList<ModelObject>();
 		
-		radarObject			= new RadarObject(new RadarController(2.5f,2.5f,5,5),new RadarRenderer());
+		radarObject			= new RadarObject(new RadarController(2.5f,2.5f,5f,5f),new RadarRenderer());
 		seaObject 			= new SeaObject(new SeaController(5f,5f,10,10), new SeaRenderer());
 		((SeaController) seaObject.controller).createShips();
 		guiObject			= new GuiObject(new GuiController());
