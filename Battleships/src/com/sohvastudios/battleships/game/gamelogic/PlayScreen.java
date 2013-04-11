@@ -43,7 +43,7 @@ public class PlayScreen implements Screen, GestureListener{
 		
 		paused			= false;
 
-		Gdx.input.setInputProcessor(new GestureDetector(2.0f,1f,0.5f,0.5f,this));
+		Gdx.input.setInputProcessor(new GestureDetector(2.0f,1f,.2f,0.5f,this));
 	}
 
 	@Override
@@ -95,13 +95,7 @@ public class PlayScreen implements Screen, GestureListener{
 
 	
 
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		guiCam.unproject(touchPoint.set(x, y, 0));
-		controller.touchDown(touchPoint);
-		return false;
-	}
-
+	
 	@Override
 	public boolean tap(float x, float y, int count, int button) {
 		guiCam.unproject(touchPoint.set(x, y, 0));
@@ -111,7 +105,9 @@ public class PlayScreen implements Screen, GestureListener{
 
 	@Override
 	public boolean longPress(float x, float y) {
-		// TODO Auto-generated method stub
+		guiCam.unproject(touchPoint.set(x, y, 0));
+		System.out.println("LongPress!");
+		controller.touchLong(touchPoint);
 		return false;
 	}
 
@@ -140,5 +136,16 @@ public class PlayScreen implements Screen, GestureListener{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		System.out.println("touchup");
+		guiCam.unproject(touchPoint.set(x,y, 0));
+		controller.touchDown(touchPoint);
+	
+		return false;
+	}
+
+
 
 }

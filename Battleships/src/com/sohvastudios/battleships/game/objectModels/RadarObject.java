@@ -13,7 +13,7 @@ import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class RadarObject extends ModelObject {
 
-	private final int SWEEP_INTERVAL = 3;
+	private final float SWEEP_INTERVAL = 0.5f;
 	private final double SWEEP_STEP_INTERVAL = 0.033f;
 	private float sweeptime;
 	private float sweepStepTime;
@@ -39,7 +39,7 @@ public class RadarObject extends ModelObject {
 		
 		sweeptime = 0;
 		sweepStepTime = 0;
-		scanBar = new Rectangle(bounds.x-1, bounds.y,1, 5);
+		scanBar = new Rectangle(bounds.x-1, bounds.y,1, bounds.height);
 		sweepEffect = new Sprite(AssetStorage.manager.get("data/effects/sweep.png",Texture.class));
 		sweepEffect.setSize(1,5);
 		sweepEffect.setPosition(scanBar.x , scanBar.y);
@@ -48,7 +48,7 @@ public class RadarObject extends ModelObject {
 
 	@Override
 	public void update() {
-		sweeptime += Gdx.graphics.getDeltaTime();
+		sweeptime += Gdx.graphics.getDeltaTime()/5;
 		if (sweeptime > SWEEP_INTERVAL) {
 			runSweep();
 
@@ -65,7 +65,7 @@ public class RadarObject extends ModelObject {
 			scanBar.set(scanBar.x + 0.1f, bounds.y, 1, 5);
 			sweepEffect.setPosition(scanBar.x , scanBar.y);
 			sweepStepTime = 0;
-			if (scanBar.x > 5) {
+			if (scanBar.x > bounds.width) {
 				scanBar.set(bounds.x-1,  bounds.y,1,5);
 				sweeptime = 0;
 			}

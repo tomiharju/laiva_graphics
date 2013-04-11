@@ -75,6 +75,8 @@ public class ShipController extends ObjectController {
 	}
 
 	public void rotate90() {
+		if(GameLogicHandler.shipsLocked)
+			return;
 		Rectangle tempRect = new Rectangle();
 		tempRect.set(bounds);
 		float temp;

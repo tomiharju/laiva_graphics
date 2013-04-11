@@ -45,6 +45,9 @@ public class RadarController extends ObjectController {
 		crosshair.getController().handleInputDrag(pos);
 	}
 	public void handleDoubleTap(Vector3 pos){
+		
+	}
+	public void handleLongPress(Vector3 pos){
 		if(GameLogicHandler.ableToFire)
 			fire();
 	}
