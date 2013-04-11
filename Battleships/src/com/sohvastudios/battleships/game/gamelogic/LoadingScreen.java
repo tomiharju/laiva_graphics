@@ -77,7 +77,7 @@ public class LoadingScreen implements Screen {
 
 	public void loadGuiObjects() {
 
-		AssetStorage.manager.load("data/guiobjects/button_fire.png",Texture.class);
+		
 		AssetStorage.manager.load("data/guiobjects/button_ready.png",Texture.class);
 		AssetStorage.manager.load("data/guiobjects/crosshair.png",Texture.class);
 
