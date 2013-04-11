@@ -17,7 +17,7 @@ public class WorldController extends ObjectController {
 	private GuiController guiView;
 	private ArrayList<Vector2> result;
 	private Vector3 touchPoint;
-	//Cameras to unproject touchpoints
+	
 	
 	
 	public WorldController(float x, float y, float w, float h) {
@@ -27,15 +27,11 @@ public class WorldController extends ObjectController {
 	}
 
 	public void initialize() {
-		shipView = (SeaController) ((WorldObject) object).shipView()
-				.getController();
-		mapView = (RadarController) ((WorldObject) object).mapView()
-				.getController();
-		guiView = (GuiController)((WorldObject)object).guiView()
-				.getController();
+		shipView = (SeaController) ((WorldObject) object).shipView().getController();
+		mapView = (RadarController) ((WorldObject) object).mapView().getController();
+		guiView = (GuiController)((WorldObject)object).guiView().getController();
 		shipView.show();
 		mapView.show();
-
 		result = new ArrayList<Vector2>();
 
 	}
@@ -58,39 +54,33 @@ public class WorldController extends ObjectController {
 
 		case 0: {
 			// Grenade
-		
 			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,
-					radius);
+					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
 			break;
 		}
 
 		case 1: {
 			// Heatseeker
 			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,
-					radius);
+					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
 			break;
 		}
 		case 2: {
 			// Mortar
 			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,
-					radius);
+					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
 			break;
 		}
 		case 3: {
 			// NavalGun
 			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,
-					radius);
+					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
 			break;
 		}
 		case 4: {
 			// Phalanx CIWS
 			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,
-					radius);
+					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
 			break;
 		}
 		}

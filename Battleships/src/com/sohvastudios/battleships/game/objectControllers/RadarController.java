@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
+import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
 import com.sohvastudios.battleships.game.objectModels.GuiObject;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectRenderers.GuiRenderer;
-import com.sohvastudios.battleships.game.utilities.Turn;
 
 public class RadarController extends ObjectController {
 
@@ -33,7 +33,7 @@ public class RadarController extends ObjectController {
 				target.mul(2);
 				int weapon = ((ShipObject)sc.getObject()).shipWeapon.ordinal();
 				System.out.println("Shooting at "+target.toString()+ " with "+weapon);
-				GameLogicHandler.sendShoot(new Turn(Turn.TURN_SHOOT,target.x,target.y,weapon));
+				PlayScreen.logicHandler.sendShoot(target.x,target.y,weapon);
 				break;
 			}
 			

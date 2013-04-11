@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
+import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.ProjectileController;
 import com.sohvastudios.battleships.game.objectControllers.SeaController;
@@ -126,7 +126,7 @@ public class ProjectileObject extends ModelObject {
 				}
 			}
 		}
-		GameLogicHandler.sendResult((new Turn(Turn.TURN_RESULT, result)));
+		PlayScreen.logicHandler.sendResult(result);
 	}
 
 	@Override
