@@ -19,7 +19,7 @@ public class RadarController extends ObjectController {
 	public RadarController(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		markerControllers = new ArrayList<HitMarkerController>();
-		crosshair = new GuiObject(new GuiController(7.5f,2.5f,.5f,.5f,null),new GuiRenderer(),"crosshair.png");
+		crosshair = new GuiObject(new GuiController(0f,0f,.5f,.5f,null),new GuiRenderer(),"crosshair.png");
 
 	}
 
