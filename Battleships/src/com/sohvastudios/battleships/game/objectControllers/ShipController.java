@@ -6,29 +6,42 @@ import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 
 public class ShipController extends ObjectController {
+	private boolean isStacked;
 
 	public ShipController(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		SeaController.shipControllers.add(this);
 		deSelect();
+		isStacked=true;
+		
 	}
 
 
 	@Override
 	public void handleInputDrag(Vector3 pos) {
+		boolean legalmove = true;
+		
 		if(GameLogicHandler.shipsLocked)
 			return;
 		
-		if (!area_bounds_sea.contains(pos.x, pos.y))
+		if(isStacked){
+			if(pos.y<position.y){
+				position.y=pos.y;
+				setPosition(position);
+				if (area_bounds_sea.contains(bounds)) {
+					isStacked=false;
+					System.out.println("no longer stacked");
+				}
+			}
 			return;
-		boolean legalmove = true;
+		}
 		clear_bounds.set(pos.x - bounds.width / 2, pos.y - bounds.height / 2,
 				bounds.width, bounds.height);
 		for (ShipController sc : SeaController.shipControllers) {
 			if (!sc.equals(this)) {
-				if (sc.pollBounds().overlaps(clear_bounds)
-						|| !area_bounds_sea.contains(clear_bounds)) {
+				if (sc.pollBounds().overlaps(clear_bounds) || !area_bounds_sea.contains(clear_bounds)) {
 					legalmove = false;
+				
 				}
 
 			}

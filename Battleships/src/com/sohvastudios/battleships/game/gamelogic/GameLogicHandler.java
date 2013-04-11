@@ -21,10 +21,10 @@ public class GameLogicHandler implements LogicHandler {
 
 	private WorldController controller;
 	private ConnectionHandler nativeConnector;
-	private NativeActions nativeActions;
+	
+	public NativeActions nativeActions;
 
 	public static int state;
-	private static boolean dialogOpen;
 	public static boolean shipsLocked;
 	public static boolean ableToFire;
 
@@ -47,25 +47,29 @@ public class GameLogicHandler implements LogicHandler {
 			nativeActions.createToast("Place your ships", 1);
 			ableToFire	=	false;
 			shipsLocked	=	false;
+			controller.hideRadar();
 			System.out.println("Current state: Beginning");
 			break;
 		}
 
 		case Turn.TURN_START: { // 
+			nativeActions.dismissProgressDialog();
 			nativeActions.createToast("Your turn", 5000);
 			ableToFire 	= 	true;
 			shipsLocked =	true;
+			controller.showRadar();
 			System.out.println("Current state: Start");
 			break;
 		}
-		case Turn.TURN_WAIT: { // 
+		case Turn.TURN_WAIT: { 
+			controller.hideRadar();
 			nativeActions.createProgressDialog("Waiting", "Waiting for opponent to shoot", false, new CancelListener() {
 				@Override
 				public void cancel() {}
 			});
-			dialogOpen=true;
 			ableToFire = false;
 			shipsLocked =	true;
+			
 			System.out.println("Current state: Wait");
 			break;
 		}
@@ -102,8 +106,7 @@ public class GameLogicHandler implements LogicHandler {
 				new ConfirmListener() {			
 					@Override
 					public void yes() {
-						if(dialogOpen)
-							nativeActions.dismissProgressDialog();
+						nativeActions.dismissProgressDialog();
 						nativeConnector.leave();
 						Gdx.app.exit();
 					}
@@ -134,7 +137,7 @@ public class GameLogicHandler implements LogicHandler {
 				+ result.size());
 		for (Vector2 v : result) {
 			Vector2 scaledHit = v;
-			scaledHit.div(2);
+			scaledHit.div(1.25f);
 			new HitMarkerObject(new HitMarkerController(scaledHit.x,
 					scaledHit.y, 0.25f, 0.25f), new HitMarkerRenderer());
 		}
@@ -147,6 +150,7 @@ public class GameLogicHandler implements LogicHandler {
 		System.out.println("Receiving turn: Shoot");
 		controller.calculateDamageTaken(new Vector3(x, y, 0), weapon);
 		state = Turn.TURN_START;
+		runStateMachine();
 	}
 
 	@Override
@@ -172,6 +176,9 @@ public class GameLogicHandler implements LogicHandler {
 		nativeConnector.sendResult(result);
 		runStateMachine();
 
+	}
+	public void createToast(String message){
+		nativeActions.createToast(message, 1);
 	}
 
 }

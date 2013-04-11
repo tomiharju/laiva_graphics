@@ -21,8 +21,8 @@ public abstract class ObjectController {
 		position 			= new Vector3(x, y, 0);
 		bounds				= new Rectangle(x - width / 2, y - height / 2, width, height);
 		clear_bounds 		= new Rectangle();
-		area_bounds_sea 	= new Rectangle(0,0f, 10, 10);
-		area_bounds_radar 	= new Rectangle(5,0,5,5);
+		area_bounds_sea 	= new Rectangle(-5,-5, 10, 10);
+		area_bounds_radar 	= new Rectangle(-4,-4,8,8);
 	}
 	public ObjectController(){
 	}

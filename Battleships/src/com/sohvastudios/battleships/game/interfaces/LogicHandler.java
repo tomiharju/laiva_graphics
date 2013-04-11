@@ -15,7 +15,9 @@ public interface LogicHandler {
 	public void sendReady();
 	public void sendShoot(float x,float y, int weapon);
 	public void sendResult(ArrayList<Vector2> result);
-	public void opponentLeft(); 
+	public void opponentLeft();
+
+	
 		
 
 }

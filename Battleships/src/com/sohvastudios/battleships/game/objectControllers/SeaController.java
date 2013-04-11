@@ -29,10 +29,10 @@ public class SeaController extends ObjectController {
 	}
 
 	public void createShips() {
-		float values[] = { 9,7, 5, 3, 1 };
+	
 		for (ShipType ship : ShipType.values()) {
-			new ShipObject(ship, new ShipController(3, values[ship.ordinal()],
-					ship.getLenght(), ship.getWidth()), new ShipRenderer());
+			new ShipObject(ship, new ShipController(0, 6 ,
+					ship.getLenght(), ship.getWidth()), new ShipRenderer()).getController();
 		}
 
 	}

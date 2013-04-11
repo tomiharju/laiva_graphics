@@ -27,6 +27,8 @@ public abstract class ModelObject {
 		WorldRenderer.renderers.remove(this.getRenderer());
 		WorldObject.objects.remove(this);
 	}
+	
+	
 
 	public boolean isVisible() {
 		return visible;

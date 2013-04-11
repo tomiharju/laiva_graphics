@@ -59,11 +59,11 @@ public class ShipObject extends ModelObject {
 			ShipRenderer renderer) {
 		setController(controller);
 		setRenderer(renderer);
+		
 		position = controller.pollPosition();
 		bounds = controller.pollBounds();
 
-		sprite = new Sprite(AssetStorage.manager.get(
-				"data/ships/" + ship.getFile(), Texture.class));
+		sprite = new Sprite(AssetStorage.manager.get("data/ships/" + ship.getFile(), Texture.class));
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
@@ -105,6 +105,7 @@ public class ShipObject extends ModelObject {
 		}
 
 	}
+	
 
 	public boolean isDestroyed() {
 		return destroyed;

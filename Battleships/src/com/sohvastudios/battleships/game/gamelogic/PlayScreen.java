@@ -31,7 +31,7 @@ public class PlayScreen implements Screen, GestureListener{
 	public PlayScreen(ConnectionHandler connector, NativeActions actions){
 		
 		guiCam 			=  	new OrthographicCamera(10,15);
-		guiCam.position.set(5,7.5f,0f);
+		//guiCam.position.set(5,7.5f,0f);
 		touchPoint		=	new Vector3();
 		controller		= 	new WorldController(0,0,0,0);
 		renderer		=	new WorldRenderer();
@@ -139,7 +139,6 @@ public class PlayScreen implements Screen, GestureListener{
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
-		System.out.println("touchup");
 		guiCam.unproject(touchPoint.set(x,y, 0));
 		controller.touchDown(touchPoint);
 	

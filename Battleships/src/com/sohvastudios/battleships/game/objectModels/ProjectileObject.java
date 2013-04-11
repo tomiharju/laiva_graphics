@@ -17,7 +17,6 @@ import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 import com.sohvastudios.battleships.game.utilities.DamageCalculator;
-import com.sohvastudios.battleships.game.utilities.Turn;
 import com.sohvastudios.battleships.game.weaponStrategies.GrenadeStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.MissileStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.MortarStrategy;
@@ -46,12 +45,14 @@ public class ProjectileObject extends ModelObject {
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
 
-		WorldObject.objects.add(this);
-		this.renderer.addGraphics(sprite);
+		
 
 		((ProjectileRenderer) this.renderer).createAnimation(0);
 		setVisible();
 		setStrategy(weaponType);
+		
+		WorldObject.objects.add(this);
+		this.renderer.addGraphics(sprite);
 	}
 
 	public void setStrategy(int weapon_type) {

@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
 import com.sohvastudios.battleships.game.objectModels.GuiObject;
-import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectRenderers.GuiRenderer;
 
 public class RadarController extends ObjectController {
@@ -24,20 +23,21 @@ public class RadarController extends ObjectController {
 	}
 
 	public void fire() {
-		for(ShipController sc : SeaController.shipControllers){
-			if(sc.isSelected()){
+		//for(ShipController sc : SeaController.shipControllers){
+		//	if(sc.isSelected()){
 				System.out.println("Fire in the hole!");
 				Vector3 target = new Vector3();
 				target.set(crosshair.getController().pollPosition());
-				target.set(target.x-5,target.y,0);
-				target.mul(2);
-				int weapon = ((ShipObject)sc.getObject()).shipWeapon.ordinal();
+				target.set(target.x,target.y,0);
+				target.mul(1.25f);
+				//BUGFIXGING int weapon = ((ShipObject)sc.getObject()).shipWeapon.ordinal();
+				int weapon = 1;
 				System.out.println("Shooting at "+target.toString()+ " with "+weapon);
 				PlayScreen.logicHandler.sendShoot(target.x,target.y,weapon);
-				break;
-			}
+				
+			//}
 			
-		}
+		//}
 	}
 
 	@Override

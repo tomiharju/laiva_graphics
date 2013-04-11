@@ -10,6 +10,7 @@ import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class GuiObject extends ModelObject {
 
+	
 	public GuiObject(ObjectController controller, ObjectRenderer renderer,
 			String file) {
 		setController(controller);
@@ -52,5 +53,6 @@ public class GuiObject extends ModelObject {
 		// TODO Auto-generated method stub
 
 	}
+	
 
 }

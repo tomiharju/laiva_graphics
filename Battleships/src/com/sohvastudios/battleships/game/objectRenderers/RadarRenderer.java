@@ -18,9 +18,10 @@ public class RadarRenderer extends ObjectRenderer {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		if(object.isVisible()){
 		graphics.draw(batch);
 		sweepGraphics.draw(batch);
-				
+		}
 	
 	}
 
