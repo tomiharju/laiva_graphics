@@ -24,11 +24,13 @@ public class HitMarkerObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
-		WorldObject.objects.add(this);
-		this.renderer.addGraphics(sprite);
+	
 
 		alpha = 1f; // Value used to render with increasing transparency
 		visible = true;
+		controller.initialize();
+		WorldObject.objects.add(this);
+		this.renderer.addGraphics(sprite);
 	}
 
 	@Override

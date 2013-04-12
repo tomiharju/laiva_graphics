@@ -52,8 +52,8 @@ public class ShipObject extends ModelObject {
 	private float maxHitpoints;
 	private float hpPercentage;
 	private boolean destroyed = false;
-	
 	public Weapon shipWeapon;
+	
 	
 	public ShipObject(ShipType ship, ShipController controller,
 			ShipRenderer renderer) {
@@ -67,14 +67,16 @@ public class ShipObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
-
-		WorldObject.objects.add(this);
+		baseSprite = new Sprite(sprite);
+		
 		hitpoints = ship.getHp();
 		maxHitpoints = hitpoints;
 		hpPercentage = 100;
-		this.renderer.addGraphics(sprite);
-
 		installWeapon(ship.ordinal());
+		
+		controller.initialize();
+		WorldObject.objects.add(this);
+		this.renderer.addGraphics(sprite);
 	}
 	public void installWeapon(int shiptype){
 		switch(shiptype){
@@ -127,7 +129,7 @@ public class ShipObject extends ModelObject {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		baseSprite.setPosition(sprite.getX(), sprite.getY());
 
 	}
 

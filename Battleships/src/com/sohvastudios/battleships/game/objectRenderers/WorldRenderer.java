@@ -51,8 +51,7 @@ public class WorldRenderer extends ObjectRenderer {
 			SeaRenderer.objectsAtSea.get(i).draw(batch);
 		
 		batch.setProjectionMatrix(radarCam.combined);
-		
-		for (int i = 0; i < RadarRenderer.objectsAtRadar.size(); i++)
+				for (int i = 0; i < RadarRenderer.objectsAtRadar.size(); i++)
 			RadarRenderer.objectsAtRadar.get(i).draw(batch);
 		
 		batch.setProjectionMatrix(cam.combined);

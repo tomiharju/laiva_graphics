@@ -3,23 +3,29 @@ package com.sohvastudios.battleships.game.objectControllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
-import com.sohvastudios.battleships.game.objectModels.GuiObject;
-import com.sohvastudios.battleships.game.objectRenderers.GuiRenderer;
+import com.sohvastudios.battleships.game.objectModels.UserInterfaceObject;
+import com.sohvastudios.battleships.game.objectRenderers.UserInterfaceRenderer;
 
 public class RadarController extends ObjectController {
 
 	public static ArrayList<HitMarkerController> markerControllers;
 
 	// Gui objects
-	private GuiObject crosshair;
-
+	private UserInterfaceObject crosshair;
+	
+	private boolean radarLocked;
+	
 	public RadarController(float x, float y, float w, float h) {
 		super(x, y, w, h);
-		markerControllers = new ArrayList<HitMarkerController>();
-		crosshair = new GuiObject(new GuiController(0f,0f,.5f,.5f,null),new GuiRenderer(),"crosshair.png");
+		radarLocked=true;
 
+	}
+	public void initialize(){
+		markerControllers = new ArrayList<HitMarkerController>();
+		crosshair = new UserInterfaceObject(new UserInterfaceController(0f,0f,.5f,.5f,null),new UserInterfaceRenderer(),"crosshair.png");
+		crosshair.addToRadar(this);
+	
 	}
 
 	public void fire() {
@@ -40,15 +46,32 @@ public class RadarController extends ObjectController {
 		//}
 	}
 
+	public void unlockRadar(){
+		radarLocked=false;
+	}
+	public void lockRadar(){
+		radarLocked=true;
+	}
+	public boolean isLocked(){
+		return radarLocked;
+	}
 	@Override
 	public void handleInputDrag(Vector3 pos) {
-		crosshair.getController().handleInputDrag(pos);
+		for(UserInterfaceController uc : guiControllers){
+			uc.handleInputDrag(pos);
+		}
+		
+	}
+	public void handleInputDown(Vector3 pos){
+		for(UserInterfaceController uc : guiControllers){
+			uc.handleInputDown(pos);
+		}
 	}
 	public void handleDoubleTap(Vector3 pos){
 		
 	}
 	public void handleLongPress(Vector3 pos){
-		if(GameLogicHandler.ableToFire)
+		if(!radarLocked)
 			fire();
 	}
 

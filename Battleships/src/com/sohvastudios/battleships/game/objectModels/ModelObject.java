@@ -5,13 +5,16 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.RadarRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.SeaRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 
 public abstract class ModelObject {
 
 	protected ObjectController controller;
 	protected ObjectRenderer renderer;
-	protected Sprite sprite;
+	public Sprite sprite;
+	public Sprite baseSprite;
 	protected Rectangle bounds;
 	protected Vector3 position;
 	protected boolean visible;
@@ -24,7 +27,10 @@ public abstract class ModelObject {
 	
 
 	public void dispose() {
-		WorldRenderer.renderers.remove(this.getRenderer());
+		SeaRenderer.objectsAtSea.remove(this.renderer);
+		RadarRenderer.objectsAtRadar.remove(this.renderer);
+		WorldRenderer.renderers.remove(this.renderer);
+		
 		WorldObject.objects.remove(this);
 	}
 	
@@ -54,9 +60,6 @@ public abstract class ModelObject {
 
 	public abstract void setRenderer(ObjectRenderer renderer);
 
-	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
-	}
 
 	public Vector3 getPosition() {
 		return position;

@@ -1,5 +1,7 @@
 package com.sohvastudios.battleships.game.objectControllers;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -17,14 +19,26 @@ public abstract class ObjectController {
 	protected Rectangle area_bounds_sea;
 	protected Rectangle area_bounds_radar;
 	
+	public ArrayList<UserInterfaceController> guiControllers = new ArrayList<UserInterfaceController>();
+	
 	public ObjectController(float x, float y, float width, float height) {
 		position 			= new Vector3(x, y, 0);
 		bounds				= new Rectangle(x - width / 2, y - height / 2, width, height);
 		clear_bounds 		= new Rectangle();
 		area_bounds_sea 	= new Rectangle(-5,-5, 10, 10);
 		area_bounds_radar 	= new Rectangle(-4,-4,8,8);
+		
 	}
 	public ObjectController(){
+	}
+	
+	public abstract void initialize();
+		
+	
+	
+	public void removeGuiObject(UserInterfaceController obj) {
+		guiControllers.remove(obj);
+		obj.getObject().dispose();
 	}
 
 	public ModelObject getObject() {
@@ -39,9 +53,9 @@ public abstract class ObjectController {
 		position.set(vector3);
 		bounds.x = position.x - bounds.width / 2;
 		bounds.y = position.y - bounds.height / 2;
-		Sprite sprite = object.getSprite();
-		sprite.setPosition(position.x - sprite.getWidth() / 2, position.y
-				- sprite.getHeight() / 2);
+		Sprite sprite = object.sprite;
+		sprite.setPosition(bounds.x,bounds.y);
+			
 	}
 
 	public Vector3 pollPosition() {
@@ -64,19 +78,7 @@ public abstract class ObjectController {
 		return selected;
 	}
 
-	public void setBounds(float w, float h) {
-		bounds.width = w;
-		bounds.height = h;
-		setPosition(position);
-		object.getSprite().setSize(bounds.getWidth(), bounds.getHeight());
-	}
 
-	public void setBounds(float x) {
-		bounds.height = x * 2;
-		bounds.width = x * 2;
-		setPosition(position);
-		object.getSprite().setSize(bounds.getWidth(), bounds.getHeight());
-	}
 
 	public void hide() {
 	};
@@ -84,6 +86,7 @@ public abstract class ObjectController {
 	public void show() {
 	};
 
+	
 	public void handleInputDown(Vector3 touchPoint) {
 	};
 

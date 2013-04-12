@@ -3,7 +3,6 @@ package com.sohvastudios.battleships.game.objectModels;
 import java.util.ArrayList;
 
 import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
-import com.sohvastudios.battleships.game.objectControllers.GuiController;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.RadarController;
 import com.sohvastudios.battleships.game.objectControllers.SeaController;
@@ -27,7 +26,7 @@ public class WorldObject extends ModelObject {
 	// Game components
 	private SeaObject seaObject;
 	private RadarObject radarObject;
-	private GuiObject	guiObject;
+
 	public WorldObject(ObjectController controller, ObjectRenderer renderer) {
 		setController(controller);
 		setRenderer(renderer);
@@ -38,7 +37,6 @@ public class WorldObject extends ModelObject {
 		radarObject			= new RadarObject(new RadarController(0,0,8,8),new RadarRenderer());
 		seaObject 			= new SeaObject(new SeaController(0,0,10,10), new SeaRenderer());
 		((SeaController) seaObject.controller).createShips();
-		guiObject			= new GuiObject(new GuiController());
 
 		
 		
@@ -71,8 +69,5 @@ public class WorldObject extends ModelObject {
 	public RadarObject mapView() {
 		return radarObject;
 	}
-	public GuiObject guiView(){
-		return guiObject;
-	}
-
+	
 }

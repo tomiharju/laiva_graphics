@@ -24,8 +24,9 @@ public class SeaObject extends ModelObject {
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
 
+		controller.initialize();
 		WorldObject.objects.add(this);
-		renderer.addGraphics(sprite);
+		this.renderer.addGraphics(sprite);
 
 	}
 

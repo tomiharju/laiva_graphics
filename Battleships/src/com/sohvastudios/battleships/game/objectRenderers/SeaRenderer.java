@@ -7,12 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class SeaRenderer extends ObjectRenderer {
 
-	public static ArrayList<ObjectRenderer> objectsAtSea;
+	public static ArrayList<ObjectRenderer> objectsAtSea = new ArrayList<ObjectRenderer>();
 	
 
 	
 	public SeaRenderer() {
-		objectsAtSea = new ArrayList<ObjectRenderer>();
 		objectsAtSea.add(this);
 	}
 

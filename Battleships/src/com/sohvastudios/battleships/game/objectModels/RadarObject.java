@@ -34,8 +34,6 @@ public class RadarObject extends ModelObject {
 				- bounds.height / 2);
 
 		
-		WorldObject.objects.add(this);
-		renderer.addGraphics(sprite);
 		
 		sweeptime = 0;
 		sweepStepTime = 0;
@@ -44,6 +42,11 @@ public class RadarObject extends ModelObject {
 		sweepEffect.setSize(1,bounds.height);
 		sweepEffect.setPosition(scanBar.x , scanBar.y);
 		renderer.addSweepGraphics(sweepEffect);
+		
+
+		controller.initialize();
+		WorldObject.objects.add(this);
+		this.renderer.addGraphics(sprite);
 	}
 
 	@Override

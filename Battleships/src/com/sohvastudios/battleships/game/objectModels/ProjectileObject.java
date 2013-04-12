@@ -51,6 +51,7 @@ public class ProjectileObject extends ModelObject {
 		setVisible();
 		setStrategy(weaponType);
 		
+		controller.initialize();
 		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
 	}

@@ -3,45 +3,35 @@ package com.sohvastudios.battleships.game.objectControllers;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 
 public class ShipController extends ObjectController {
 	private boolean isStacked;
 
 	public ShipController(float x, float y, float w, float h) {
 		super(x, y, w, h);
+		
+	}
+	public void initialize(){
 		SeaController.shipControllers.add(this);
 		deSelect();
 		isStacked=true;
-		
 	}
-
 
 	@Override
 	public void handleInputDrag(Vector3 pos) {
+
+		if(!area_bounds_sea.contains(pos.x,pos.y))
+			return;
+		
 		boolean legalmove = true;
-		
-		if(GameLogicHandler.shipsLocked)
-			return;
-		
-		if(isStacked){
-			if(pos.y<position.y){
-				position.y=pos.y;
-				setPosition(position);
-				if (area_bounds_sea.contains(bounds)) {
-					isStacked=false;
-					System.out.println("no longer stacked");
-				}
-			}
-			return;
-		}
 		clear_bounds.set(pos.x - bounds.width / 2, pos.y - bounds.height / 2,
 				bounds.width, bounds.height);
 		for (ShipController sc : SeaController.shipControllers) {
 			if (!sc.equals(this)) {
 				if (sc.pollBounds().overlaps(clear_bounds) || !area_bounds_sea.contains(clear_bounds)) {
 					legalmove = false;
-				
+					object.baseSprite.setColor(1,0,0,1);
+					setPosition(pos);
 				}
 
 			}
@@ -50,6 +40,7 @@ public class ShipController extends ObjectController {
 
 		if (legalmove) {
 			setPosition(pos);
+			object.baseSprite.setColor(1,0,0,0);
 		} else {
 			legalmove = true;
 
@@ -61,12 +52,15 @@ public class ShipController extends ObjectController {
 						- bounds.height / 2, bounds.width, bounds.height);
 				for (ShipController sc : SeaController.shipControllers)
 					if (!sc.equals(this))
-						if (sc.pollBounds().overlaps(clear_bounds)
-								|| !area_bounds_sea.contains(clear_bounds))
+						if (sc.pollBounds().overlaps(clear_bounds)|| !area_bounds_sea.contains(clear_bounds)){
 							legalmove = false;
-				if (legalmove)
+							object.baseSprite.setColor(1,0,0,1);
+							setPosition(pos);
+						}
+				if (legalmove){
 					setPosition(position);
-
+					object.baseSprite.setColor(1,0,0,0);
+				}
 			}
 
 			else if (pos.x < bounds.x || pos.x > bounds.x + bounds.width) {
@@ -75,21 +69,26 @@ public class ShipController extends ObjectController {
 						- bounds.height / 2, bounds.width, bounds.height);
 				for (ShipController sc : SeaController.shipControllers)
 					if (!sc.equals(this))
-						if (sc.pollBounds().overlaps(clear_bounds)
-								|| !area_bounds_sea.contains(clear_bounds))
+						if (sc.pollBounds().overlaps(clear_bounds)|| !area_bounds_sea.contains(clear_bounds)){
 							legalmove = false;
-				if (legalmove)
+							object.baseSprite.setColor(1,0,0,1);
+							setPosition(pos);
+						}
+				if (legalmove){
 					setPosition(position);
+					object.baseSprite.setColor(1,0,0,0);
+				}
 
 			}
 
 		}
 
+	
+
 	}
 
 	public void rotate90() {
-		if(GameLogicHandler.shipsLocked)
-			return;
+		
 		Rectangle tempRect = new Rectangle();
 		tempRect.set(bounds);
 		float temp;
@@ -101,8 +100,7 @@ public class ShipController extends ObjectController {
 		boolean legalmove = true;
 		for (ShipController sc : SeaController.shipControllers) {
 			if (!sc.equals(this)) {
-				if (sc.pollBounds().overlaps(tempRect)
-						|| !area_bounds_sea.contains(tempRect)) {
+				if (sc.pollBounds().overlaps(tempRect)	|| !area_bounds_sea.contains(tempRect)) {
 					legalmove = false;
 
 				}
@@ -113,10 +111,13 @@ public class ShipController extends ObjectController {
 
 		if (legalmove) {
 			bounds.set(tempRect);
-			Sprite sprite = object.getSprite();
+			Sprite sprite = object.sprite;
 			sprite.rotate90(true);
 			sprite.setSize(bounds.width, bounds.height);
 			setPosition(position);
+			sprite = object.baseSprite;
+			sprite.rotate90(true);
+			sprite.setSize(bounds.width, bounds.height);
 		}
 
 	}

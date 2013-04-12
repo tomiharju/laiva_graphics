@@ -3,12 +3,10 @@ package com.sohvastudios.battleships.game.objectRenderers;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GuiRenderer extends ObjectRenderer{
+public class UserInterfaceRenderer extends ObjectRenderer{
 
 	
-	public GuiRenderer(){
-		WorldRenderer.renderers.add(this);
-		
+	public UserInterfaceRenderer(){
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -24,6 +22,6 @@ public class GuiRenderer extends ObjectRenderer{
 		graphics=s;
 		
 	}
-	
+
 
 }

@@ -8,4 +8,10 @@ public class ProjectileController extends ObjectController {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void initialize() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

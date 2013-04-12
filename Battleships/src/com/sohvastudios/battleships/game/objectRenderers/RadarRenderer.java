@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class RadarRenderer extends ObjectRenderer {
 
-	public static ArrayList<ObjectRenderer> objectsAtRadar;
+	public static ArrayList<ObjectRenderer> objectsAtRadar = new ArrayList<ObjectRenderer>();
 	private Sprite sweepGraphics;
 	
 	public RadarRenderer() {
-		objectsAtRadar = new ArrayList<ObjectRenderer>();
+		
 		objectsAtRadar.add(this);
 		
 	}

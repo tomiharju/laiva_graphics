@@ -45,8 +45,6 @@ public class GameLogicHandler implements LogicHandler {
 		// Ship placement phase
 		case Turn.TURN_BEGINNING: { //
 			nativeActions.createToast("Place your ships", 1);
-			ableToFire	=	false;
-			shipsLocked	=	false;
 			controller.hideRadar();
 			System.out.println("Current state: Beginning");
 			break;
@@ -55,9 +53,8 @@ public class GameLogicHandler implements LogicHandler {
 		case Turn.TURN_START: { // 
 			nativeActions.dismissProgressDialog();
 			nativeActions.createToast("Your turn", 5000);
-			ableToFire 	= 	true;
-			shipsLocked =	true;
 			controller.showRadar();
+	
 			System.out.println("Current state: Start");
 			break;
 		}
@@ -67,20 +64,18 @@ public class GameLogicHandler implements LogicHandler {
 				@Override
 				public void cancel() {}
 			});
-			ableToFire = false;
-			shipsLocked =	true;
-			
+		
 			System.out.println("Current state: Wait");
 			break;
 		}
 		case Turn.TURN_SHOOT: {
-			ableToFire = false;
+			controller.hideRadar();
 			System.out.println("Current state: Shoot");
 			break;
 		}
 
 		case Turn.TURN_READY: { // 
-			ableToFire = false;
+			controller.hideRadar();
 			System.out.println("Current state: Ready");
 			break;
 		}

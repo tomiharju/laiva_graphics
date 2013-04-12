@@ -2,16 +2,18 @@ package com.sohvastudios.battleships.game.objectModels;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.sohvastudios.battleships.game.objectControllers.GuiController;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
-import com.sohvastudios.battleships.game.objectRenderers.GuiRenderer;
+import com.sohvastudios.battleships.game.objectControllers.UserInterfaceController;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.RadarRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.SeaRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.UserInterfaceRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
-public class GuiObject extends ModelObject {
+public class UserInterfaceObject extends ModelObject {
 
 	
-	public GuiObject(ObjectController controller, ObjectRenderer renderer,
+	public UserInterfaceObject(ObjectController controller, ObjectRenderer renderer,
 			String file) {
 		setController(controller);
 		setRenderer(renderer);
@@ -25,25 +27,38 @@ public class GuiObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
-		this.renderer.addGraphics(sprite);
+	
 		setVisible();
+		
+		controller.initialize();
 		WorldObject.objects.add(this);
+		this.renderer.addGraphics(sprite);
 	}
-	public GuiObject(ObjectController controller){
+	
+	public void addToSea(ObjectController controller){
+		controller.guiControllers.add((UserInterfaceController) this.getController());
+		SeaRenderer.objectsAtSea.add(renderer);
+	}
+	public void addToRadar(ObjectController controller){
+		controller.guiControllers.add((UserInterfaceController) this.getController());
+		RadarRenderer.objectsAtRadar.add(renderer);
+	}
+	
+	public UserInterfaceObject(ObjectController controller){
 		System.out.println("Another constructor");
 		setController(controller);
 	}
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller = (GuiController) controller;
+		this.controller = (UserInterfaceController) controller;
 		this.controller.setObject(this);
 
 	}
 
 	@Override
 	public void setRenderer(ObjectRenderer renderer) {
-		this.renderer = (GuiRenderer) renderer;
+		this.renderer = (UserInterfaceRenderer) renderer;
 		this.renderer.setObject(this);
 
 	}

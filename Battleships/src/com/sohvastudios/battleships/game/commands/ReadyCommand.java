@@ -2,32 +2,39 @@ package com.sohvastudios.battleships.game.commands;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
-import com.sohvastudios.battleships.game.objectControllers.GuiController;
+import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.SeaController;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
+import com.sohvastudios.battleships.game.objectControllers.UserInterfaceController;
 
 
 public class ReadyCommand implements Command{
 
-	
-	public ReadyCommand(){
-		
+	ObjectController source;
+	public ReadyCommand(ObjectController source){
+		this.source=source;
 	}
 	@Override
-	public void execute(GuiController c) {
+	public void execute(ObjectController target) {
 		Rectangle safeBounds = new Rectangle(-5,-5,10,10);
-		for(ShipController sc : SeaController.shipControllers){
-			if(!safeBounds.contains(sc.pollBounds())){
-				System.out.println(sc.getObject().getSprite().getColor().toString());
-				sc.getObject().getSprite().setColor(0.5f,0,0,1);
-				
+		boolean checkSuccess = true;
+		for (ShipController sc : SeaController.shipControllers){
+			for (ShipController SC : SeaController.shipControllers)
+				if (!sc.equals(SC))
+					if (sc.pollBounds().overlaps(SC.pollBounds())|| !safeBounds.contains(sc.pollBounds())){
+						checkSuccess=false;
+				}
 			}
-			return;
-		}
-		GuiController.removeGuiObject((GuiController) c);
-		c.getObject().dispose();
-		PlayScreen.logicHandler.sendReady();
+	
 		
+		if(checkSuccess){
+			((SeaController) source).lockShips();
+			for(ShipController sc : SeaController.shipControllers){
+				sc.getObject().baseSprite.setColor(0.9f,0,0,0);
+			}
+		source.removeGuiObject((UserInterfaceController) target);
+		PlayScreen.logicHandler.sendReady();
+		}
 	}
 
 }

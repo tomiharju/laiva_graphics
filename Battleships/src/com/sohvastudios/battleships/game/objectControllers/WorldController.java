@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.gamelogic.GameLogicHandler;
 import com.sohvastudios.battleships.game.objectModels.ProjectileObject;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectModels.WeaponObject.Weapon;
@@ -15,7 +14,7 @@ public class WorldController extends ObjectController {
 
 	private SeaController shipView;
 	private RadarController radarView;
-	private GuiController guiView;
+	
 	private ArrayList<Vector2> result;
 	private Vector3 touchPoint;
 	
@@ -30,7 +29,7 @@ public class WorldController extends ObjectController {
 	public void initialize() {
 		shipView = (SeaController) ((WorldObject) object).shipView().getController();
 		radarView = (RadarController) ((WorldObject) object).mapView().getController();
-		guiView = (GuiController)((WorldObject)object).guiView().getController();
+	
 		shipView.show();
 		result = new ArrayList<Vector2>();
 
@@ -38,9 +37,11 @@ public class WorldController extends ObjectController {
 
 	public void showRadar(){
 		radarView.show();
+		radarView.unlockRadar();
 	}
 	public void hideRadar(){
 		radarView.hide();
+		radarView.lockRadar();
 	}
 
 	public boolean allShipsDestroyed() {
@@ -94,13 +95,11 @@ public class WorldController extends ObjectController {
 
 	public void touchDown(Vector3 p) {
 		
-			touchPoint.set(p.x,p.y,0);
-			guiView.handleInputDown(touchPoint);
-			if(GameLogicHandler.ableToFire){
-				radarView.handleInputDown(touchPoint);
+			if(!radarView.isLocked()){
+				radarView.handleInputDown(p);
 			}
 			else{
-				shipView.handleInputDown(touchPoint);
+				shipView.handleInputDown(p);
 			}
 	
 		
@@ -113,27 +112,21 @@ public class WorldController extends ObjectController {
 	}
 	
 	public void doubleTap(Vector3 p){
+			shipView.handleDoubleTap(p);
+			radarView.handleDoubleTap(p);
+		
 	
-	
-			shipView.handleDoubleTap(touchPoint);
 			
-		
-		
-			radarView.handleDoubleTap(touchPoint);
-		
-	
-			guiView.handleDoubleTap(p);
-		
 	}
 
 	public void touchDragged(Vector3 p) {
-		touchPoint.set(p.x,p.y,0);
+	
 		
-		if(GameLogicHandler.ableToFire){
-			radarView.handleInputDrag(touchPoint);
+		if(!radarView.isLocked()){
+			radarView.handleInputDrag(p);
 		}
 		else{
-			shipView.handleInputDrag(touchPoint);
+			shipView.handleInputDrag(p);
 		}
 	}
 	public void touchLong(Vector3 p){

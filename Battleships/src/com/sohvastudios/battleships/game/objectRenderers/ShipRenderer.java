@@ -18,7 +18,8 @@ public class ShipRenderer extends ObjectRenderer {
 	private boolean animate;
 	private float stateTime;
 	private Vector3 animPos;
-
+	private Sprite baseGraphics;
+	
 	public ShipRenderer() {
 		SeaRenderer.objectsAtSea.add(this);
 		createAnimation();
@@ -48,6 +49,7 @@ public class ShipRenderer extends ObjectRenderer {
 	public void draw(SpriteBatch batch) {
 		if (object.isVisible()) {
 			graphics.draw(batch);
+			baseGraphics.draw(batch);
 			if (animate) {
 				stateTime += Gdx.graphics.getDeltaTime();
 				currentFrame = smokeAnimation.getKeyFrame(stateTime, true);
@@ -62,6 +64,7 @@ public class ShipRenderer extends ObjectRenderer {
 	@Override
 	public void addGraphics(Sprite s) {
 		graphics = s;
+		baseGraphics = object.baseSprite;
 	}
 
 	public void animateSmoke(Vector3 pos) {
