@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.interfaces.CancelListener;
 import com.sohvastudios.battleships.game.interfaces.ConfirmListener;
 import com.sohvastudios.battleships.game.interfaces.ConnectionHandler;
 import com.sohvastudios.battleships.game.interfaces.LogicHandler;
@@ -45,37 +44,28 @@ public class GameLogicHandler implements LogicHandler {
 		// Ship placement phase
 		case Turn.TURN_BEGINNING: { //
 			nativeActions.createToast("Place your ships", 1);
-			controller.hideRadar();
 			System.out.println("Current state: Beginning");
 			break;
 		}
 
 		case Turn.TURN_START: { // 
-			nativeActions.dismissProgressDialog();
-			nativeActions.createToast("Your turn", 5000);
 			controller.showRadar();
-	
+			nativeActions.createToast("Your turn", 5000);
 			System.out.println("Current state: Start");
 			break;
 		}
 		case Turn.TURN_WAIT: { 
 			controller.hideRadar();
-			nativeActions.createProgressDialog("Waiting", "Waiting for opponent to shoot", false, new CancelListener() {
-				@Override
-				public void cancel() {}
-			});
-		
 			System.out.println("Current state: Wait");
 			break;
 		}
 		case Turn.TURN_SHOOT: {
-			controller.hideRadar();
 			System.out.println("Current state: Shoot");
 			break;
 		}
 
 		case Turn.TURN_READY: { // 
-			controller.hideRadar();
+			nativeActions.createToast("Your are ready!", 1);
 			System.out.println("Current state: Ready");
 			break;
 		}

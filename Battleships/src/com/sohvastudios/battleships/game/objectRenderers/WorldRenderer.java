@@ -28,15 +28,8 @@ public class WorldRenderer extends ObjectRenderer {
 
 	public void setupCamera() {
 		cam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT); 
-		//cam.position.set(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
-		
 		seaCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		//seaCam.position.set(5f,2.5f,0);
-		
-		
 		radarCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		//radarCam.position.set(0,7.5f,0);
-		
 	}
 
 	public void render() {

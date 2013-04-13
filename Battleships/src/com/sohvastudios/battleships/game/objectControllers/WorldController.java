@@ -16,13 +16,13 @@ public class WorldController extends ObjectController {
 	private RadarController radarView;
 	
 	private ArrayList<Vector2> result;
-	private Vector3 touchPoint;
+	
 	
 	
 	
 	public WorldController(float x, float y, float w, float h) {
 		super(x, y, w, h);
-		touchPoint = new Vector3();
+		
 		
 	}
 
@@ -37,11 +37,9 @@ public class WorldController extends ObjectController {
 
 	public void showRadar(){
 		radarView.show();
-		radarView.unlockRadar();
 	}
 	public void hideRadar(){
 		radarView.hide();
-		radarView.lockRadar();
 	}
 
 	public boolean allShipsDestroyed() {
@@ -102,23 +100,8 @@ public class WorldController extends ObjectController {
 				shipView.handleInputDown(p);
 			}
 	
-		
-	
-		
-		
-		
-		
-
 	}
 	
-	public void doubleTap(Vector3 p){
-			shipView.handleDoubleTap(p);
-			radarView.handleDoubleTap(p);
-		
-	
-			
-	}
-
 	public void touchDragged(Vector3 p) {
 	
 		
@@ -129,10 +112,19 @@ public class WorldController extends ObjectController {
 			shipView.handleInputDrag(p);
 		}
 	}
-	public void touchLong(Vector3 p){
-			radarView.handleLongPress(p);
-		
+
+	@Override
+	public void removeObject(ObjectController obj) {
+		object.dispose();
 		
 	}
+
+	@Override
+	public void cleanTrash() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }

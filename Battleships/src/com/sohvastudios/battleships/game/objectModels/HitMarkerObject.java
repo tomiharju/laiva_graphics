@@ -35,6 +35,7 @@ public class HitMarkerObject extends ModelObject {
 
 	@Override
 	public void update() {
+		
 		alpha -= Gdx.graphics.getDeltaTime();
 		
 		if (alpha < 0)

@@ -129,6 +129,9 @@ public class ShipObject extends ModelObject {
 
 	@Override
 	public void update() {
+	
+		
+		
 		baseSprite.setPosition(sprite.getX(), sprite.getY());
 
 	}

@@ -1,12 +1,10 @@
 package com.sohvastudios.battleships.game.gamelogic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.interfaces.ConnectionHandler;
 import com.sohvastudios.battleships.game.interfaces.LogicHandler;
@@ -15,7 +13,7 @@ import com.sohvastudios.battleships.game.objectControllers.WorldController;
 import com.sohvastudios.battleships.game.objectModels.WorldObject;
 import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 
-public class PlayScreen implements Screen, GestureListener{
+public class PlayScreen extends InputAdapter implements Screen{
 	
 		OrthographicCamera 	guiCam;
 		Vector3 			touchPoint;
@@ -26,7 +24,7 @@ public class PlayScreen implements Screen, GestureListener{
 		
 		public static LogicHandler logicHandler;
 		
-	
+		Vector3 prevpoint;
 	
 	public PlayScreen(ConnectionHandler connector, NativeActions actions){
 		
@@ -42,8 +40,8 @@ public class PlayScreen implements Screen, GestureListener{
 		
 		
 		paused			= false;
-
-		Gdx.input.setInputProcessor(new GestureDetector(2.0f,1f,.2f,0.5f,this));
+		prevpoint		= new Vector3();
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
@@ -96,54 +94,36 @@ public class PlayScreen implements Screen, GestureListener{
 	
 
 	
+	
+
 	@Override
-	public boolean tap(float x, float y, int count, int button) {
-		guiCam.unproject(touchPoint.set(x, y, 0));
-		controller.doubleTap(touchPoint);
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		guiCam.unproject(touchPoint.set(screenX,screenY, 0));
+		controller.touchDown(touchPoint);
 		return false;
 	}
 
 	@Override
-	public boolean longPress(float x, float y) {
-		guiCam.unproject(touchPoint.set(x, y, 0));
-		System.out.println("LongPress!");
-		controller.touchLong(touchPoint);
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		guiCam.unproject(touchPoint.set(screenX,screenY, 0));
+		controller.handleInputUp(touchPoint);
 		return false;
 	}
 
 	@Override
-	public boolean fling(float velocityX, float velocityY, int button) {
-		
-		return false;
-	}
-
-	@Override
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
-		guiCam.unproject(touchPoint.set(x, y, 0));
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		guiCam.unproject(touchPoint.set(screenX,screenY, 0));
 		controller.touchDragged(touchPoint);
 		return false;
 	}
-
-	@Override
-	public boolean zoom(float initialDistance, float distance) {
-		return false;
-	}
-
-	@Override
-	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2,
-			Vector2 pointer1, Vector2 pointer2) {
-		
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(float x, float y, int pointer, int button) {
-		guiCam.unproject(touchPoint.set(x,y, 0));
-		controller.touchDown(touchPoint);
 	
-		return false;
-	}
+
+	
+	
+
+	
+
+
 
 
 

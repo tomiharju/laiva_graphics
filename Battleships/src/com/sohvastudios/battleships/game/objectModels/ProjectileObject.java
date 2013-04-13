@@ -133,6 +133,8 @@ public class ProjectileObject extends ModelObject {
 
 	@Override
 	public void update() {
+		
+		
 		if(isVisible()){
 		sprite.setRotation((float) Math.toDegrees(Math.atan2(strategy.getPos().y
 					- position.y, strategy.getPos().x - position.x)

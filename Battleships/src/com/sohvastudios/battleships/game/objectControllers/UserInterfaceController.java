@@ -21,9 +21,7 @@ public class UserInterfaceController extends ObjectController {
 	public void initialize(){
 		clear_bounds = new Rectangle();
 	}
-	public UserInterfaceController(){
-		System.out.println("Creating elements");
-	}
+
 	
 	
 	
@@ -46,13 +44,9 @@ public class UserInterfaceController extends ObjectController {
 
 	@Override
 	public void handleInputDown(Vector3 pos) {
-		
 		if (bounds.contains(pos.x, pos.y)) {
-				System.out.println("Executing");
 				executeCommand();
-				
 			}
-
 	}
 
 	@Override
@@ -72,6 +66,17 @@ public class UserInterfaceController extends ObjectController {
 			setPosition(pos);
 		}
 
+	}
+	@Override
+	public void removeObject(ObjectController obj) {
+		object.dispose();
+		
+	}
+	@Override
+	public void cleanTrash() {
+		guiControllers.removeAll(removeList);
+		removeList.clear();
+		
 	}
 
 }

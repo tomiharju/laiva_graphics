@@ -3,16 +3,18 @@ package com.sohvastudios.battleships.game.commands;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.RadarController;
 
-public class DisposeCommand implements Command{
+public class WeaponSelectCommand implements Command {
 
-	RadarController source;
-	public DisposeCommand(RadarController source){
-		this.source=source;
+	private int weaponNumber;
+	private RadarController controller;
+	public WeaponSelectCommand(RadarController controller, int w){
+		this.weaponNumber=w;
+		this.controller=controller;
 	}
-
 	@Override
 	public void execute(ObjectController target) {
-		source.removeList.add(target);
+		controller.selectWeapon(weaponNumber);
 		
 	}
+
 }

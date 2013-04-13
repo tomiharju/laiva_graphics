@@ -14,4 +14,17 @@ public class ProjectileController extends ObjectController {
 		
 	}
 
+	@Override
+	public void removeObject(ObjectController obj) {
+		object.dispose();
+		
+	}
+
+	@Override
+	public void cleanTrash() {
+		guiControllers.removeAll(removeList);
+		removeList.clear();
+		
+	}
+
 }

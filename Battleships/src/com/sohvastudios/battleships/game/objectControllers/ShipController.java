@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class ShipController extends ObjectController {
-	private boolean isStacked;
+	
 
 	public ShipController(float x, float y, float w, float h) {
 		super(x, y, w, h);
@@ -14,7 +14,7 @@ public class ShipController extends ObjectController {
 	public void initialize(){
 		SeaController.shipControllers.add(this);
 		deSelect();
-		isStacked=true;
+		
 	}
 
 	@Override
@@ -102,6 +102,15 @@ public class ShipController extends ObjectController {
 			if (!sc.equals(this)) {
 				if (sc.pollBounds().overlaps(tempRect)	|| !area_bounds_sea.contains(tempRect)) {
 					legalmove = false;
+					object.baseSprite.setColor(1,0,0,1);
+					bounds.set(tempRect);
+					Sprite sprite = object.sprite;
+					sprite.rotate90(true);
+					sprite.setSize(bounds.width, bounds.height);
+					setPosition(position);
+					sprite = object.baseSprite;
+					sprite.rotate90(true);
+					sprite.setSize(bounds.width, bounds.height);
 
 				}
 
@@ -110,6 +119,7 @@ public class ShipController extends ObjectController {
 		}
 
 		if (legalmove) {
+			object.baseSprite.setColor(1,0,0,0);
 			bounds.set(tempRect);
 			Sprite sprite = object.sprite;
 			sprite.rotate90(true);
@@ -128,6 +138,17 @@ public class ShipController extends ObjectController {
 
 	public void show() {
 		object.setVisible();
+	}
+	@Override
+	public void removeObject(ObjectController obj) {
+		object.dispose();
+		
+	}
+	@Override
+	public void cleanTrash() {
+		guiControllers.removeAll(removeList);
+		removeList.clear();
+		
 	}
 	
 	

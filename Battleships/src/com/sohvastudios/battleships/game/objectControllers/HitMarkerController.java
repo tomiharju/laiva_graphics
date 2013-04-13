@@ -18,4 +18,16 @@ public class HitMarkerController extends ObjectController {
 	public void show() {
 		object.setVisible();
 	}
+	@Override
+	public void removeObject(ObjectController obj) {
+		RadarController.markerControllers.remove(this);
+		object.dispose();
+		
+	}
+	@Override
+	public void cleanTrash() {
+		guiControllers.removeAll(removeList);
+		removeList.clear();
+		
+	}
 }

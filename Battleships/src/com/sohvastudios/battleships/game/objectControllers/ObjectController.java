@@ -20,6 +20,7 @@ public abstract class ObjectController {
 	protected Rectangle area_bounds_radar;
 	
 	public ArrayList<UserInterfaceController> guiControllers = new ArrayList<UserInterfaceController>();
+	public ArrayList<ObjectController> removeList = new ArrayList<ObjectController>();
 	
 	public ObjectController(float x, float y, float width, float height) {
 		position 			= new Vector3(x, y, 0);
@@ -29,18 +30,14 @@ public abstract class ObjectController {
 		area_bounds_radar 	= new Rectangle(-4,-4,8,8);
 		
 	}
-	public ObjectController(){
-	}
+
 	
 	public abstract void initialize();
 		
 	
 	
-	public void removeGuiObject(UserInterfaceController obj) {
-		guiControllers.remove(obj);
-		obj.getObject().dispose();
-	}
-
+	public abstract void removeObject(ObjectController obj);
+	public abstract void cleanTrash();
 	public ModelObject getObject() {
 		return object;
 	}

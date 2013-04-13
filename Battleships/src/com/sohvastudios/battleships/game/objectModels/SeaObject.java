@@ -31,6 +31,7 @@ public class SeaObject extends ModelObject {
 	}
 
 	public void update() {
+	
 
 	}
 

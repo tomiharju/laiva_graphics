@@ -4,23 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.objectControllers.HitMarkerController;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.RadarController;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.RadarRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class RadarObject extends ModelObject {
 
 
 	private final double SWEEP_STEP_INTERVAL = 0.033f;
-	private float sweeptime;
 	private float sweepStepTime;
 
 	private Rectangle scanBar;
 	private Sprite sweepEffect;
-	
+	private Vector3 camPosition;
+	float radarpos;
+	float dt;
 	public RadarObject(RadarController controller,
 			RadarRenderer renderer) {
 		setController(controller);
@@ -35,7 +38,7 @@ public class RadarObject extends ModelObject {
 
 		
 		
-		sweeptime = 0;
+	
 		sweepStepTime = 0;
 		scanBar = new Rectangle(bounds.x-1, bounds.y,1, bounds.height);
 		sweepEffect = new Sprite(AssetStorage.manager.get("data/effects/sweep.png",Texture.class));
@@ -43,7 +46,9 @@ public class RadarObject extends ModelObject {
 		sweepEffect.setPosition(scanBar.x , scanBar.y);
 		renderer.addSweepGraphics(sweepEffect);
 		
-
+		camPosition		= new Vector3(0,14,0);
+		WorldRenderer.radarCam.translate(0,14);	
+		radarpos=14;
 		controller.initialize();
 		WorldObject.objects.add(this);
 		this.renderer.addGraphics(sprite);
@@ -51,9 +56,28 @@ public class RadarObject extends ModelObject {
 
 	@Override
 	public void update() {
-		runSweep();
-
+		
+		
+		
+		if(isVisible())
+			runSweep();
+		radarpos+=dt;
+		double realvalue = radarpos*1000;
+		realvalue = Math.round(realvalue);
+		realvalue = realvalue/1000;
 	
+		if((realvalue)==((RadarController)controller).targetPosition.y){
+			dt=0;
+		}
+		else if((realvalue)<(((RadarController)controller).targetPosition.y)){
+			dt=0.1f;
+		}
+		else if((realvalue)>(((RadarController)controller).targetPosition.y)){
+			dt=-0.1f;
+		}
+		WorldRenderer.radarCam.translate(0,dt);
+		
+		
 	}
 
 	public void runSweep() {

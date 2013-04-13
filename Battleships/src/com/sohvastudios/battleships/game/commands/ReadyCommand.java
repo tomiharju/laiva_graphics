@@ -5,7 +5,6 @@ import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.SeaController;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
-import com.sohvastudios.battleships.game.objectControllers.UserInterfaceController;
 
 
 public class ReadyCommand implements Command{
@@ -32,7 +31,8 @@ public class ReadyCommand implements Command{
 			for(ShipController sc : SeaController.shipControllers){
 				sc.getObject().baseSprite.setColor(0.9f,0,0,0);
 			}
-		source.removeGuiObject((UserInterfaceController) target);
+		source.removeList.add(target);
+		
 		PlayScreen.logicHandler.sendReady();
 		}
 	}

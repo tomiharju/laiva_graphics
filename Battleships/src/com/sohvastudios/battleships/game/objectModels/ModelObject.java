@@ -30,7 +30,6 @@ public abstract class ModelObject {
 		SeaRenderer.objectsAtSea.remove(this.renderer);
 		RadarRenderer.objectsAtRadar.remove(this.renderer);
 		WorldRenderer.renderers.remove(this.renderer);
-		
 		WorldObject.objects.remove(this);
 	}
 	
