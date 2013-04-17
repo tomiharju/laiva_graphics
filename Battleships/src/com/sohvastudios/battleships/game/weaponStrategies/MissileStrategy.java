@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
+import com.sohvastudios.battleships.game.objectControllers.SeaContainer;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
@@ -15,53 +16,72 @@ import com.sohvastudios.battleships.game.utilities.DamageCalculator;
 
 public class MissileStrategy implements WeaponStrategy {
 
-	private ObjectController parent;
-	private Set<ShipController> ships_hit;
-	private Vector3 primaryTarget;
-	public Vector3 currentTarget;
-	public Vector3 virtualposition;
 
-	public MissileStrategy(ObjectController parentController) {
-		this.parent=parentController;
-		ships_hit = new HashSet<ShipController>();
-		primaryTarget = new Vector3();
-		currentTarget = new Vector3();
-		virtualposition = new Vector3();
+	//Weapon properties
+		final float 	RADIUS 			= 0.25f;
+		final float 	SEEKING_RADIUS 	= 1.5f;
+		final float 	DMG_DENSITY     = 1.0f;
+		final float		EXP_PROXIMITY	= 0.1f;
+		
+		Vector3 projectilePosition;
+		Vector3 projectileDestination;
+		Vector3 primaryDestination;
+		
+		Set<ShipController>		targetsInSweep;
+		
+	//General variables
+		
+		private Set<ShipController> hits;
+		private ObjectController parent;
+	
+	
+	
+	
+	
+
+	public MissileStrategy(ObjectController parent) {
+		this.parent=parent;
+		hits 				= new HashSet<ShipController>();
+		targetsInSweep 		= new HashSet<ShipController>();
+		projectilePosition 	= new Vector3();
+		projectileDestination = new Vector3();
+		primaryDestination  = new Vector3();
+		
 	}
 
 	@Override
 	public boolean animate(Sprite sprite, Vector3 position) {
-		sprite.setRotation((float) Math.toDegrees(Math.atan2(currentTarget.y
-				- position.y, currentTarget.x - position.x)
+		sprite.setRotation((float) Math.toDegrees(Math.atan2(projectileDestination.y
+				- position.y, projectileDestination.x - position.x)
 				- Math.PI / 2));
-		position.x += ((currentTarget.x - position.x) * 1.25f)* Gdx.graphics.getDeltaTime() * 2;
-		position.y += ((currentTarget.y - position.y) * 1.25f)* Gdx.graphics.getDeltaTime() * 2;
-		if (position.dst(primaryTarget) < 0.2f) {
+		position.lerp(projectileDestination,(float) (Gdx.graphics.getDeltaTime()));
+		if (position.dst(primaryDestination) < EXP_PROXIMITY) {
 			return true;
-		} else if (position.dst(currentTarget) < 0.2f) {
-			currentTarget.set(primaryTarget);
+		} else if (position.dst(projectileDestination) < EXP_PROXIMITY) {
+			projectileDestination.set(primaryDestination);
 		}
+		
 		return false;
 
 	}
 	public Vector3 simulate(Vector3 position){
-		virtualposition.set(position);
-		return primaryTarget;
+		//Not used with missiles
+		return projectileDestination;
 	
 	}
 
 	@Override
-	public void setFlightPath(ArrayList<Vector3> pathlist,Vector3 target) {
+	public void calculatePathAndHits(Vector3 target) {
 	
-		primaryTarget.set(target);
-		currentTarget.set(target);
-		getShipsInRange(target, 1.5f);
+		projectileDestination.set(target);
+		primaryDestination.set(target);
+		getShipsInRange(target);
 		boolean closerTargetFound = false;
 		Vector3 distance_vector = new Vector3(10, 10, 0);
-		Vector3 gap_vector = new Vector3(0, 0, 0);
-		Vector3 temp_pos = new Vector3(0, 0, 0);
+		Vector3 gap_vector 		= new Vector3(0, 0, 0);
+		Vector3 temp_pos 		= new Vector3(0, 0, 0);
 
-		for (ShipController ship : ships_hit) {
+		for (ShipController ship : targetsInSweep) {
 			temp_pos.set(ship.pollPosition());
 			gap_vector.set(temp_pos.sub(target));
 			if (gap_vector.len() < distance_vector.len()) {
@@ -70,19 +90,21 @@ public class MissileStrategy implements WeaponStrategy {
 			}
 		}
 		if (closerTargetFound)
-			primaryTarget.add(distance_vector);
+			primaryDestination.add(distance_vector);
 
-		pathlist.add(target);
-		pathlist.add(primaryTarget);
+		((SeaContainer)parent).flightpath.add(projectileDestination);
+		((SeaContainer)parent).flightpath.add(primaryDestination);
+		projectilePosition.set(primaryDestination);
+		findBlastAffectedShips();
 	}
 
-	public void getShipsInRange(Vector3 target, float radius) {
-		ships_hit.clear();
+	public void getShipsInRange(Vector3 target) {
+		targetsInSweep.clear();
 		for (ObjectController oc : parent.controllers) {
 			if(oc instanceof ShipController)
-				if (!ships_hit.contains(oc)) {
-					if (target.dst(oc.pollPosition()) < radius){
-						ships_hit.add((ShipController) oc);
+				if (!targetsInSweep.contains(oc)) {
+					if (target.dst(oc.pollPosition()) < SEEKING_RADIUS){
+						targetsInSweep.add((ShipController) oc);
 					}
 			}
 		}
@@ -95,21 +117,50 @@ public class MissileStrategy implements WeaponStrategy {
 	@Override
 	public void setRadarAnimationData(ArrayList<Vector3> path,
 			ArrayList<Vector3> hits, ObjectController parent) {
-		// TODO Auto-generated method stub
+		//Not used with missiles
 		
 	}
 
 	@Override
-	public void dealDamage(Set<ShipController> shipshit, Vector3 point,float radius,ProjectileRenderer renderer) {
-		if(shipshit.size()>0){
+	public void dealDamage(Vector3 point,ProjectileRenderer renderer) {
+		if(hits.size()>0){
 			renderer.animateExplosion(point);
-		for (ShipController ship : shipshit) {
+		for (ShipController ship : hits) {
 			((ShipObject) ship.getObject()).dealDamage(new DamageCalculator(
-					point, radius, (ShipObject) ship.getObject()).calculate());
+					point, RADIUS, (ShipObject) ship.getObject()).calculate());
 		}
 		}
 		else
 			renderer.animateSplash(point);
+		
+	}
+
+	@Override
+	public void findBlastAffectedShips() {
+		Vector3 hitIndicator = new Vector3();
+		for (ObjectController oc : parent.controllers) {
+			if(oc instanceof ShipController){
+			if (!hits.contains(oc)) {
+				hitIndicator.set(projectilePosition.x, projectilePosition.y, 0);
+				if (oc.pollBounds().contains(hitIndicator.x, hitIndicator.y)) {
+					((SeaContainer)parent).hitspot.add(new Vector3(hitIndicator.x, hitIndicator.y,0));
+					hits.add((ShipController) oc);
+					continue;
+				}
+				for (int a = 0; a <= 360; a++) {
+					float x = (float) (projectilePosition.x + Math.cos(Math.toRadians(a))* RADIUS);
+					float y = (float) (projectilePosition.y + Math.sin(Math.toRadians(a))* RADIUS);
+					hitIndicator.set(x, y, 0);
+					if (oc.pollBounds().contains(hitIndicator.x, hitIndicator.y)&& !hits.contains(oc)) {
+						hits.add((ShipController) oc);
+						((SeaContainer)parent).hitspot.add(new Vector3(hitIndicator.x, hitIndicator.y,0));
+
+					}
+				}
+			}
+		}
+		}
+	
 		
 	}
 

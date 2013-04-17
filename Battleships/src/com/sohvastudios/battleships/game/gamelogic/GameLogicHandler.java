@@ -91,16 +91,16 @@ public class GameLogicHandler implements LogicHandler {
 	@Override
 	public void sendShoot(float x, float y, int weapon) {
 		System.out.println("Sending turn shoot");
-		//nativeConnector.sendShoot(x, y, weapon);
-		receiveShoot(x,y,weapon);
+		nativeConnector.sendShoot(x, y, weapon);
+		//receiveShoot(x,y,weapon);
 		//controller.lockRadar();
 	}
 
 	@Override
 	public void sendResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result) {
 		System.out.println("Sending result size "+result.size());
-		//nativeConnector.sendResult(result);
-		receiveResult(result);
+		nativeConnector.sendResult(result);
+		//receiveResult(result);
 		
 	}
 	public void createToast(String message){

@@ -11,7 +11,6 @@ import com.sohvastudios.battleships.game.objectModels.ProjectileObject;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectModels.ShipObject.ShipType;
 import com.sohvastudios.battleships.game.objectModels.UserInterfaceObject;
-import com.sohvastudios.battleships.game.objectModels.WeaponObject.Weapon;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ShipRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.UserInterfaceRenderer;
@@ -66,42 +65,39 @@ public class SeaContainer extends ObjectController {
 	}
 
 	public void calculateDamageTaken(Vector3 point, int weapon_type) {
-		
-		float radius = Weapon.values()[weapon_type].getRadius();
 
 		switch (weapon_type) {
 
 		case 0: {
 			// Grenade
-			for(int i = 0 ; i<1 ; i++){
-			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(),this, weapon_type).calculateDamage(point, radius);
+			new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+					new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 			ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 			ArrayList<Vector3> temppath = new ArrayList<Vector3>();
 			temphit.addAll(hitspot);
 			temppath.addAll(flightpath);
-			System.out.println("Added hits to list size is "+temphit.size());
-			attackResult.put(temphit, temppath);
+			System.out.println("New result Hitspots " + hitspot.size() +" Paths "+flightpath.size());
+			attackResult.put(temppath,temphit);
 			hitspot.clear();
 			flightpath.clear();
 		
-			}
+			
 			break;
 		}
 
 		case 1: {
 			// Heatseeker
 			for(int i = 0 ; i<1 ; i++){
-				hitspot.clear();
-				flightpath.clear();
-				new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-						new ProjectileRenderer(),this, weapon_type).calculateDamage(point, radius);
+				
+				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
 				temphit.addAll(hitspot);
 				temppath.addAll(flightpath);
-				attackResult.put(temphit, temppath);
-				
+				attackResult.put(temppath,temphit);
+				hitspot.clear();
+				flightpath.clear();
 			
 				}
 		
@@ -111,36 +107,36 @@ public class SeaContainer extends ObjectController {
 		case 2: {
 			// Mortar
 			for(int i = 0 ; i<5 ; i++){
-				hitspot.clear();
-				flightpath.clear();
+				
 				Vector3 displacement = new Vector3();
 				displacement.set(point);
 				displacement.add((float)(-2+Math.random()*4),(float)(-2+Math.random()*4), 0);
-				new ProjectileObject(new ProjectileController(5f, 15f, 0.75f, 0.75f),
-						new ProjectileRenderer(),this, weapon_type).calculateDamage(displacement, radius);
+				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+						new ProjectileRenderer(),this, weapon_type).animateDamage(displacement);
 				
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
 				temphit.addAll(hitspot);
 				temppath.addAll(flightpath);
 				attackResult.put(temppath, temphit);
-			
+				hitspot.clear();
+				flightpath.clear();
 			
 				}
-			System.out.println("All mortars away. "+attackResult.size());
+			
 		
 			break;
 		}
 		case 3: {
 			// NavalGun
 			for(int i = 0 ; i<1 ; i++){
-				new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-						new ProjectileRenderer(),this, weapon_type).calculateDamage(point, radius);
+				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
 				temphit.addAll(hitspot);
 				temppath.addAll(flightpath);
-				attackResult.put(temphit, temppath);
+				attackResult.put(temppath,temphit);
 				hitspot.clear();
 				flightpath.clear();
 			
@@ -151,13 +147,13 @@ public class SeaContainer extends ObjectController {
 		case 4: {
 			// Phalanx CIWS
 			for(int i = 0 ; i<1 ; i++){
-				new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-						new ProjectileRenderer(),this, weapon_type).calculateDamage(point, radius);
+				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
 				temphit.addAll(hitspot);
 				temppath.addAll(flightpath);
-				attackResult.put(temphit, temppath);
+				attackResult.put(temppath,temphit);
 				hitspot.clear();
 				flightpath.clear();
 			
@@ -168,7 +164,6 @@ public class SeaContainer extends ObjectController {
 		}
 		
 		PlayScreen.logicHandler.sendResult(attackResult);
-		
 		attackResult.clear();
 	}
 
