@@ -11,7 +11,6 @@ import com.sohvastudios.battleships.game.interfaces.LogicHandler;
 import com.sohvastudios.battleships.game.interfaces.NativeActions;
 import com.sohvastudios.battleships.game.objectControllers.WorldController;
 import com.sohvastudios.battleships.game.objectModels.WorldObject;
-import com.sohvastudios.battleships.game.utilities.Turn;
 
 public class GameLogicHandler implements LogicHandler {
 
@@ -20,7 +19,12 @@ public class GameLogicHandler implements LogicHandler {
 	
 	public NativeActions nativeActions;
 
-	public static int state;
+	public boolean receivedResult;
+	public boolean receivedShoot;
+	public Vector3 shootPosition;
+	public int shootWeapon;
+	public HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result;
+	
 	public static boolean shipsLocked;
 	public static boolean ableToFire;
 
@@ -30,9 +34,29 @@ public class GameLogicHandler implements LogicHandler {
 		this.controller = c;
 		this.nativeActions = nativeActions;
 		nativeConnector.setLogicHandler(this);
-		state = Turn.TURN_BEGINNING;
-		runStateMachine();
+	
 
+
+	}
+	
+	public void handleServerInput(){
+		
+		if(receivedResult){
+			System.out.println("Receiving result size "+result.size());
+			controller.drawResult(result);
+			receivedResult=false;
+		}
+		if(receivedShoot){
+			System.out.println("Receiving shoot");
+			controller.calculateDamageTaken(shootPosition, shootWeapon);
+			receivedShoot=false;
+		}
+		
+		
+		
+		
+		
+		
 	}
 
 	public void opponentLeft() {
@@ -68,17 +92,17 @@ public class GameLogicHandler implements LogicHandler {
 
 	@Override
 	public void receiveResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result) {
-		System.out.println("Receiving result size "+result.size());
-		controller.drawResult(result);
+		this.result=result;
+		receivedResult=true;
 		//controller.lockRadar();
 	}
 
 	@Override
 	public void receiveShoot(float x, float y, int weapon) {
-		System.out.println("Receiving turn: Shoot" +x +" " +y + " "+weapon );
-		controller.calculateDamageTaken(new Vector3(x, y, 0), weapon);
-
-		//controller.unlockRadar();
+		shootWeapon=weapon;
+		shootPosition = new Vector3(x,y,0);
+		controller.unlockRadar();
+		receivedShoot=true;
 	}
 
 	@Override
