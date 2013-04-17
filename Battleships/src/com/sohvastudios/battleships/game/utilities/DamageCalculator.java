@@ -25,7 +25,7 @@ public class DamageCalculator {
 
 	}
 
-	public float run() {
+	public float calculate() {
 
 		startTime = System.currentTimeMillis();
 		float radius_factor = radius;

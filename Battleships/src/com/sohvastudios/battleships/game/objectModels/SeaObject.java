@@ -3,15 +3,14 @@ package com.sohvastudios.battleships.game.objectModels;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
-import com.sohvastudios.battleships.game.objectControllers.SeaController;
+import com.sohvastudios.battleships.game.objectControllers.SeaContainer;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.SeaRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class SeaObject extends ModelObject {
 
-	public SeaObject(SeaController controller,
-			SeaRenderer renderer) {
+	public SeaObject(SeaContainer controller,SeaRenderer renderer,ObjectController parent) {
 
 		setController(controller);
 		setRenderer(renderer);
@@ -24,10 +23,10 @@ public class SeaObject extends ModelObject {
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
 
-		controller.initialize();
-		WorldObject.objects.add(this);
+		controller.initialize(parent);
+		WorldObject.addlist.add(this);
 		this.renderer.addGraphics(sprite);
-
+		setVisible();
 	}
 
 	public void update() {
@@ -37,7 +36,7 @@ public class SeaObject extends ModelObject {
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller = (SeaController) controller;
+		this.controller = (SeaContainer) controller;
 		this.controller.setObject(this);
 
 	}

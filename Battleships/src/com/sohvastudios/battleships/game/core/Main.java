@@ -39,6 +39,17 @@ public class Main extends Game{
 	public void startGame(){
 		setScreen(new PlayScreen(connectionHandler, nativeActions));
 	}
+	 @Override  
+	 public void dispose() {  
+		if (this.getScreen() != null) this.getScreen().dispose();  
+		System.out.println("Game data disposed");
+	    }  
+	  
+	 @Override  
+	 public void pause() {  
+	   if (this.getScreen() != null) this.getScreen().pause();  
+	   System.out.println("Game paused");
+	    }  
 }
 
 

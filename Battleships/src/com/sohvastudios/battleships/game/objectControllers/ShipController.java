@@ -11,8 +11,9 @@ public class ShipController extends ObjectController {
 		super(x, y, w, h);
 		
 	}
-	public void initialize(){
-		SeaController.shipControllers.add(this);
+	public void initialize(ObjectController parent){
+		this.parent=parent;
+		parent.addlist.add(this);
 		deSelect();
 		
 	}
@@ -26,16 +27,16 @@ public class ShipController extends ObjectController {
 		boolean legalmove = true;
 		clear_bounds.set(pos.x - bounds.width / 2, pos.y - bounds.height / 2,
 				bounds.width, bounds.height);
-		for (ShipController sc : SeaController.shipControllers) {
-			if (!sc.equals(this)) {
-				if (sc.pollBounds().overlaps(clear_bounds) || !area_bounds_sea.contains(clear_bounds)) {
-					legalmove = false;
-					object.baseSprite.setColor(1,0,0,1);
-					setPosition(pos);
+		for (ObjectController oc : parent.controllers) {
+			if(oc instanceof ShipController){
+				if (!oc.equals(this)) {
+					if (oc.pollBounds().overlaps(clear_bounds) || !area_bounds_sea.contains(clear_bounds)) {
+						legalmove = false;
+						object.baseSprite.setColor(1,0,0,1);
+						setPosition(pos);
+					}
 				}
-
 			}
-
 		}
 
 		if (legalmove) {
@@ -50,13 +51,15 @@ public class ShipController extends ObjectController {
 				position.x = pos.x;
 				clear_bounds.set(position.x - bounds.width / 2, position.y
 						- bounds.height / 2, bounds.width, bounds.height);
-				for (ShipController sc : SeaController.shipControllers)
-					if (!sc.equals(this))
-						if (sc.pollBounds().overlaps(clear_bounds)|| !area_bounds_sea.contains(clear_bounds)){
-							legalmove = false;
-							object.baseSprite.setColor(1,0,0,1);
-							setPosition(pos);
-						}
+				for (ObjectController oc : parent.controllers)
+					if(oc instanceof ShipController)
+						if (!oc.equals(this))
+							if (oc.pollBounds().overlaps(clear_bounds)|| !area_bounds_sea.contains(clear_bounds)){
+								legalmove = false;
+								object.baseSprite.setColor(1,0,0,1);
+								setPosition(pos);
+							}
+				
 				if (legalmove){
 					setPosition(position);
 					object.baseSprite.setColor(1,0,0,0);
@@ -67,13 +70,15 @@ public class ShipController extends ObjectController {
 				position.y = pos.y;
 				clear_bounds.set(position.x - bounds.width / 2, position.y
 						- bounds.height / 2, bounds.width, bounds.height);
-				for (ShipController sc : SeaController.shipControllers)
-					if (!sc.equals(this))
-						if (sc.pollBounds().overlaps(clear_bounds)|| !area_bounds_sea.contains(clear_bounds)){
-							legalmove = false;
-							object.baseSprite.setColor(1,0,0,1);
-							setPosition(pos);
-						}
+				for (ObjectController oc : parent.controllers)
+					if(oc instanceof ShipController)
+						if (!oc.equals(this))
+							if (oc.pollBounds().overlaps(clear_bounds)|| !area_bounds_sea.contains(clear_bounds)){
+								legalmove = false;
+								object.baseSprite.setColor(1,0,0,1);
+								setPosition(pos);
+							}
+				
 				if (legalmove){
 					setPosition(position);
 					object.baseSprite.setColor(1,0,0,0);
@@ -98,19 +103,20 @@ public class ShipController extends ObjectController {
 		tempRect.x = position.x - tempRect.width / 2;
 		tempRect.y = position.y - tempRect.height / 2;
 		boolean legalmove = true;
-		for (ShipController sc : SeaController.shipControllers) {
-			if (!sc.equals(this)) {
-				if (sc.pollBounds().overlaps(tempRect)	|| !area_bounds_sea.contains(tempRect)) {
-					legalmove = false;
-					object.baseSprite.setColor(1,0,0,1);
-					bounds.set(tempRect);
-					Sprite sprite = object.sprite;
-					sprite.rotate90(true);
-					sprite.setSize(bounds.width, bounds.height);
-					setPosition(position);
-					sprite = object.baseSprite;
-					sprite.rotate90(true);
-					sprite.setSize(bounds.width, bounds.height);
+		for (ObjectController oc : parent.controllers) {
+			if(oc instanceof ShipController)
+				if (!oc.equals(this)) {
+					if (oc.pollBounds().overlaps(tempRect)	|| !area_bounds_sea.contains(tempRect)) {
+						legalmove = false;
+						object.baseSprite.setColor(1,0,0,1);
+						bounds.set(tempRect);
+						Sprite sprite = object.sprite;
+						sprite.rotate90(true);
+						sprite.setSize(bounds.width, bounds.height);
+						setPosition(position);
+						sprite = object.baseSprite;
+						sprite.rotate90(true);
+						sprite.setSize(bounds.width, bounds.height);
 
 				}
 
@@ -138,19 +144,6 @@ public class ShipController extends ObjectController {
 
 	public void show() {
 		object.setVisible();
-	}
-	@Override
-	public void removeObject(ObjectController obj) {
-		object.dispose();
-		
-	}
-	@Override
-	public void cleanTrash() {
-		guiControllers.removeAll(removeList);
-		removeList.clear();
-		
-	}
-	
-	
+	}	
 
 }

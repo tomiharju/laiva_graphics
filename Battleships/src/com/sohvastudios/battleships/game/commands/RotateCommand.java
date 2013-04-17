@@ -1,13 +1,13 @@
 package com.sohvastudios.battleships.game.commands;
 
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
-import com.sohvastudios.battleships.game.objectControllers.SeaController;
+import com.sohvastudios.battleships.game.objectControllers.SeaContainer;
 
 public class RotateCommand implements Command{
 
-	SeaController source;
+	SeaContainer source;
 	
-	public RotateCommand(SeaController source){
+	public RotateCommand(SeaContainer source){
 		this.source=source;
 	}
 	@Override

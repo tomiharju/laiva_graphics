@@ -17,7 +17,7 @@ public abstract class ModelObject {
 	public Sprite baseSprite;
 	protected Rectangle bounds;
 	protected Vector3 position;
-	protected boolean visible;
+	protected boolean visible = false;
 
 	public abstract void update();
 
@@ -30,7 +30,7 @@ public abstract class ModelObject {
 		SeaRenderer.objectsAtSea.remove(this.renderer);
 		RadarRenderer.objectsAtRadar.remove(this.renderer);
 		WorldRenderer.renderers.remove(this.renderer);
-		WorldObject.objects.remove(this);
+		controller.parent.removelist.add(this.controller);
 	}
 	
 	

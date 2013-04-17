@@ -15,12 +15,36 @@ public class ProjectileRenderer extends ObjectRenderer {
 	Texture explosionSheet;
 	TextureRegion[] explosionFrames;
 	TextureRegion currentFrame;
+	
+	Animation splashAnimation;
+	Texture splashSheet;
+	TextureRegion[] splashFrames;
+	
+	
 	private boolean animate;
+	private boolean animateMiss;
 	private float stateTime;
 	private Vector3 animPos;
 
 	public ProjectileRenderer() {
-		SeaRenderer.objectsAtSea.add(this);
+		
+	}
+	public void createSplashAnimation(){
+		animateMiss = false;
+		stateTime = 0;
+		splashSheet = AssetStorage.manager.get("data/effects/splash.png");
+
+		TextureRegion[][] tmp = TextureRegion.split(splashSheet,
+				splashSheet.getWidth() / 6, splashSheet.getHeight() / 4);
+
+		splashFrames = new TextureRegion[6 * 4];
+		int index = 0;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 6; j++) {
+				splashFrames[index++] = tmp[i][j];
+			}
+		}
+		splashAnimation = new Animation(0.05f, splashFrames);
 	}
 
 	public void createAnimation(int weaponType) {
@@ -37,7 +61,6 @@ public class ProjectileRenderer extends ObjectRenderer {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 6; j++) {
 				explosionFrames[index++] = tmp[i][j];
-
 			}
 		}
 		explosionAnimation = new Animation(0.05f, explosionFrames);
@@ -58,6 +81,15 @@ public class ProjectileRenderer extends ObjectRenderer {
 				object.dispose();
 			}
 		}
+		else if(animateMiss){
+			stateTime += Gdx.graphics.getDeltaTime();
+			currentFrame = splashAnimation.getKeyFrame(stateTime, false);
+			batch.draw(currentFrame, (animPos.x - 1f), (animPos.y - 1f), 1, 1);
+			if (splashAnimation.isAnimationFinished(stateTime)) {
+				animateMiss = false;
+				object.dispose();
+			}
+		}
 	}
 
 	@Override
@@ -67,6 +99,11 @@ public class ProjectileRenderer extends ObjectRenderer {
 
 	public void animateExplosion(Vector3 pos) {
 		animate = true;
+		stateTime = 0;
+		animPos = pos;
+	}
+	public void animateSplash(Vector3 pos){
+		animateMiss = true;
 		stateTime = 0;
 		animPos = pos;
 	}

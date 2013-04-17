@@ -10,6 +10,7 @@ import com.sohvastudios.battleships.game.objectModels.ModelObject;
 public abstract class ObjectController {
 
 	protected ModelObject object;
+	public ObjectController parent;
 	protected Vector3 position;
 	protected Rectangle bounds;
 	protected boolean orientation_changed;
@@ -19,8 +20,9 @@ public abstract class ObjectController {
 	protected Rectangle area_bounds_sea;
 	protected Rectangle area_bounds_radar;
 	
-	public ArrayList<UserInterfaceController> guiControllers = new ArrayList<UserInterfaceController>();
-	public ArrayList<ObjectController> removeList = new ArrayList<ObjectController>();
+	public ArrayList<ObjectController> controllers;
+	public ArrayList<ObjectController> addlist;
+	public ArrayList<ObjectController> removelist;
 	
 	public ObjectController(float x, float y, float width, float height) {
 		position 			= new Vector3(x, y, 0);
@@ -32,12 +34,12 @@ public abstract class ObjectController {
 	}
 
 	
-	public abstract void initialize();
+	public abstract void initialize(ObjectController parent);
 		
 	
 	
-	public abstract void removeObject(ObjectController obj);
-	public abstract void cleanTrash();
+	
+	
 	public ModelObject getObject() {
 		return object;
 	}

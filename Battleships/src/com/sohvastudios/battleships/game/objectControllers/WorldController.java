@@ -1,19 +1,17 @@
 package com.sohvastudios.battleships.game.objectControllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.objectModels.ProjectileObject;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
-import com.sohvastudios.battleships.game.objectModels.WeaponObject.Weapon;
 import com.sohvastudios.battleships.game.objectModels.WorldObject;
-import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
 
 public class WorldController extends ObjectController {
 
-	private SeaController shipView;
-	private RadarController radarView;
+	private SeaContainer shipView;
+	private RadarContainer radarView;
 	
 	private ArrayList<Vector2> result;
 	
@@ -27,14 +25,22 @@ public class WorldController extends ObjectController {
 	}
 
 	public void initialize() {
-		shipView = (SeaController) ((WorldObject) object).shipView().getController();
-		radarView = (RadarController) ((WorldObject) object).mapView().getController();
+		shipView = (SeaContainer) ((WorldObject) object).shipView().getController();
+		radarView = (RadarContainer) ((WorldObject) object).mapView().getController();
 	
 		shipView.show();
 		result = new ArrayList<Vector2>();
 
 	}
 
+	public void lockRadar(){
+		radarView.lockRadar();
+		radarView.hide();
+	}
+	public void unlockRadar(){
+		radarView.unlockRadar();
+		radarView.show();
+	}
 	public void showRadar(){
 		radarView.show();
 	}
@@ -43,52 +49,19 @@ public class WorldController extends ObjectController {
 	}
 
 	public boolean allShipsDestroyed() {
-		for (ShipController sc : SeaController.shipControllers) {
-			if (!((ShipObject) sc.getObject()).isDestroyed())
-				return false;
+		for (ObjectController oc : shipView.controllers) {
+			if(oc instanceof ShipController)
+				if (!((ShipObject) oc.getObject()).isDestroyed())
+					return false;
 		}
 		return true;
 	}
 
 	public void calculateDamageTaken(Vector3 point, int weapon_type) {
-		
-		float radius = Weapon.values()[weapon_type].getRadius();
-
-		switch (weapon_type) {
-
-		case 0: {
-			// Grenade
-			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
-			break;
-		}
-
-		case 1: {
-			// Heatseeker
-			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
-			break;
-		}
-		case 2: {
-			// Mortar
-			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
-			break;
-		}
-		case 3: {
-			// NavalGun
-			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
-			break;
-		}
-		case 4: {
-			// Phalanx CIWS
-			new ProjectileObject(new ProjectileController(5f, 15f, 1f, 1.5f),
-					new ProjectileRenderer(), weapon_type).setTarget(point,radius);
-			break;
-		}
-		}
-
+		shipView.calculateDamageTaken(point, weapon_type);
+	}
+	public void drawResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result){
+		radarView.drawResult(result);
 	}
 
 	public void touchDown(Vector3 p) {
@@ -114,17 +87,9 @@ public class WorldController extends ObjectController {
 	}
 
 	@Override
-	public void removeObject(ObjectController obj) {
-		object.dispose();
-		
-	}
-
-	@Override
-	public void cleanTrash() {
+	public void initialize(ObjectController parent) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	
+	}	
 
 }

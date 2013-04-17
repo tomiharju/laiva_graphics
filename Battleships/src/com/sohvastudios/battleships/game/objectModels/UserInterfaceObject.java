@@ -13,8 +13,7 @@ import com.sohvastudios.battleships.game.utilities.AssetStorage;
 public class UserInterfaceObject extends ModelObject {
 
 	
-	public UserInterfaceObject(ObjectController controller, ObjectRenderer renderer,
-			String file) {
+	public UserInterfaceObject(ObjectController controller, ObjectRenderer renderer,ObjectController parent,String file) {
 		setController(controller);
 		setRenderer(renderer);
 
@@ -28,26 +27,21 @@ public class UserInterfaceObject extends ModelObject {
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
 	
-		setVisible();
 		
-		controller.initialize();
-		WorldObject.objects.add(this);
+		
+		controller.initialize(parent);
+		WorldObject.addlist.add(this);
 		this.renderer.addGraphics(sprite);
+		setVisible();
 	}
 	
-	public void addToSea(ObjectController controller){
-		controller.guiControllers.add((UserInterfaceController) this.getController());
+	public void addToSea(){
 		SeaRenderer.objectsAtSea.add(renderer);
 	}
-	public void addToRadar(ObjectController controller){
-		controller.guiControllers.add((UserInterfaceController) this.getController());
+	public void addToRadar(){
 		RadarRenderer.objectsAtRadar.add(renderer);
 	}
-	
-	public UserInterfaceObject(ObjectController controller){
-		System.out.println("Another constructor");
-		setController(controller);
-	}
+
 
 	@Override
 	public void setController(ObjectController controller) {

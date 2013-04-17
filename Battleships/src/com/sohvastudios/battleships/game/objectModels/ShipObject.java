@@ -55,8 +55,7 @@ public class ShipObject extends ModelObject {
 	public Weapon shipWeapon;
 	
 	
-	public ShipObject(ShipType ship, ShipController controller,
-			ShipRenderer renderer) {
+	public ShipObject(ShipType ship, ShipController controller,ShipRenderer renderer,ObjectController parent) {
 		setController(controller);
 		setRenderer(renderer);
 		
@@ -74,9 +73,10 @@ public class ShipObject extends ModelObject {
 		hpPercentage = 100;
 		installWeapon(ship.ordinal());
 		
-		controller.initialize();
-		WorldObject.objects.add(this);
+		controller.initialize(parent);
+		WorldObject.addlist.add(this);
 		this.renderer.addGraphics(sprite);
+		setVisible();
 	}
 	public void installWeapon(int shiptype){
 		switch(shiptype){
@@ -129,11 +129,7 @@ public class ShipObject extends ModelObject {
 
 	@Override
 	public void update() {
-	
-		
-		
 		baseSprite.setPosition(sprite.getX(), sprite.getY());
-
 	}
 
 }

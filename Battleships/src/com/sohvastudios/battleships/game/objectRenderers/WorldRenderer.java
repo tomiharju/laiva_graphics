@@ -30,6 +30,7 @@ public class WorldRenderer extends ObjectRenderer {
 		cam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT); 
 		seaCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 		radarCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+	
 	}
 
 	public void render() {
@@ -37,7 +38,6 @@ public class WorldRenderer extends ObjectRenderer {
 		seaCam.update();
 		radarCam.update();
 		batch.begin();
-		
 		
 		batch.setProjectionMatrix(seaCam.combined);
 		for (int i = 0; i < SeaRenderer.objectsAtSea.size(); i++)

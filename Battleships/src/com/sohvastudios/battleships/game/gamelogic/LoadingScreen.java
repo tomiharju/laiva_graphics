@@ -63,6 +63,7 @@ public class LoadingScreen implements Screen {
 	}
 
 	public void loadEffects() {
+		AssetStorage.manager.load("data/effects/splash.png", Texture.class);
 		AssetStorage.manager.load("data/effects/smokesheet.png", Texture.class);
 		AssetStorage.manager.load("data/effects/sweep.png", Texture.class);
 	}
@@ -89,6 +90,7 @@ public class LoadingScreen implements Screen {
 	}
 
 	public void loadWeapons() {
+		AssetStorage.manager.load("data/weapons/w-1.png", Texture.class);
 		AssetStorage.manager.load("data/weapons/w0.png", Texture.class);
 		AssetStorage.manager.load("data/weapons/w1.png", Texture.class);
 		AssetStorage.manager.load("data/weapons/w2.png", Texture.class);

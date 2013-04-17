@@ -6,34 +6,33 @@ import java.util.Set;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.ProjectileController;
-import com.sohvastudios.battleships.game.objectControllers.SeaController;
+import com.sohvastudios.battleships.game.objectControllers.SeaContainer;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.RadarRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.SeaRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
-import com.sohvastudios.battleships.game.utilities.DamageCalculator;
+import com.sohvastudios.battleships.game.weaponStrategies.AnimateStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.GrenadeStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.MissileStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.MortarStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.NavalGunStrategy;
-import com.sohvastudios.battleships.game.weaponStrategies.PhalanxStrategy;
+import com.sohvastudios.battleships.game.weaponStrategies.TorpedoStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.WeaponStrategy;
 
 
 public class ProjectileObject extends ModelObject {
 
-	private ArrayList<Vector2> result;
+
 	private Set<ShipController> ships_hit;
 	private float radius;
 	private WeaponStrategy strategy;
 
-	public ProjectileObject(ObjectController controller,
-			ObjectRenderer renderer, int weaponType) {
+	public ProjectileObject(ObjectController controller,ObjectRenderer renderer,ObjectController parent, int weaponType) {
 		setController(controller);
 		setRenderer(renderer);
 		position = controller.pollPosition();
@@ -44,25 +43,31 @@ public class ProjectileObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
-
+		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		
 
 		((ProjectileRenderer) this.renderer).createAnimation(0);
-		setVisible();
-		setStrategy(weaponType);
+		((ProjectileRenderer) this.renderer).createSplashAnimation();
 		
-		controller.initialize();
-		WorldObject.objects.add(this);
+		
+		controller.initialize(parent);
+		WorldObject.addlist.add(this);
+		setStrategy(weaponType);
 		this.renderer.addGraphics(sprite);
+	
+		
 	}
 
 	public void setStrategy(int weapon_type) {
 		switch (weapon_type) {
+		case -1:
+			strategy = new AnimateStrategy();
+			break;
 		case 0:
 			strategy = new GrenadeStrategy();
 			break;
 		case 1:
-			strategy = new MissileStrategy();
+			strategy = new MissileStrategy(controller.parent);
 			break;
 		case 2:
 			strategy = new MortarStrategy();
@@ -71,7 +76,7 @@ public class ProjectileObject extends ModelObject {
 			strategy = new NavalGunStrategy();
 			break;
 		case 4:
-			strategy = new PhalanxStrategy();
+			strategy = new TorpedoStrategy(controller.parent);
 			break;
 		default:
 			break;
@@ -79,37 +84,33 @@ public class ProjectileObject extends ModelObject {
 		}
 	}
 
-	public void setTarget(Vector3 target, float radius) {
-		strategy.setTarget(target);
-		this.radius = radius;
-		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		ships_hit = new HashSet<ShipController>();
-		result = new ArrayList<Vector2>();
-	}
-
 	
-
-	public void dealDamage(Vector3 point, float radius) {
-		getShipsInRange(position, radius);
-		for (ShipController ship : ships_hit) {
-			((ShipObject) ship.getObject()).dealDamage(new DamageCalculator(
-					point, radius, (ShipObject) ship.getObject()).run());
-
-		}
-		((ProjectileRenderer) renderer).animateExplosion(position);
+	public void calculateDamage(Vector3 target, float radius){
+		//Calculate damage, send result, animate damage, send true when finished calculating
+		ships_hit = new HashSet<ShipController>();
+		strategy.setFlightPath(((SeaContainer)controller.parent).flightpath,target);
+		this.radius=radius;
+		getShipsInRange(strategy.simulate(target),radius);
+		addToSea();
+		animateDamage();
 	}
-
+	public void animateOnRadar(ArrayList<Vector3> path, ArrayList<Vector3> hits,ObjectController parent){
+		strategy.setRadarAnimationData(path, hits, parent);
+		addToRadar();
+		animateDamage();
+	}
+	public void animateDamage(){
+		setVisible();
+	}
 	public void getShipsInRange(Vector3 pos, float radius) {
 		Vector3 hitIndicator = new Vector3();
-		ships_hit.clear();
-		result.clear();
-
-		for (ShipController sc : SeaController.shipControllers) {
-			if (!ships_hit.contains(sc)) {
+		for (ObjectController oc : controller.parent.controllers) {
+			if(oc instanceof ShipController){
+			if (!ships_hit.contains(oc)) {
 				hitIndicator.set(pos.x, pos.y, 0);
-				if (sc.pollBounds().contains(hitIndicator.x, hitIndicator.y)) {
-					result.add(new Vector2(hitIndicator.x, hitIndicator.y));
-					ships_hit.add(sc);
+				if (oc.pollBounds().contains(hitIndicator.x, hitIndicator.y)) {
+					((SeaContainer)controller.parent).hitspot.add(new Vector3(hitIndicator.x, hitIndicator.y,0));
+					ships_hit.add((ShipController) oc);
 					continue;
 				}
 				for (int a = 0; a <= 360; a++) {
@@ -118,36 +119,36 @@ public class ProjectileObject extends ModelObject {
 					float y = (float) (pos.y + Math.sin(Math.toRadians(a))
 							* radius);
 					hitIndicator.set(x, y, 0);
-					if (sc.pollBounds()
-							.contains(hitIndicator.x, hitIndicator.y)
-							&& !ships_hit.contains(sc)) {
-						ships_hit.add(sc);
-						result.add(new Vector2(hitIndicator.x, hitIndicator.y));
+					if (oc.pollBounds().contains(hitIndicator.x, hitIndicator.y)&& !ships_hit.contains(oc)) {
+						ships_hit.add((ShipController) oc);
+						((SeaContainer)controller.parent).hitspot.add(new Vector3(hitIndicator.x, hitIndicator.y,0));
 
 					}
 				}
 			}
 		}
-		PlayScreen.logicHandler.sendResult(result);
+		}
+	
 	}
 
 	@Override
 	public void update() {
-		
-		
 		if(isVisible()){
-		sprite.setRotation((float) Math.toDegrees(Math.atan2(strategy.getPos().y
-					- position.y, strategy.getPos().x - position.x)
-					- Math.PI / 2));
-		if (strategy.update(position)) {
-				dealDamage(position, radius);
+			if (strategy.animate(sprite,position)) {
 				setHidden();
+				strategy.dealDamage(ships_hit, position, radius,((ProjectileRenderer) renderer));
 			}
 			controller.setPosition(position);
 		
 		}
 	}
 
+	public void addToSea(){
+		SeaRenderer.objectsAtSea.add(renderer);
+	}
+	public void addToRadar(){
+		RadarRenderer.objectsAtRadar.add(renderer);
+	}
 	@Override
 	public void setController(ObjectController controller) {
 		this.controller = (ProjectileController) controller;

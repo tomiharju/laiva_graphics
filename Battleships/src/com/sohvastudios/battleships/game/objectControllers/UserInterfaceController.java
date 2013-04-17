@@ -18,7 +18,9 @@ public class UserInterfaceController extends ObjectController {
 	
 		
 	}
-	public void initialize(){
+	public void initialize(ObjectController parent){
+		this.parent=parent;
+		parent.addlist.add(this);
 		clear_bounds = new Rectangle();
 	}
 
@@ -67,16 +69,6 @@ public class UserInterfaceController extends ObjectController {
 		}
 
 	}
-	@Override
-	public void removeObject(ObjectController obj) {
-		object.dispose();
-		
-	}
-	@Override
-	public void cleanTrash() {
-		guiControllers.removeAll(removeList);
-		removeList.clear();
-		
-	}
+	
 
 }

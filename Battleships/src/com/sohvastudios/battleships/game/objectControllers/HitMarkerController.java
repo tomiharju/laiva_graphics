@@ -7,8 +7,9 @@ public class HitMarkerController extends ObjectController {
 		
 
 	}
-	public void initialize(){
-		RadarController.markerControllers.add(this);
+	public void initialize(ObjectController parent){
+		this.parent=parent;
+		parent.addlist.add(this);
 	}
 
 	public void hide() {
@@ -18,16 +19,6 @@ public class HitMarkerController extends ObjectController {
 	public void show() {
 		object.setVisible();
 	}
-	@Override
-	public void removeObject(ObjectController obj) {
-		RadarController.markerControllers.remove(this);
-		object.dispose();
-		
+	
+	
 	}
-	@Override
-	public void cleanTrash() {
-		guiControllers.removeAll(removeList);
-		removeList.clear();
-		
-	}
-}

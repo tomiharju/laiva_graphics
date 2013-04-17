@@ -13,7 +13,7 @@ public class HitMarkerObject extends ModelObject {
 
 	public float alpha;
 
-	public HitMarkerObject(ObjectController controller, ObjectRenderer renderer) {
+	public HitMarkerObject(ObjectController controller, ObjectRenderer renderer,ObjectController parent) {
 		setController(controller);
 		setRenderer(renderer);
 		position = controller.pollPosition();
@@ -28,9 +28,10 @@ public class HitMarkerObject extends ModelObject {
 
 		alpha = 1f; // Value used to render with increasing transparency
 		visible = true;
-		controller.initialize();
-		WorldObject.objects.add(this);
+		controller.initialize(parent);
+		WorldObject.addlist.add(this);
 		this.renderer.addGraphics(sprite);
+		setVisible();
 	}
 
 	@Override

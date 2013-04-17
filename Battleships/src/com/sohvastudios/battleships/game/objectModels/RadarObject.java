@@ -4,10 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.objectControllers.HitMarkerController;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
-import com.sohvastudios.battleships.game.objectControllers.RadarController;
+import com.sohvastudios.battleships.game.objectControllers.RadarContainer;
 import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.RadarRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
@@ -21,11 +20,10 @@ public class RadarObject extends ModelObject {
 
 	private Rectangle scanBar;
 	private Sprite sweepEffect;
-	private Vector3 camPosition;
 	float radarpos;
 	float dt;
-	public RadarObject(RadarController controller,
-			RadarRenderer renderer) {
+	
+	public RadarObject(RadarContainer controller,RadarRenderer renderer,ObjectController parent) {
 		setController(controller);
 		setRenderer(renderer);
 		position = controller.pollPosition();
@@ -46,12 +44,13 @@ public class RadarObject extends ModelObject {
 		sweepEffect.setPosition(scanBar.x , scanBar.y);
 		renderer.addSweepGraphics(sweepEffect);
 		
-		camPosition		= new Vector3(0,14,0);
-		WorldRenderer.radarCam.translate(0,14);	
-		radarpos=14;
-		controller.initialize();
-		WorldObject.objects.add(this);
+		
+		WorldRenderer.radarCam.translate(10,0);	
+		radarpos=10;
+		controller.initialize(parent);
+		WorldObject.addlist.add(this);
 		this.renderer.addGraphics(sprite);
+		setVisible();
 	}
 
 	@Override
@@ -66,25 +65,27 @@ public class RadarObject extends ModelObject {
 		realvalue = Math.round(realvalue);
 		realvalue = realvalue/1000;
 	
-		if((realvalue)==((RadarController)controller).targetPosition.y){
+		if((realvalue)==((RadarContainer)controller).targetPosition.x){
 			dt=0;
 		}
-		else if((realvalue)<(((RadarController)controller).targetPosition.y)){
-			dt=0.1f;
+		else if((realvalue)<(((RadarContainer)controller).targetPosition.x)){
+			dt=0.4f;
 		}
-		else if((realvalue)>(((RadarController)controller).targetPosition.y)){
-			dt=-0.1f;
+		else if((realvalue)>(((RadarContainer)controller).targetPosition.x)){
+			dt=-0.4f;
 		}
-		WorldRenderer.radarCam.translate(0,dt);
+		WorldRenderer.radarCam.translate(dt,0);
 		
 		
 	}
 
 	public void runSweep() {
 		if ((sweepStepTime += Gdx.graphics.getDeltaTime()) > SWEEP_STEP_INTERVAL) {
-			for (HitMarkerController hc : RadarController.markerControllers) {
-				if (scanBar.contains(hc.pollPosition().x, hc.pollPosition().y)) {
-					((HitMarkerObject) hc.getObject()).resetAlpha();
+			for (ObjectController oc : controller.controllers) {
+				if(oc instanceof HitMarkerController){
+					if (scanBar.contains(oc.pollPosition().x, oc.pollPosition().y)) {
+						((HitMarkerObject) oc.getObject()).resetAlpha();
+					}
 				}
 			}
 			scanBar.set(scanBar.x + 0.05f, bounds.y, 1,bounds.height);
@@ -98,7 +99,7 @@ public class RadarObject extends ModelObject {
 
 	@Override
 	public void setController(ObjectController controller) {
-		this.controller = (RadarController) controller;
+		this.controller = (RadarContainer) controller;
 		this.controller.setObject(this);
 
 	}

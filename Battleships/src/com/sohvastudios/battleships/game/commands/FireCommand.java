@@ -1,12 +1,12 @@
 package com.sohvastudios.battleships.game.commands;
 
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
-import com.sohvastudios.battleships.game.objectControllers.RadarController;
+import com.sohvastudios.battleships.game.objectControllers.RadarContainer;
 
 public class FireCommand implements Command{
 
-	RadarController source;
-	public FireCommand(RadarController source){
+	RadarContainer source;
+	public FireCommand(RadarContainer source){
 		this.source=source;
 	}
 	@Override
