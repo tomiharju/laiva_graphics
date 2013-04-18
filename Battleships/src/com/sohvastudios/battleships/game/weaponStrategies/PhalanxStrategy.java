@@ -27,12 +27,14 @@ public class PhalanxStrategy implements WeaponStrategy {
 	//General variables
 		private Set<ShipController> hits;
 		private ObjectController parent;
+		private ArrayList<Vector3> hitspots;
 
 	public PhalanxStrategy(ObjectController parent) {
 		this.parent=parent;
 		projectilePosition 		= new Vector3();
 		projectileDestination 	= new Vector3();
 		hits = new HashSet<ShipController>();
+		hitspots = new ArrayList<Vector3>();
 	}
 
 	@Override

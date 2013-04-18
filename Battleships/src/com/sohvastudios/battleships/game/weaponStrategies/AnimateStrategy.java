@@ -62,7 +62,7 @@ public class AnimateStrategy implements WeaponStrategy {
 			}else{
 				for(Vector3 hit : hits){
 					new HitMarkerObject(new HitMarkerController(hit.x,
-						hit.y, 0.25f, 0.25f), new HitMarkerRenderer(),parent,true);
+						hit.y, hit.z,hit.z), new HitMarkerRenderer(),parent,true);
 				}
 				new HitMarkerObject(new HitMarkerController(position.x,
 						position.y, blastSimulationRadius*2, blastSimulationRadius*2), new HitMarkerRenderer(),parent,false);

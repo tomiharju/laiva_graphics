@@ -25,8 +25,13 @@ public class HitMarkerObject extends ModelObject {
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
 	
-
-		alpha = 0.2f; // Value used to render with increasing transparency
+		if(isHitMarker){
+			alpha = 1f; // Value used to render with increasing transparency
+		}else{
+			alpha=0.2f;
+			sprite.setColor(1f,0f,0f,1f);
+		}
+		
 		this.isHitMarker=isHitMarker;
 		visible = true;
 		controller.initialize(parent);

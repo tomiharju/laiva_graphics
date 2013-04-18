@@ -13,6 +13,7 @@ import com.sohvastudios.battleships.game.objectControllers.ShipController;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
 import com.sohvastudios.battleships.game.utilities.DamageCalculator;
+import com.sohvastudios.battleships.game.utilities.HitSpotCalculator;
 
 public class TorpedoStrategy implements WeaponStrategy{
 
@@ -27,6 +28,7 @@ public class TorpedoStrategy implements WeaponStrategy{
 	//General variables
 	private ObjectController parent;
 	private Set<ShipController> hits;
+	private ArrayList<Vector3> hitspots;
 	
 	public TorpedoStrategy(ObjectController parent){
 		this.parent=parent;
@@ -34,6 +36,7 @@ public class TorpedoStrategy implements WeaponStrategy{
 		projectileDestination 	= new Vector3();
 		primaryDestination		= new Vector3();
 		hits = new HashSet<ShipController>();
+		hitspots = new ArrayList<Vector3>();
 		
 	}
 	@Override
@@ -103,31 +106,30 @@ public class TorpedoStrategy implements WeaponStrategy{
 	}
 	@Override
 	public void findBlastAffectedShips() {
-		Vector3 hitIndicator = new Vector3();
+		float radius_factor = RADIUS;
+		Vector3 spot = new Vector3();
 		for (ObjectController oc : parent.controllers) {
-			if(oc instanceof ShipController){
-			if (!hits.contains(oc)) {
-				hitIndicator.set(projectilePosition.x, projectilePosition.y, 0);
-				if (oc.pollBounds().contains(hitIndicator.x, hitIndicator.y)) {
-					((SeaContainer)parent).hitspot.add(new Vector3(hitIndicator.x, hitIndicator.y,0));
-					hits.add((ShipController) oc);
-					continue;
-				}
-				for (int a = 0; a <= 360; a++) {
-					float x = (float) (projectilePosition.x + Math.cos(Math.toRadians(a))* RADIUS);
-					float y = (float) (projectilePosition.y + Math.sin(Math.toRadians(a))* RADIUS);
-					hitIndicator.set(x, y, 0);
-					if (oc.pollBounds().contains(hitIndicator.x, hitIndicator.y)&& !hits.contains(oc)) {
-						hits.add((ShipController) oc);
-						((SeaContainer)parent).hitspot.add(new Vector3(hitIndicator.x, hitIndicator.y,0));
+			if (oc instanceof ShipController) {
+				for (float i = RADIUS; i >= 0; i -= 0.1) { // 10 circles in 1
+					for (int a = 0; a <= 360; a += 2) {
+						float x = (float) (projectilePosition.x + Math.cos(Math.toRadians(a)) * radius_factor);
+						float y = (float) (projectilePosition.y + Math.sin(Math.toRadians(a)) * radius_factor);
+						spot.set(x, y, 0);
+						if (oc.pollBounds().contains(spot.x, spot.y)) {
+							if(!hits.contains(oc))
+								hits.add(((ShipController)oc));
+							
+							hitspots.add(new Vector3(spot));
+
+						}
 
 					}
+					radius_factor -= 0.1;
 				}
 			}
 		}
-		}
-	
-		
+		if(hits.size()>0)
+			((SeaContainer) parent).hitspot.add(new HitSpotCalculator().getWeightedHit(hitspots));
 	}
 
 	
