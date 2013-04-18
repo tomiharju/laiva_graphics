@@ -46,7 +46,8 @@ public class GameLogicHandler implements LogicHandler {
 			controller.drawResult(result);
 			receivedResult=false;
 		}
-		if(receivedShoot){
+		
+		else if(receivedShoot){
 			System.out.println("Receiving shoot");
 			controller.calculateDamageTaken(shootPosition, shootWeapon);
 			receivedShoot=false;
@@ -92,6 +93,7 @@ public class GameLogicHandler implements LogicHandler {
 
 	@Override
 	public void receiveResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result) {
+	
 		this.result=result;
 		receivedResult=true;
 		//controller.lockRadar();

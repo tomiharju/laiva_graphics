@@ -84,7 +84,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 		else if(animateMiss){
 			stateTime += Gdx.graphics.getDeltaTime();
 			currentFrame = splashAnimation.getKeyFrame(stateTime, false);
-			batch.draw(currentFrame, (animPos.x - 1f), (animPos.y - 1f), 1, 1);
+			batch.draw(currentFrame, (animPos.x - .5f), (animPos.y - .5f), 1, 1);
 			if (splashAnimation.isAnimationFinished(stateTime)) {
 				animateMiss = false;
 				object.dispose();

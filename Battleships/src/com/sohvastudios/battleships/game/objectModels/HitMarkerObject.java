@@ -12,8 +12,8 @@ import com.sohvastudios.battleships.game.utilities.AssetStorage;
 public class HitMarkerObject extends ModelObject {
 
 	public float alpha;
-
-	public HitMarkerObject(ObjectController controller, ObjectRenderer renderer,ObjectController parent) {
+	public boolean isHitMarker;
+	public HitMarkerObject(ObjectController controller, ObjectRenderer renderer,ObjectController parent,boolean isHitMarker) {
 		setController(controller);
 		setRenderer(renderer);
 		position = controller.pollPosition();
@@ -26,7 +26,8 @@ public class HitMarkerObject extends ModelObject {
 				- bounds.height / 2);
 	
 
-		alpha = 1f; // Value used to render with increasing transparency
+		alpha = 0.2f; // Value used to render with increasing transparency
+		this.isHitMarker=isHitMarker;
 		visible = true;
 		controller.initialize(parent);
 		WorldObject.addlist.add(this);
@@ -36,11 +37,11 @@ public class HitMarkerObject extends ModelObject {
 
 	@Override
 	public void update() {
-		
-		alpha -= Gdx.graphics.getDeltaTime();
-		
-		if (alpha < 0)
-			alpha = 0;
+		if(isHitMarker){
+			alpha -= Gdx.graphics.getDeltaTime()/10;
+			if (alpha < 0)
+				alpha = 0;
+		}
 	}
 
 	@Override
@@ -58,7 +59,8 @@ public class HitMarkerObject extends ModelObject {
 	}
 
 	public void resetAlpha() {
-		alpha = 1f;
+		if(isHitMarker)
+			alpha = 1f;
 	}
 
 }

@@ -95,6 +95,7 @@ public class ProjectileObject extends ModelObject {
 			if (strategy.animate(sprite,position)) {
 				setHidden();
 				strategy.dealDamage(position,((ProjectileRenderer) renderer));
+				
 			}
 			controller.setPosition(position);
 		

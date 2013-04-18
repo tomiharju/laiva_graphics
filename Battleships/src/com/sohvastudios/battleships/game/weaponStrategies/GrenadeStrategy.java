@@ -54,7 +54,6 @@ public class GrenadeStrategy implements WeaponStrategy {
 	public void calculatePathAndHits(Vector3 target) {
 		projectileDestination.set(target);
 		((SeaContainer)parent).flightpath.add(projectileDestination);
-		projectilePosition.set(projectileDestination);
 		findBlastAffectedShips();
 	
 	}
@@ -67,7 +66,6 @@ public class GrenadeStrategy implements WeaponStrategy {
 	
 	@Override
 	public Vector3 simulate(Vector3 position) {
-		//Not in use
 		return projectilePosition;
 	
 	}

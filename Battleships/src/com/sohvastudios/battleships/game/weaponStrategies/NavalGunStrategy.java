@@ -18,7 +18,7 @@ public class NavalGunStrategy implements WeaponStrategy{
 
 
 	//Weapon properties
-		final float 	RADIUS 			= 0.25f;
+		final float 	RADIUS 			= 0.75f;
 		final float 	DMG_DENSITY     = 1.0f;
 		final float		EXP_PROXIMITY	= 0.1f;
 		Vector3 projectilePosition;

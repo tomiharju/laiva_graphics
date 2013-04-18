@@ -18,7 +18,7 @@ public class MissileStrategy implements WeaponStrategy {
 
 
 	//Weapon properties
-		final float 	RADIUS 			= 0.25f;
+		final float 	RADIUS 			= 0.5f;
 		final float 	SEEKING_RADIUS 	= 1.5f;
 		final float 	DMG_DENSITY     = 1.0f;
 		final float		EXP_PROXIMITY	= 0.1f;
@@ -65,9 +65,7 @@ public class MissileStrategy implements WeaponStrategy {
 
 	}
 	public Vector3 simulate(Vector3 position){
-		//Not used with missiles
-		return projectileDestination;
-	
+		return projectilePosition;
 	}
 
 	@Override

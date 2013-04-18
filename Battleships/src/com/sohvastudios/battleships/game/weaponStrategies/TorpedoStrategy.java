@@ -18,7 +18,7 @@ public class TorpedoStrategy implements WeaponStrategy{
 
 
 	//Weapon properties
-		final float 	RADIUS 			= 0.25f;
+		final float 	RADIUS 			= 0.5f;
 		final float 	DMG_DENSITY     = 1.0f;
 		final float		EXP_PROXIMITY	= 0.1f;
 		Vector3 projectilePosition;
@@ -82,7 +82,7 @@ public class TorpedoStrategy implements WeaponStrategy{
 
 	@Override
 	public Vector3 simulate(Vector3 target) {
-		while(projectilePosition.dst(target)>0.1){
+		while(projectilePosition.dst(target)>EXP_PROXIMITY){
 			projectilePosition.lerp(target, 0.1f);
 			for(ObjectController sc : parent.controllers)
 				if(sc instanceof ShipController){
