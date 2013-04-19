@@ -92,7 +92,7 @@ public class MortarStrategy implements WeaponStrategy {
 			renderer.animateExplosion(point);
 		for (ShipController ship : hits) {
 			((ShipObject) ship.getObject()).dealDamage(new DamageCalculator(
-					point, RADIUS, (ShipObject) ship.getObject()).calculate());
+					point, RADIUS,ship).calculate());
 		}
 		}
 		else
@@ -122,9 +122,13 @@ public class MortarStrategy implements WeaponStrategy {
 					radius_factor -= 0.1;
 				}
 			}
+			if(hitspots.size()>0){
+				((SeaContainer) parent).hitspot.add(new HitSpotCalculator().getWeightedHit(hitspots));
+				hitspots.clear();
+			}
+			
 		}
-		if(hits.size()>0)
-			((SeaContainer) parent).hitspot.add(new HitSpotCalculator().getWeightedHit(hitspots));
+		
 	}
 
 }

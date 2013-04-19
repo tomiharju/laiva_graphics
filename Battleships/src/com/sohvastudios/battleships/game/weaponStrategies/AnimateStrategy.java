@@ -53,7 +53,7 @@ public class AnimateStrategy implements WeaponStrategy {
 
 	@Override
 	public boolean animate(Sprite sprite,Vector3 position) {
-		position.lerp(currentTarget,(float) (1*Gdx.graphics.getDeltaTime()));
+		position.lerp(currentTarget,(float) (Gdx.graphics.getDeltaTime()));
 	
 		if(position.dst(currentTarget)<blastTriggerRange){
 			targetNumber++;
@@ -62,7 +62,7 @@ public class AnimateStrategy implements WeaponStrategy {
 			}else{
 				for(Vector3 hit : hits){
 					new HitMarkerObject(new HitMarkerController(hit.x,
-						hit.y, hit.z,hit.z), new HitMarkerRenderer(),parent,true);
+						hit.y,hit.z,hit.z), new HitMarkerRenderer(),parent,true);
 				}
 				new HitMarkerObject(new HitMarkerController(position.x,
 						position.y, blastSimulationRadius*2, blastSimulationRadius*2), new HitMarkerRenderer(),parent,false);

@@ -2,12 +2,12 @@ package com.sohvastudios.battleships.game.utilities;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.sohvastudios.battleships.game.objectModels.ShipObject;
+import com.sohvastudios.battleships.game.objectControllers.ShipController;
 import com.sohvastudios.battleships.game.objectModels.WeaponObject;
 
 public class DamageCalculator {
 
-	ShipObject ship;
+	
 	WeaponObject weapon;
 	Rectangle ship_bounds;
 	float hits_total;
@@ -15,11 +15,10 @@ public class DamageCalculator {
 	long startTime;
 	float radius;
 
-	public DamageCalculator(Vector3 point, float radius, ShipObject ship) {
+	public DamageCalculator(Vector3 point, float radius, ShipController ship) {
 
 		this.radius = radius;
-		this.ship = ship;
-		ship_bounds = new Rectangle(ship.getController().pollBounds());
+		ship_bounds = new Rectangle(ship.pollBounds());
 		center = new Vector3(point);
 		hit_marker = new Vector3();
 
@@ -45,11 +44,6 @@ public class DamageCalculator {
 			}
 			radius_factor -= 0.1;
 		}
-
-		long finalTime = System.currentTimeMillis();
-
-		System.out.println("Algoritm took " + (finalTime - startTime)
-				+ " milliseconds.");
 		System.out.println("Total hits " + hits_total);
 		return hits_total;
 	}

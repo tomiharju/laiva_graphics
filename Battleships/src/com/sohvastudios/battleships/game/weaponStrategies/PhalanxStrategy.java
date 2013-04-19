@@ -86,7 +86,7 @@ public class PhalanxStrategy implements WeaponStrategy {
 			renderer.animateExplosion(point);
 		for (ShipController ship : hits) {
 			((ShipObject) ship.getObject()).dealDamage(new DamageCalculator(
-					point, RADIUS, (ShipObject) ship.getObject()).calculate());
+					point, RADIUS, ship).calculate());
 		}
 		}
 		else

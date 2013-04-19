@@ -70,7 +70,7 @@ public class RadarContainer extends ObjectController {
 			ArrayList<Vector3> flightpath = result.getKey();
 			ArrayList<Vector3> hitspots = result.getValue();
 			System.out.println("HitSpot size "+hitspots.size()+ " flightpath size "+flightpath.size());
-			new ProjectileObject(new ProjectileController(5f, 10f, 0.5f, 0.5f),
+			new ProjectileObject(new ProjectileController(5f, 10f, 0.25f, 0.25f),
 					new ProjectileRenderer(),this, -1).simulateDamage(flightpath, hitspots, this);
 		}
 		

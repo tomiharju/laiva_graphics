@@ -67,14 +67,14 @@ public class WorldObject extends ModelObject {
 			seaObject.controller.controllers.addAll(seaObject.controller.addlist);
 			seaObject.controller.removelist.clear();	
 			seaObject.controller.addlist.clear();
-			System.out.println("Finished working on sealists");
+		
 		}
 		if(radarObject.controller.addlist.size()>0 || radarObject.controller.removelist.size()>0){
 			radarObject.controller.controllers.removeAll(radarObject.controller.removelist);
 			radarObject.controller.controllers.addAll(radarObject.controller.addlist);
 			radarObject.controller.removelist.clear();
 			radarObject.controller.addlist.clear();
-			System.out.println("Finsihed working on radarlists");
+		
 		}
 		
 	}

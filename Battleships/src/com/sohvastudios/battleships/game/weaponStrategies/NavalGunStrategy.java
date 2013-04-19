@@ -83,7 +83,7 @@ public class NavalGunStrategy implements WeaponStrategy{
 		if(hits.size()>0){
 			renderer.animateExplosion(point);
 		for (ShipController ship : hits) {
-			((ShipObject) ship.getObject()).dealDamage(new DamageCalculator(point,RADIUS,(ShipObject) ship.getObject()).calculate());
+			((ShipObject) ship.getObject()).dealDamage(new DamageCalculator(point,RADIUS,ship).calculate());
 		}
 		}
 		else
@@ -100,13 +100,11 @@ public class NavalGunStrategy implements WeaponStrategy{
 			if (oc instanceof ShipController) {
 				for (float i = RADIUS; i >= 0; i -= 0.1) { // 10 circles in 1
 					for (int a = 0; a <= 360; a += 2) {
-						float x = (float) (projectilePosition.x + Math.cos(Math.toRadians(a)) * radius_factor);
-						float y = (float) (projectilePosition.y + Math.sin(Math.toRadians(a)) * radius_factor);
+						float x = (float) (projectilePosition.x + Math.cos(Math.toRadians(a))* radius_factor);
+						float y = (float) (projectilePosition.y + Math.sin(Math.toRadians(a))* radius_factor);
 						spot.set(x, y, 0);
 						if (oc.pollBounds().contains(spot.x, spot.y)) {
-							if(!hits.contains(oc))
-								hits.add(((ShipController)oc));
-							
+							hits.add(((ShipController)oc));
 							hitspots.add(new Vector3(spot));
 
 						}
@@ -115,8 +113,12 @@ public class NavalGunStrategy implements WeaponStrategy{
 					radius_factor -= 0.1;
 				}
 			}
+			if(hitspots.size()>0){
+				((SeaContainer) parent).hitspot.add(new HitSpotCalculator().getWeightedHit(hitspots));
+				hitspots.clear();
+			}
+			
 		}
-		if(hits.size()>0)
-			((SeaContainer) parent).hitspot.add(new HitSpotCalculator().getWeightedHit(hitspots));
+		
 	}
 }
