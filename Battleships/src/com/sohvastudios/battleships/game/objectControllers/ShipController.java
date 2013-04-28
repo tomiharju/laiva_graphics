@@ -144,6 +144,9 @@ public class ShipController extends ObjectController {
 
 	public void show() {
 		object.setVisible();
-	}	
+	}
+	public void scalePositions(){
+		setPosition(position.mul(2));
+	}
 
 }

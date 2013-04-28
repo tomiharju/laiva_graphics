@@ -86,6 +86,9 @@ public class WorldController extends ObjectController {
 		}
 	}
 
+	public void scaleShipPositions(){
+		shipView.scaleShipPositions();
+	}
 	@Override
 	public void initialize(ObjectController parent) {
 		// TODO Auto-generated method stub

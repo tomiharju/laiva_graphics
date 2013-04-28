@@ -39,7 +39,7 @@ public class UserInterfaceObject extends ModelObject {
 		SeaRenderer.objectsAtSea.add(renderer);
 	}
 	public void addToRadar(){
-		RadarRenderer.objectsAtRadar.add(renderer);
+		RadarRenderer.objectsAtRadar.add(RadarRenderer.objectsAtRadar.size()-1,renderer);
 	}
 
 

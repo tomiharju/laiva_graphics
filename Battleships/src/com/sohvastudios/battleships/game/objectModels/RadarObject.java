@@ -16,12 +16,21 @@ public class RadarObject extends ModelObject {
 
 
 	private final double SWEEP_STEP_INTERVAL = 0.033f;
+	//private final double SWEEP_STEP_INTERVAL = 2f;
 	private float sweepStepTime;
 
 	private Rectangle scanBar;
 	private Sprite sweepEffect;
 	float radarpos;
 	float dt;
+	
+	//Sweep related arrays
+	float small_x=0;
+	float small_y;
+	float high_x=-4;
+	float high_y;	
+	float width;
+	float height;
 	
 	public RadarObject(RadarContainer controller,RadarRenderer renderer,ObjectController parent) {
 		setController(controller);
@@ -33,7 +42,7 @@ public class RadarObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
-
+		sprite.setColor(0f,1f,0,1f);
 		
 		
 	

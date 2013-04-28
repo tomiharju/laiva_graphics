@@ -26,6 +26,7 @@ public class RadarContainer extends ObjectController {
 	public Vector3 targetPosition;
 	public int selectedWeapon;
 	
+	
 	public RadarContainer(float x, float y, float w, float h) {
 		super(x, y, w, h);
 		radarLocked=true;
@@ -69,13 +70,13 @@ public class RadarContainer extends ObjectController {
 		for(Map.Entry<ArrayList<Vector3>, ArrayList<Vector3>> result : results.entrySet() ){
 			ArrayList<Vector3> flightpath = result.getKey();
 			ArrayList<Vector3> hitspots = result.getValue();
+		
 			System.out.println("HitSpot size "+hitspots.size()+ " flightpath size "+flightpath.size());
-			new ProjectileObject(new ProjectileController(5f, 10f, 0.25f, 0.25f),
+			new ProjectileObject(new ProjectileController(0f, 4f, 0.25f, 0.25f),
 					new ProjectileRenderer(),this, -1).simulateDamage(flightpath, hitspots, this);
 		}
 		
 	}
-	
 	public void selectWeapon(int weapon){
 		selectedWeapon=weapon;
 		showWeaponIcon();

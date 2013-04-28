@@ -39,7 +39,7 @@ public class WorldObject extends ModelObject {
 		addlist				= new ArrayList<ModelObject>();
 		
 		radarObject			= new RadarObject(new RadarContainer(0,0,8,8),new RadarRenderer(),this.controller);
-		seaObject 			= new SeaObject(new SeaContainer(0,0,10,10), new SeaRenderer(),this.controller);
+		seaObject 			= new SeaObject(new SeaContainer(0,0,40,40), new SeaRenderer(),this.controller);
 	
 		
 

@@ -70,7 +70,7 @@ public class SeaContainer extends ObjectController {
 
 		case 0: {
 			// Grenade
-			new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+			new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
 					new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 			ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 			ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -89,7 +89,7 @@ public class SeaContainer extends ObjectController {
 			// Heatseeker
 			for(int i = 0 ; i<1 ; i++){
 				
-				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -111,7 +111,7 @@ public class SeaContainer extends ObjectController {
 				Vector3 displacement = new Vector3();
 				displacement.set(point);
 				displacement.add((float)(-2+Math.random()*4),(float)(-2+Math.random()*4), 0);
-				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(displacement);
 				
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
@@ -130,7 +130,7 @@ public class SeaContainer extends ObjectController {
 		case 3: {
 			// NavalGun
 			for(int i = 0 ; i<1 ; i++){
-				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -147,7 +147,7 @@ public class SeaContainer extends ObjectController {
 		case 4: {
 			// Phalanx CIWS
 			for(int i = 0 ; i<1 ; i++){
-				new ProjectileObject(new ProjectileController(5f, 10f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -226,7 +226,12 @@ public class SeaContainer extends ObjectController {
 		}
 		
 	}
-	
+	public void scaleShipPositions(){
+		for(ObjectController oc : controllers){
+			if(oc instanceof ShipController)
+				((ShipController) oc).scalePositions();
+		}
+	}
 	
 
 }

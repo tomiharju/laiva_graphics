@@ -24,11 +24,11 @@ public class HitMarkerObject extends ModelObject {
 		sprite.setSize(bounds.getWidth(), bounds.getHeight());
 		sprite.setPosition(position.x - bounds.width / 2, position.y
 				- bounds.height / 2);
-	
+
 		if(isHitMarker){
 			alpha = 1f; // Value used to render with increasing transparency
 		}else{
-			alpha=0.2f;
+			alpha=1f;
 			sprite.setColor(1f,0f,0f,1f);
 		}
 		
@@ -42,11 +42,14 @@ public class HitMarkerObject extends ModelObject {
 
 	@Override
 	public void update() {
-		if(isHitMarker){
 			alpha -= Gdx.graphics.getDeltaTime()/10;
-			if (alpha < 0)
-				alpha = 0;
-		}
+			if (alpha < 0){
+				if(!isHitMarker){
+					dispose();
+				}else
+					alpha = 0;
+			}
+		
 	}
 
 	@Override

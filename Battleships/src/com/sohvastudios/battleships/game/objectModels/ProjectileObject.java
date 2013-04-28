@@ -11,6 +11,7 @@ import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.RadarRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.SeaRenderer;
+import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 import com.sohvastudios.battleships.game.weaponStrategies.AnimateStrategy;
 import com.sohvastudios.battleships.game.weaponStrategies.GrenadeStrategy;
@@ -92,13 +93,13 @@ public class ProjectileObject extends ModelObject {
 	@Override
 	public void update() {
 		if(isVisible()){
+			if(!(strategy instanceof AnimateStrategy))
+				WorldRenderer.move(position);
 			if (strategy.animate(sprite,position)) {
 				setHidden();
 				strategy.dealDamage(position,((ProjectileRenderer) renderer));
-				
 			}
 			controller.setPosition(position);
-		
 		}
 	}
 

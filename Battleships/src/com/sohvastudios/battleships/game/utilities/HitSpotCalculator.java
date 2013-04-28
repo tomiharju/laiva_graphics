@@ -24,18 +24,8 @@ public class HitSpotCalculator {
 		avgX=sumX/hits.size();
 		avgY=sumY/hits.size();
 		System.out.println("Average x "+avgX +" Average y "+avgY);
-		//Calculate standard deviation
-		float tempSumX=0;
-		float tempSumY=0;
-		for(Vector3 v :hits){
-			tempSumX+=((v.x-avgX)*(v.x-avgX));
-			tempSumY+=((v.y-avgX)*(v.y-avgX));
-		}
-		float stdx = (float) Math.sqrt(tempSumX/hits.size());
-		float stdy = (float) Math.sqrt(tempSumY)/hits.size();
-		float avgStd = (stdx+stdy)/2;
-		System.out.println("Std "+avgStd);
-		weightedHit.set(avgX,avgY,avgStd);
+		System.out.println("Total hits at spot  calculator"+hits.size());
+		weightedHit.set(avgX,avgY,hits.size());
 		
 		return weightedHit;
 	}

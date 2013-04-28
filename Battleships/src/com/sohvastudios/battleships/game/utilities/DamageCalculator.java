@@ -25,16 +25,11 @@ public class DamageCalculator {
 	}
 
 	public float calculate() {
-
-		startTime = System.currentTimeMillis();
-		float radius_factor = radius;
-		for (float i = radius; i >= 0; i -= 0.1) { // 10 circles in 1 unit
+		int radius_factor = (int) (radius*100);
+		for (int i = (int) (radius*100) ; i > 0 ; i -= 5) {
 			for (int a = 0; a <= 360; a += 2) {
-				float x = (float) (center.x + Math.cos(Math.toRadians(a))
-						* radius_factor);
-				float y = (float) (center.y + Math.sin(Math.toRadians(a))
-						* radius_factor);
-
+				float x = (float) (center.x + Math.cos(Math.toRadians(a))* (radius_factor/100));
+				float y = (float) (center.y + Math.cos(Math.toRadians(a))* (radius_factor/100));
 				hit_marker.set(x, y, 0);
 				if (ship_bounds.contains(hit_marker.x, hit_marker.y)) {
 					hits_total++;
@@ -42,7 +37,7 @@ public class DamageCalculator {
 				}
 
 			}
-			radius_factor -= 0.1;
+			radius_factor -= 5;
 		}
 		System.out.println("Total hits " + hits_total);
 		return hits_total;

@@ -9,7 +9,7 @@ public class HitMarkerRenderer extends ObjectRenderer{
 
 	
 	public HitMarkerRenderer(){
-		RadarRenderer.objectsAtRadar.add(this);
+		
 	}
 	@Override
 	public void draw(SpriteBatch batch) {
@@ -21,6 +21,11 @@ public class HitMarkerRenderer extends ObjectRenderer{
 	@Override
 	public void addGraphics(Sprite s) {
 		graphics=s;
+		if(((HitMarkerObject)object).isHitMarker)
+			RadarRenderer.objectsAtRadar.add(RadarRenderer.objectsAtRadar.size()-2,this);
+		else{
+			RadarRenderer.objectsAtRadar.add(1,this);
+		}
 		
 	}
 

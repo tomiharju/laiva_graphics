@@ -51,6 +51,7 @@ public class ShipObject extends ModelObject {
 	private float hitpoints;
 	private float maxHitpoints;
 	private float hpPercentage;
+	private int damageToBeTaken;
 	private boolean destroyed = false;
 	public Weapon shipWeapon;
 	
@@ -98,14 +99,16 @@ public class ShipObject extends ModelObject {
 		}
 	}
 
-	public void dealDamage(float dmg) {
-		hitpoints -= dmg;
+	public void dealDamage() {
+		hitpoints -= damageToBeTaken;
 		hpPercentage = (hitpoints / maxHitpoints) * 100;
 		if (hpPercentage <= 20) {
 			destroyed = true;
 			((ShipRenderer) renderer).animateSmoke(position);
 		}
-
+	}
+	public void saveDamageTaken(int dmg){
+		damageToBeTaken=dmg;
 	}
 	
 

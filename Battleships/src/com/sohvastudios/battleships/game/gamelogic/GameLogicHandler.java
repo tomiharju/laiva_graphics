@@ -11,10 +11,12 @@ import com.sohvastudios.battleships.game.interfaces.LogicHandler;
 import com.sohvastudios.battleships.game.interfaces.NativeActions;
 import com.sohvastudios.battleships.game.objectControllers.WorldController;
 import com.sohvastudios.battleships.game.objectModels.WorldObject;
+import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 
 public class GameLogicHandler implements LogicHandler {
 
 	private WorldController controller;
+	private WorldObject world;
 	private ConnectionHandler nativeConnector;
 	
 	public NativeActions nativeActions;
@@ -32,6 +34,7 @@ public class GameLogicHandler implements LogicHandler {
 			ConnectionHandler con, NativeActions nativeActions) {
 		this.nativeConnector = con;
 		this.controller = c;
+		this.world=w;
 		this.nativeActions = nativeActions;
 		nativeConnector.setLogicHandler(this);
 	
@@ -48,6 +51,7 @@ public class GameLogicHandler implements LogicHandler {
 		}
 		
 		else if(receivedShoot){
+			WorldRenderer.move(shootPosition);
 			System.out.println("Receiving shoot");
 			controller.calculateDamageTaken(shootPosition, shootWeapon);
 			receivedShoot=false;
@@ -93,7 +97,6 @@ public class GameLogicHandler implements LogicHandler {
 
 	@Override
 	public void receiveResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result) {
-	
 		this.result=result;
 		receivedResult=true;
 		//controller.lockRadar();
@@ -109,24 +112,27 @@ public class GameLogicHandler implements LogicHandler {
 
 	@Override
 	public void sendReady() {
+		controller.scaleShipPositions();
+		((WorldRenderer) world.getRenderer()).setToPerspective();
+	
 		System.out.println("Sending turn ready");
 		nativeConnector.sendReady();
-		controller.lockRadar();
+	//	controller.lockRadar();
 	}
 
 	@Override
 	public void sendShoot(float x, float y, int weapon) {
 		System.out.println("Sending turn shoot");
-		nativeConnector.sendShoot(x, y, weapon);
-		//receiveShoot(x,y,weapon);
-		//controller.lockRadar();
+		float mx = x*2.5f;
+		float my = y*2.5f;
+		nativeConnector.sendShoot(mx, my, weapon);
+	//	controller.lockRadar();
 	}
 
 	@Override
 	public void sendResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result) {
 		System.out.println("Sending result size "+result.size());
 		nativeConnector.sendResult(result);
-		//receiveResult(result);
 		
 	}
 	public void createToast(String message){

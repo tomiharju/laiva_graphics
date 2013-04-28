@@ -12,7 +12,7 @@ import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 public abstract class ModelObject {
 
 	protected ObjectController controller;
-	protected ObjectRenderer renderer;
+	public ObjectRenderer renderer;
 	public Sprite sprite;
 	public Sprite baseSprite;
 	protected Rectangle bounds;

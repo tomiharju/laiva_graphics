@@ -35,16 +35,20 @@ public class AnimateStrategy implements WeaponStrategy {
 	private Vector3 currentTarget;
 	private int targetNumber;
 	
+	private Vector3 speedVector;
+	private float SPEED;
+	
 	public AnimateStrategy(ObjectController parent){
 		this.parent=parent;
+		speedVector = new Vector3();
 		int weapon = ((RadarContainer)parent).selectedWeapon;
 		switch(weapon){	
-		case 0:blastSimulationRadius=RADIUS_GRENADE;blastTriggerRange=PROX_GRENADE;break;
-		case 1:blastSimulationRadius=RADIUS_MISSILE;blastTriggerRange=PROX_MISSILE;break;
-		case 2:blastSimulationRadius=RADIUS_MORTAR;blastTriggerRange=PROX_MORTAR;break;
-		case 3:blastSimulationRadius=RADIUS_NAVALGUN;blastTriggerRange=PROX_NAVALGUN;break;
-		case 4:blastSimulationRadius=RADIUS_TORPEDO;blastTriggerRange=PROX_TORPEDO;break;
-		case 5:blastSimulationRadius=RADIUS_TORPEDO;blastTriggerRange=PROX_TORPEDO;break;
+		case 0:blastSimulationRadius=RADIUS_GRENADE;blastTriggerRange=PROX_GRENADE;SPEED=14;break;
+		case 1:blastSimulationRadius=RADIUS_MISSILE;blastTriggerRange=PROX_MISSILE;SPEED=20;break;
+		case 2:blastSimulationRadius=RADIUS_MORTAR;blastTriggerRange=PROX_MORTAR;SPEED=10;break;
+		case 3:blastSimulationRadius=RADIUS_NAVALGUN;blastTriggerRange=PROX_NAVALGUN;SPEED=15;break;
+		case 4:blastSimulationRadius=RADIUS_TORPEDO;blastTriggerRange=PROX_TORPEDO;SPEED=12;break;
+		case 5:blastSimulationRadius=RADIUS_TORPEDO;blastTriggerRange=PROX_TORPEDO;SPEED=15;break;
 		}
 		
 		
@@ -53,17 +57,23 @@ public class AnimateStrategy implements WeaponStrategy {
 
 	@Override
 	public boolean animate(Sprite sprite,Vector3 position) {
-		position.lerp(currentTarget,(float) (Gdx.graphics.getDeltaTime()));
-	
+		
+		speedVector.set(currentTarget);
+		speedVector.sub(position);
+		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED/7.5f);
+		position.add(speedVector);
 		if(position.dst(currentTarget)<blastTriggerRange){
 			targetNumber++;
 			if(path.size()>targetNumber){
 				currentTarget.set(path.get(targetNumber));
 			}else{
 				for(Vector3 hit : hits){
+					float hitPercentage = hit.z/(((blastSimulationRadius*100)/5)*180);
+					hit.set(hit.x,hit.y,hitPercentage);
 					new HitMarkerObject(new HitMarkerController(hit.x,
 						hit.y,hit.z,hit.z), new HitMarkerRenderer(),parent,true);
 				}
+			
 				new HitMarkerObject(new HitMarkerController(position.x,
 						position.y, blastSimulationRadius*2, blastSimulationRadius*2), new HitMarkerRenderer(),parent,false);
 				return true;
@@ -92,6 +102,11 @@ public class AnimateStrategy implements WeaponStrategy {
 		this.parent=parent;
 		this.path=path;
 		this.hits=hits;
+		for(Vector3 v : path)
+			v.div(2.5f);
+		for(Vector3 v : hits)
+			v.div(2.5f);
+		
 		currentTarget = path.get(0);
 		targetNumber = 0;
 	}
