@@ -29,7 +29,7 @@ public abstract class ObjectController {
 		bounds				= new Rectangle(x - width / 2, y - height / 2, width, height);
 		clear_bounds 		= new Rectangle();
 		area_bounds_sea 	= new Rectangle(-5,-5, 10, 10);
-		area_bounds_radar 	= new Rectangle(-4,-4,8,8);
+		area_bounds_radar 	= new Rectangle(-2.5f,-2.5f,5,5);
 		
 	}
 
@@ -98,11 +98,5 @@ public abstract class ObjectController {
 	public void rotate90() {
 	}
 
-	public void handleDoubleTap(Vector3 touchPoint) {
-		// TODO Auto-generated method stub
-	};
-	public void handleLongPress(Vector3 touchPoint){
-		
-	}
 
 }

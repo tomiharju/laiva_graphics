@@ -11,7 +11,8 @@ public class UserInterfaceController extends ObjectController {
 	private Command command;
 	Rectangle radar_bounds;
 	Rectangle clear_bounds;
-
+	private Vector3 movement;
+	
 	public UserInterfaceController(float x, float y, float w, float h, Command command) {
 		super(x, y, w, h);
 		this.command = command;
@@ -22,6 +23,7 @@ public class UserInterfaceController extends ObjectController {
 		this.parent=parent;
 		parent.addlist.add(this);
 		clear_bounds = new Rectangle();
+		movement = new Vector3();
 	}
 
 	
@@ -60,13 +62,17 @@ public class UserInterfaceController extends ObjectController {
 	@Override
 	public void handleInputDrag(Vector3 pos) {
 		boolean legalmove = true;
-		clear_bounds.set(pos.x - bounds.width / 2, pos.y - bounds.height / 2,
-				bounds.width, bounds.height);
-		if (!area_bounds_radar.contains(clear_bounds))
-			legalmove = false;
-		if (legalmove) {
-			setPosition(pos);
-		}
+		movement.set(0,0,0);
+		if(pos.x>-2.5 || pos.x<2.5)
+			movement.set(pos.x,0,0);
+		
+		if(pos.y<2.5f || pos.y>-2.5f)
+			movement.set(movement.x,pos.y,0);
+		
+		setPosition(movement);
+		
+		
+	
 
 	}
 	

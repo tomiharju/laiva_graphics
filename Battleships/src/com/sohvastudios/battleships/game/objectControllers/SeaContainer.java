@@ -11,6 +11,7 @@ import com.sohvastudios.battleships.game.objectModels.ProjectileObject;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectModels.ShipObject.ShipType;
 import com.sohvastudios.battleships.game.objectModels.UserInterfaceObject;
+import com.sohvastudios.battleships.game.objectModels.WorldObject;
 import com.sohvastudios.battleships.game.objectRenderers.ProjectileRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.ShipRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.UserInterfaceRenderer;
@@ -61,6 +62,10 @@ public class SeaContainer extends ObjectController {
 
 	}
 	public void lockShips(){
+		for(ObjectController oc : controllers)
+			if(oc instanceof UserInterfaceController)
+				WorldObject.removelist.add(oc.getObject());
+		
 		shipsLocked=true;
 	}
 

@@ -29,7 +29,7 @@ public class PlayScreen extends InputAdapter implements Screen{
 	public PlayScreen(ConnectionHandler connector, NativeActions actions){
 		
 		guiCam 			=  	new OrthographicCamera(10,15);
-		guiCam.position.set(0,0,0f);
+		
 		touchPoint		=	new Vector3();
 		controller		= 	new WorldController(0,0,0,0);
 		renderer		=	new WorldRenderer();
@@ -77,21 +77,21 @@ public class PlayScreen extends InputAdapter implements Screen{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		guiCam.unproject(touchPoint.set(screenX,screenY, 0));
+		touchPoint.set(screenX,screenY, 0);
 		controller.touchDown(touchPoint);
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		guiCam.unproject(touchPoint.set(screenX,screenY, 0));
+		touchPoint.set(screenX,screenY, 0);
 		controller.handleInputUp(touchPoint);
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		guiCam.unproject(touchPoint.set(screenX,screenY, 0));
+		touchPoint.set(screenX,screenY, 0);
 		controller.touchDragged(touchPoint);
 		return false;
 	}

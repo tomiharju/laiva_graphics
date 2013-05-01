@@ -3,20 +3,20 @@ package com.sohvastudios.battleships.game.objectControllers;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.objectModels.ShipObject;
 import com.sohvastudios.battleships.game.objectModels.WorldObject;
+import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
 
 public class WorldController extends ObjectController {
 
 	private SeaContainer shipView;
 	private RadarContainer radarView;
-	
-	private ArrayList<Vector2> result;
-	
+	private Vector3 projTouch;
 	
 	
+	
+	private Vector3 touchCorrection = new Vector3(5,0,0);
 	
 	public WorldController(float x, float y, float w, float h) {
 		super(x, y, w, h);
@@ -29,7 +29,8 @@ public class WorldController extends ObjectController {
 		radarView = (RadarContainer) ((WorldObject) object).mapView().getController();
 	
 		shipView.show();
-		result = new ArrayList<Vector2>();
+		
+		projTouch = new Vector3();
 
 	}
 
@@ -65,25 +66,28 @@ public class WorldController extends ObjectController {
 	}
 
 	public void touchDown(Vector3 p) {
+		projTouch.set(p);
+		WorldRenderer.cam.unproject(projTouch);
+		shipView.handleInputDown(projTouch);
 		
-			if(!radarView.isLocked()){
-				radarView.handleInputDown(p);
-			}
-			else{
-				shipView.handleInputDown(p);
-			}
+		projTouch.set(p);
+		WorldRenderer.radarCam.unproject(projTouch);
+		radarView.handleInputDown(projTouch);
 	
 	}
 	
 	public void touchDragged(Vector3 p) {
-	
+		projTouch.set(p);
+		WorldRenderer.cam.unproject(projTouch);
+		shipView.handleInputDrag(projTouch);
+		System.out.println("Sea projected "+projTouch.toString());
 		
-		if(!radarView.isLocked()){
-			radarView.handleInputDrag(p);
-		}
-		else{
-			shipView.handleInputDrag(p);
-		}
+		projTouch.set(p);
+		WorldRenderer.radarCam.unproject(projTouch);
+		radarView.handleInputDrag(projTouch);
+		
+		
+		
 	}
 
 	public void scaleShipPositions(){

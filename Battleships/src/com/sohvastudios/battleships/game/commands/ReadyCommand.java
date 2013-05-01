@@ -5,7 +5,6 @@ import com.sohvastudios.battleships.game.gamelogic.PlayScreen;
 import com.sohvastudios.battleships.game.objectControllers.ObjectController;
 import com.sohvastudios.battleships.game.objectControllers.SeaContainer;
 import com.sohvastudios.battleships.game.objectControllers.ShipController;
-import com.sohvastudios.battleships.game.objectModels.WorldObject;
 
 
 public class ReadyCommand implements Command{
@@ -35,9 +34,6 @@ public class ReadyCommand implements Command{
 				if(oc instanceof ShipController)
 					oc.getObject().baseSprite.setColor(0.9f,0,0,0);
 			}
-			
-		WorldObject.removelist.add(target.getObject());
-		
 		PlayScreen.logicHandler.sendReady();
 		}
 	}

@@ -99,7 +99,7 @@ public class GameLogicHandler implements LogicHandler {
 	public void receiveResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result) {
 		this.result=result;
 		receivedResult=true;
-		//controller.lockRadar();
+		controller.lockRadar();
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class GameLogicHandler implements LogicHandler {
 	
 		System.out.println("Sending turn ready");
 		nativeConnector.sendReady();
-	//	controller.lockRadar();
+		controller.lockRadar();
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class GameLogicHandler implements LogicHandler {
 		float mx = x*2.5f;
 		float my = y*2.5f;
 		nativeConnector.sendShoot(mx, my, weapon);
-	//	controller.lockRadar();
+		controller.lockRadar();
 	}
 
 	@Override

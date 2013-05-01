@@ -21,10 +21,13 @@ public class WorldRenderer extends ObjectRenderer {
 	static final float VIEWPORT_HEIGHT = 15;// *100meters
 	public static boolean isInPerspective=false;
 	
-
+	
+	
+	
 	public WorldRenderer() {
 		renderers = new ArrayList<ObjectRenderer>();
 		batch = new SpriteBatch();
+	
 		setupCamera();
 	}
 
@@ -37,12 +40,15 @@ public class WorldRenderer extends ObjectRenderer {
 		radarCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 	
 	}
-
+	
 	public void render() {
 		
 		cam.update();
 		seaCam.update();
 		radarCam.update();
+		
+		
+		
 		batch.begin();
 		
 		if(isInPerspective)
@@ -89,14 +95,13 @@ public class WorldRenderer extends ObjectRenderer {
 
 	}
 	public void setToPerspective(){
-		//seaCam.combined.setToProjection(0.1f, 100, 45, 10/15);
-		seaCam.lookAt(0, 15, 5);
-		seaCam.position.set(0,-20,17);
+		seaCam.lookAt(0, 20, 5);
+		seaCam.position.set(0,-30,17);
 		isInPerspective=true;
 	}
 	public static void move(Vector3 point){
 		if(isInPerspective){
-			seaCam.position.set(0,-20,17);
+			seaCam.position.set(0,-30,17);
 			Vector3 v = new Vector3(seaCam.position);
 			seaCam.position.set(v.x+point.x,v.y+point.y,v.z);
 		}

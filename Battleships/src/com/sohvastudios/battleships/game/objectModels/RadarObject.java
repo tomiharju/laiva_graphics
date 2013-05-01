@@ -24,14 +24,7 @@ public class RadarObject extends ModelObject {
 	float radarpos;
 	float dt;
 	
-	//Sweep related arrays
-	float small_x=0;
-	float small_y;
-	float high_x=-4;
-	float high_y;	
-	float width;
-	float height;
-	
+		
 	public RadarObject(RadarContainer controller,RadarRenderer renderer,ObjectController parent) {
 		setController(controller);
 		setRenderer(renderer);
@@ -54,7 +47,7 @@ public class RadarObject extends ModelObject {
 		renderer.addSweepGraphics(sweepEffect);
 		
 		
-		WorldRenderer.radarCam.translate(10,0);	
+		WorldRenderer.radarCam.translate(10,-5);	
 		radarpos=10;
 		controller.initialize(parent);
 		WorldObject.addlist.add(this);

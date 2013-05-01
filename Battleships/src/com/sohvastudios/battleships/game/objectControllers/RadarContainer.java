@@ -41,13 +41,13 @@ public class RadarContainer extends ObjectController {
 		this.parent=parent;
 		crosshair = new UserInterfaceObject(new UserInterfaceController(0f,0f,.5f,.5f,null),new UserInterfaceRenderer(),this,"crosshair.png");
 		crosshair.addToRadar();
-		new UserInterfaceObject(new UserInterfaceController(0,4.5f,1f,1f, new FireCommand(this)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
-		new UserInterfaceObject(new UserInterfaceController(-3.5f,-4.5f,1f,1f,new WeaponSelectCommand(this,0)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
-		new UserInterfaceObject(new UserInterfaceController(-2.5f,-4.5f,1f,1f,new WeaponSelectCommand(this,1)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
-		new UserInterfaceObject(new UserInterfaceController(-1.5f,-4.5f,1f,1f,new WeaponSelectCommand(this,2)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
-		new UserInterfaceObject(new UserInterfaceController(-0.5f,-4.5f,1f,1f,new WeaponSelectCommand(this,3)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
-		new UserInterfaceObject(new UserInterfaceController(0.5f,-4.5f,1f,1f,new WeaponSelectCommand(this,4)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
-		new UserInterfaceObject(new UserInterfaceController(1.5f,-4.5f,1f,1f,new WeaponSelectCommand(this,3)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
+		new UserInterfaceObject(new UserInterfaceController(-4f,0f,0.6f,0.6f, new FireCommand(this)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
+		new UserInterfaceObject(new UserInterfaceController(-2.5f,-3f,0.5f,0.5f,new WeaponSelectCommand(this,0)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
+		new UserInterfaceObject(new UserInterfaceController(-1.5f,-3f,0.5f,0.5f,new WeaponSelectCommand(this,1)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
+		new UserInterfaceObject(new UserInterfaceController(-0.5f,-3f,0.5f,0.5f,new WeaponSelectCommand(this,2)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
+		new UserInterfaceObject(new UserInterfaceController(0.5f,-3f,0.5f,0.5f,new WeaponSelectCommand(this,3)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
+		new UserInterfaceObject(new UserInterfaceController(1.5f,-3f,0.5f,0.5f,new WeaponSelectCommand(this,4)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
+		new UserInterfaceObject(new UserInterfaceController(2.5f,-3f,0.5f,0.5f,new WeaponSelectCommand(this,3)), new UserInterfaceRenderer(),this,"button_ready.png").addToRadar();
 		
 		object.setVisible();
 		hide();
@@ -108,12 +108,12 @@ public class RadarContainer extends ObjectController {
 	
 	public void hide() {
 		lockRadar();
-		targetPosition.set(10,0,0);
+		targetPosition.set(10,-5,0);
 	}
 
 	public void show() {
 		unlockRadar();
-		targetPosition.set(0,0,0);
+		targetPosition.set(0,-5,0);
 	}
 	
 	public void showWeaponIcon(){

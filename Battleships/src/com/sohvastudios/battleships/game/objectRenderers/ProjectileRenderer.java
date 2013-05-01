@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.sohvastudios.battleships.game.objectModels.WorldObject;
 import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 public class ProjectileRenderer extends ObjectRenderer {
@@ -78,7 +79,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 			batch.draw(currentFrame, (animPos.x - 1f), (animPos.y - 1f), 2, 2);
 			if (explosionAnimation.isAnimationFinished(stateTime)) {
 				animate = false;
-				object.dispose();
+				WorldObject.removelist.add(object);
 			}
 		}
 		else if(animateMiss){
@@ -87,7 +88,7 @@ public class ProjectileRenderer extends ObjectRenderer {
 			batch.draw(currentFrame, (animPos.x - .5f), (animPos.y - .5f), 1, 1);
 			if (splashAnimation.isAnimationFinished(stateTime)) {
 				animateMiss = false;
-				object.dispose();
+				WorldObject.removelist.add(object);
 			}
 		}
 	}

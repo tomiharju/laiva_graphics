@@ -45,7 +45,7 @@ public class HitMarkerObject extends ModelObject {
 			alpha -= Gdx.graphics.getDeltaTime()/10;
 			if (alpha < 0){
 				if(!isHitMarker){
-					dispose();
+					WorldObject.removelist.add(this);
 				}else
 					alpha = 0;
 			}
