@@ -40,10 +40,10 @@ public class SeaContainer extends ObjectController {
 		createShips();
 		activeController = null;
 		weaponDescription =null;
-		new UserInterfaceObject(new UserInterfaceController(0, -6f, 3f, 1.5f,
+		new UserInterfaceObject(new UserInterfaceController(0, -10f, 3f, 1.5f,
 				new ReadyCommand(this)), new UserInterfaceRenderer(),this, "button_ready.png").addToSea();
 	
-		new UserInterfaceObject(new UserInterfaceController(-2.5f, -6f, 1.5f, 1.5f,
+		new UserInterfaceObject(new UserInterfaceController(-2.5f, -10f, 1.5f, 1.5f,
 				new RotateCommand(this)), new UserInterfaceRenderer(),this, "button_ready.png").addToSea();
 		
 		object.setVisible();
@@ -75,7 +75,7 @@ public class SeaContainer extends ObjectController {
 
 		case 0: {
 			// Grenade
-			new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
+			new ProjectileObject(new ProjectileController(5f, 20f, 0.75f, 0.75f),
 					new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 			ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 			ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -94,7 +94,7 @@ public class SeaContainer extends ObjectController {
 			// Heatseeker
 			for(int i = 0 ; i<1 ; i++){
 				
-				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 20f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -116,7 +116,7 @@ public class SeaContainer extends ObjectController {
 				Vector3 displacement = new Vector3();
 				displacement.set(point);
 				displacement.add((float)(-2+Math.random()*4),(float)(-2+Math.random()*4), 0);
-				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 20f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(displacement);
 				
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
@@ -135,7 +135,7 @@ public class SeaContainer extends ObjectController {
 		case 3: {
 			// NavalGun
 			for(int i = 0 ; i<1 ; i++){
-				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 20f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -152,7 +152,7 @@ public class SeaContainer extends ObjectController {
 		case 4: {
 			// Phalanx CIWS
 			for(int i = 0 ; i<1 ; i++){
-				new ProjectileObject(new ProjectileController(5f, 30f, 0.75f, 0.75f),
+				new ProjectileObject(new ProjectileController(5f, 20f, 0.75f, 0.75f),
 						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
@@ -188,15 +188,16 @@ public class SeaContainer extends ObjectController {
 	}
 
 	@Override
-	public void handleInputDown(Vector3 pos) {
+	public boolean handleInputDown(Vector3 pos) {
 		//Handle button touches
 		for (ObjectController oc : controllers)
-				oc.handleInputDown(pos);
+				if(oc.handleInputDown(pos))
+					return true;
 		
 		
 		//Handle ship touches, return if ships locked
 		if(shipsLocked)
-			return;
+			return false;
 		//Remove weapon description icon if its visible
 		if(weaponDescription!=null){
 			((UserInterfaceController) weaponDescription.getController()).executeCommand();
@@ -205,23 +206,28 @@ public class SeaContainer extends ObjectController {
 			for (ObjectController oc : controllers){
 				if(oc instanceof ShipController){
 				oc.deSelect();
+				System.out.println("Clicked at "+pos.toString()+ " Ship at "+oc.pollBounds().toString());
 				if (oc.pollBounds().contains(pos.x,pos.y)){
 					oc.select();
 					activeController=(ShipController) oc;
+					return true;
 				}
 				}
 			
 		}
+			return false;
 		
 
 	}
 
-	public void handleInputDrag(Vector3 pos) {
+	public boolean handleInputDrag(Vector3 pos) {
 		if(shipsLocked)
-			return;
+			return false;
 		if (activeController != null) {
 			activeController.handleInputDrag(pos);
-		}
+			return true;
+		}else
+			return false;
 	}
 	public void rotate(){
 		if(shipsLocked)
@@ -231,12 +237,7 @@ public class SeaContainer extends ObjectController {
 		}
 		
 	}
-	public void scaleShipPositions(){
-		for(ObjectController oc : controllers){
-			if(oc instanceof ShipController)
-				((ShipController) oc).scalePositions();
-		}
-	}
+	
 	
 
 }

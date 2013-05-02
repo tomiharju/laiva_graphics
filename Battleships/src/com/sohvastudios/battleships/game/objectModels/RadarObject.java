@@ -47,7 +47,7 @@ public class RadarObject extends ModelObject {
 		renderer.addSweepGraphics(sweepEffect);
 		
 		
-		WorldRenderer.radarCam.translate(10,-5);	
+		WorldRenderer.radarCam.translate(10,-6f);	
 		radarpos=10;
 		controller.initialize(parent);
 		WorldObject.addlist.add(this);

@@ -19,10 +19,10 @@ public class ShipController extends ObjectController {
 	}
 
 	@Override
-	public void handleInputDrag(Vector3 pos) {
+	public boolean handleInputDrag(Vector3 pos) {
 
 		if(!area_bounds_sea.contains(pos.x,pos.y))
-			return;
+			return false;
 		
 		boolean legalmove = true;
 		clear_bounds.set(pos.x - bounds.width / 2, pos.y - bounds.height / 2,
@@ -88,7 +88,7 @@ public class ShipController extends ObjectController {
 
 		}
 
-	
+	return true;
 
 	}
 
@@ -144,9 +144,6 @@ public class ShipController extends ObjectController {
 
 	public void show() {
 		object.setVisible();
-	}
-	public void scalePositions(){
-		setPosition(position.mul(2));
 	}
 
 }

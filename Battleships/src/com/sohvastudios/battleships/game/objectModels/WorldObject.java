@@ -11,6 +11,7 @@ import com.sohvastudios.battleships.game.objectRenderers.ObjectRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.RadarRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.SeaRenderer;
 import com.sohvastudios.battleships.game.objectRenderers.WorldRenderer;
+import com.sohvastudios.battleships.game.utilities.AssetStorage;
 
 
 
@@ -77,6 +78,22 @@ public class WorldObject extends ModelObject {
 		
 		}
 		
+	}
+	public void freeMemory(){
+		AssetStorage.manager.clear();
+		AssetStorage.manager.dispose();
+	
+		((WorldRenderer) renderer).cleanup();
+		
+		for(ModelObject o : objects)
+			o.cleanup();
+		radarObject.controller.controllers.clear();
+		seaObject.controller.controllers.clear();
+		radarObject.controller.removelist.clear();
+		radarObject.controller.addlist.clear();
+		seaObject.controller.removelist.clear();	
+		seaObject.controller.addlist.clear();
+		objects.clear();
 	}
 
 	@Override

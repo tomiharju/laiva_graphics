@@ -60,7 +60,7 @@ public class AnimateStrategy implements WeaponStrategy {
 		
 		speedVector.set(currentTarget);
 		speedVector.sub(position);
-		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED/7.5f);
+		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED/5f);
 		position.add(speedVector);
 		if(position.dst(currentTarget)<blastTriggerRange){
 			targetNumber++;
@@ -103,9 +103,9 @@ public class AnimateStrategy implements WeaponStrategy {
 		this.path=path;
 		this.hits=hits;
 		for(Vector3 v : path)
-			v.div(2.5f);
+			v.div(4f);
 		for(Vector3 v : hits)
-			v.div(2.5f);
+			v.div(4f);
 		
 		currentTarget = path.get(0);
 		targetNumber = 0;

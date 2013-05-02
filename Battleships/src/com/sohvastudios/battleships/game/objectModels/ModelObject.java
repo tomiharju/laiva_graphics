@@ -32,6 +32,11 @@ public abstract class ModelObject {
 		WorldRenderer.renderers.remove(this.renderer);
 		controller.parent.removelist.add(this.controller);
 	}
+	public void cleanup(){
+		SeaRenderer.objectsAtSea.remove(this.renderer);
+		RadarRenderer.objectsAtRadar.remove(this.renderer);
+		WorldRenderer.renderers.remove(this.renderer);
+	}
 	
 	
 

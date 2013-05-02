@@ -77,6 +77,7 @@ public class PlayScreen extends InputAdapter implements Screen{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	
 		touchPoint.set(screenX,screenY, 0);
 		controller.touchDown(touchPoint);
 		return false;
@@ -91,6 +92,7 @@ public class PlayScreen extends InputAdapter implements Screen{
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+	
 		touchPoint.set(screenX,screenY, 0);
 		controller.touchDragged(touchPoint);
 		return false;
@@ -110,7 +112,9 @@ public class PlayScreen extends InputAdapter implements Screen{
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		System.out.println("PlayScreen disposing");
+		world.freeMemory();
+		Gdx.app.exit();
 		
 	}
 	

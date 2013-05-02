@@ -42,7 +42,8 @@ public class Main extends Game{
 	 @Override  
 	 public void dispose() {  
 		if (this.getScreen() != null) this.getScreen().dispose();  
-		System.out.println("Game data disposed");
+			System.out.println("Mainscreen disposed");
+			
 	    }  
 	  
 	 @Override  

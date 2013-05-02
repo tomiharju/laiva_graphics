@@ -3,7 +3,6 @@ package com.sohvastudios.battleships.game.gamelogic;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.interfaces.ConfirmListener;
 import com.sohvastudios.battleships.game.interfaces.ConnectionHandler;
@@ -29,6 +28,7 @@ public class GameLogicHandler implements LogicHandler {
 	
 	public static boolean shipsLocked;
 	public static boolean ableToFire;
+	public static boolean opponentLeft;
 
 	public GameLogicHandler(WorldController c, WorldObject w,
 			ConnectionHandler con, NativeActions nativeActions) {
@@ -56,6 +56,28 @@ public class GameLogicHandler implements LogicHandler {
 			controller.calculateDamageTaken(shootPosition, shootWeapon);
 			receivedShoot=false;
 		}
+		else if(opponentLeft){
+			nativeActions.createConfirmDialog(
+					"Opponent has left the game", 
+					"Leave game or wait for reconnect?", 
+					"Leave game",
+					"Wait",
+					new ConfirmListener() {			
+						@Override
+						public void yes() {
+							nativeActions.dismissProgressDialog();
+							nativeConnector.leave();
+						
+						
+						}
+
+						@Override
+						public void no() {
+							// TODO Auto-generated method stub
+						}
+					});
+			opponentLeft=false;
+		}
 		
 		
 		
@@ -65,24 +87,7 @@ public class GameLogicHandler implements LogicHandler {
 	}
 
 	public void opponentLeft() {
-		nativeActions.createConfirmDialog(
-				"Opponent has left the game", 
-				"Leave game or wait for reconnect?", 
-				"Leave game",
-				"Wait",
-				new ConfirmListener() {			
-					@Override
-					public void yes() {
-						nativeActions.dismissProgressDialog();
-						nativeConnector.leave();
-						Gdx.app.exit();
-					}
-
-					@Override
-					public void no() {
-						// TODO Auto-generated method stub
-					}
-				});
+		opponentLeft=true;
 	}
 
 	@Override
@@ -92,14 +97,14 @@ public class GameLogicHandler implements LogicHandler {
 }
 	public void receiveWait(){
 		System.out.println("Receiving turn: Wait");
-		controller.lockRadar();
+	
 	}
 
 	@Override
 	public void receiveResult(HashMap<ArrayList<Vector3>,ArrayList<Vector3>> result) {
 		this.result=result;
 		receivedResult=true;
-		controller.lockRadar();
+	
 	}
 
 	@Override
@@ -112,21 +117,19 @@ public class GameLogicHandler implements LogicHandler {
 
 	@Override
 	public void sendReady() {
-		controller.scaleShipPositions();
 		((WorldRenderer) world.getRenderer()).setToPerspective();
-	
 		System.out.println("Sending turn ready");
 		nativeConnector.sendReady();
-		controller.lockRadar();
+	
 	}
 
 	@Override
 	public void sendShoot(float x, float y, int weapon) {
 		System.out.println("Sending turn shoot");
-		float mx = x*2.5f;
-		float my = y*2.5f;
+		float mx = x*4f;
+		float my = y*4f;
 		nativeConnector.sendShoot(mx, my, weapon);
-		controller.lockRadar();
+	
 	}
 
 	@Override

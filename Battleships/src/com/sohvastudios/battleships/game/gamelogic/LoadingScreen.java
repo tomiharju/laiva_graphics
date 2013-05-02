@@ -113,7 +113,10 @@ public class LoadingScreen implements Screen {
 		charSequence.append(String.valueOf(percentLoaded));
 		charSequence.append("%");
 		if (AssetStorage.manager.update()) {
+			cleanup();
+			this.dispose();
 			main.startGame();
+			return;
 		}
 
 		cam.update();
@@ -128,6 +131,12 @@ public class LoadingScreen implements Screen {
 
 	}
 
+	public void cleanup(){
+		font.dispose();
+		batch.dispose();
+		
+		
+	}
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub

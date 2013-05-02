@@ -15,7 +15,7 @@ public class ReadyCommand implements Command{
 	}
 	@Override
 	public void execute(ObjectController target) {
-		Rectangle safeBounds = new Rectangle(-5,-5,10,10);
+		Rectangle safeBounds = new Rectangle(-10,-10,20,20);
 		boolean checkSuccess = true;
 		for (ObjectController oc : source.controllers){
 			if(oc instanceof ShipController)

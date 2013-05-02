@@ -28,9 +28,9 @@ public abstract class ObjectController {
 		position 			= new Vector3(x, y, 0);
 		bounds				= new Rectangle(x - width / 2, y - height / 2, width, height);
 		clear_bounds 		= new Rectangle();
-		area_bounds_sea 	= new Rectangle(-5,-5, 10, 10);
+		area_bounds_sea 	= new Rectangle(-10,-10, 20, 20);
 		area_bounds_radar 	= new Rectangle(-2.5f,-2.5f,5,5);
-		
+		parent				= null;
 	}
 
 	
@@ -86,13 +86,15 @@ public abstract class ObjectController {
 	};
 
 	
-	public void handleInputDown(Vector3 touchPoint) {
+	public boolean handleInputDown(Vector3 touchPoint) {
+		return false;
 	};
 
 	public void handleInputUp(Vector3 pos) {
 	};
 
-	public void handleInputDrag(Vector3 pos) {
+	public boolean handleInputDrag(Vector3 pos) {
+		return false;
 	};
 
 	public void rotate90() {

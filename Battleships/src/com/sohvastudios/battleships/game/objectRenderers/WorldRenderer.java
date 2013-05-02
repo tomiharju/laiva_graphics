@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.sohvastudios.battleships.game.objectModels.ModelObject;
 
@@ -17,12 +18,16 @@ public class WorldRenderer extends ObjectRenderer {
 	public static OrthographicCamera radarCam;
 	public SpriteBatch batch;
 	
-	static final float VIEWPORT_WIDTH = 10; // *100meters
-	static final float VIEWPORT_HEIGHT = 15;// *100meters
+	static final float VIEWPORT_WIDTH = 12; // *100meters
+	static final float VIEWPORT_HEIGHT = 20;// *100meters
 	public static boolean isInPerspective=false;
 	
 	
-	
+	//Testing variables
+	Matrix4 projection = new Matrix4();
+	Matrix4 view = new Matrix4();
+	Matrix4 model = new Matrix4();
+	Matrix4 combined = new Matrix4();
 	
 	public WorldRenderer() {
 		renderers = new ArrayList<ObjectRenderer>();
@@ -33,10 +38,8 @@ public class WorldRenderer extends ObjectRenderer {
 
 	public void setupCamera() {
 		cam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT); 
-		seaCam = new PerspectiveCamera(45,VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-		seaCam.position.set(0,0,17);
-	
-	
+		seaCam = new PerspectiveCamera(67,VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+		seaCam.position.set(0,0,20);
 		radarCam = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 	
 	}
@@ -47,24 +50,19 @@ public class WorldRenderer extends ObjectRenderer {
 		seaCam.update();
 		radarCam.update();
 		
-		
-		
 		batch.begin();
-		
-		if(isInPerspective)
-			batch.setProjectionMatrix(seaCam.combined);
-		else
-			batch.setProjectionMatrix(cam.combined);
-		for (int i = 0; i < SeaRenderer.objectsAtSea.size(); i++)
-			SeaRenderer.objectsAtSea.get(i).draw(batch);
+		batch.setProjectionMatrix(seaCam.combined);
+		for (ObjectRenderer or : SeaRenderer.objectsAtSea)
+			or.draw(batch);
 		
 		batch.setProjectionMatrix(radarCam.combined);
-		for (int i = 0; i < RadarRenderer.objectsAtRadar.size(); i++)
-			RadarRenderer.objectsAtRadar.get(i).draw(batch);
+
+		for (ObjectRenderer or : RadarRenderer.objectsAtRadar)
+			or.draw(batch);
 		
 		batch.setProjectionMatrix(cam.combined);
-		for (int i = 0; i < renderers.size(); i++)
-			renderers.get(i).draw(batch);
+		for (ObjectRenderer or : renderers)
+			or.draw(batch);
 		
 		
 	
@@ -76,6 +74,9 @@ public class WorldRenderer extends ObjectRenderer {
 
 	public void draw(SpriteBatch batch) {
 
+	}
+	public void cleanup(){
+		batch.dispose();
 	}
 
 	@Override
@@ -96,14 +97,14 @@ public class WorldRenderer extends ObjectRenderer {
 	}
 	public void setToPerspective(){
 		seaCam.lookAt(0, 20, 5);
-		seaCam.position.set(0,-30,17);
+		seaCam.position.set(0,-10,12);
 		isInPerspective=true;
+		
 	}
 	public static void move(Vector3 point){
 		if(isInPerspective){
-			seaCam.position.set(0,-30,17);
-			Vector3 v = new Vector3(seaCam.position);
-			seaCam.position.set(v.x+point.x,v.y+point.y,v.z);
+			seaCam.position.set(0,-10,12);
+			seaCam.position.set(seaCam.position.x+point.x,seaCam.position.y+point.y,seaCam.position.z);
 		}
 	}
 

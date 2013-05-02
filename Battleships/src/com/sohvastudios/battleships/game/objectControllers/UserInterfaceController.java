@@ -47,10 +47,12 @@ public class UserInterfaceController extends ObjectController {
 	}
 
 	@Override
-	public void handleInputDown(Vector3 pos) {
+	public boolean handleInputDown(Vector3 pos) {
 		if (bounds.contains(pos.x, pos.y)) {
 				executeCommand();
+				return true;
 			}
+		return false;
 	}
 
 	@Override
@@ -60,17 +62,25 @@ public class UserInterfaceController extends ObjectController {
 	}
 
 	@Override
-	public void handleInputDrag(Vector3 pos) {
+	public boolean handleInputDrag(Vector3 pos) {
 		boolean legalmove = true;
 		movement.set(0,0,0);
-		if(pos.x>-2.5 || pos.x<2.5)
+		if(pos.x<-2.5){
+			movement.set(-2.5f,0,0);
+		}else if(pos.x>2.5){
+			movement.set(2.5f,0,0);
+		}else
 			movement.set(pos.x,0,0);
 		
-		if(pos.y<2.5f || pos.y>-2.5f)
+		if(pos.y<-2.5){
+			movement.set(movement.x,-2.5f,0);
+		}else if(pos.y>2.5){
+			movement.set(movement.x,2.5f,0);
+		}else
 			movement.set(movement.x,pos.y,0);
 		
 		setPosition(movement);
-		
+		return true;
 		
 	
 
