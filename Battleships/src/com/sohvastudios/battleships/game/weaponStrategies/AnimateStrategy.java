@@ -22,12 +22,14 @@ public class AnimateStrategy implements WeaponStrategy {
 	final float RADIUS_PHALANX		= 0.25f;
 	final float RADIUS_TORPEDO		= 0.5f;
 	
-	final float PROX_GRENADE	 	= 0.1f;
+	final float PROX_GRENADE	 	= 0.2f;
 	final float PROX_MISSILE	 	= 0.1f;
-	final float PROX_MORTAR	 		= 0.1f;
-	final float PROX_NAVALGUN		= 0.1f;
-	final float PROX_PHALANX		= 0.1f;
-	final float PROX_TORPEDO		= 0.1f;
+	final float PROX_MORTAR	 		= 0.5f;
+	final float PROX_NAVALGUN		= 0.6f;
+	final float PROX_PHALANX		= 0.6f;
+	final float PROX_TORPEDO		= 0.6f;
+	
+	final float TRIGGER_RADIUS		= 0.8f;
 	float blastSimulationRadius;
 	float blastTriggerRange;
 	private ArrayList<Vector3> path;
@@ -62,11 +64,13 @@ public class AnimateStrategy implements WeaponStrategy {
 		speedVector.sub(position);
 		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED/5f);
 		position.add(speedVector);
-		if(position.dst(currentTarget)<blastTriggerRange){
+		if(position.dst(currentTarget)<TRIGGER_RADIUS){
 			targetNumber++;
 			if(path.size()>targetNumber){
 				currentTarget.set(path.get(targetNumber));
 			}else{
+				speedVector.nor().mul(position.dst(currentTarget)-blastTriggerRange);
+				position.add(speedVector);
 				for(Vector3 hit : hits){
 					float hitPercentage = hit.z/(((blastSimulationRadius*100)/5)*180);
 					hit.set(hit.x,hit.y,hitPercentage);

@@ -65,6 +65,7 @@ public class UserInterfaceController extends ObjectController {
 	public boolean handleInputDrag(Vector3 pos) {
 		boolean legalmove = true;
 		movement.set(0,0,0);
+		
 		if(pos.x<-2.5){
 			movement.set(-2.5f,0,0);
 		}else if(pos.x>2.5){

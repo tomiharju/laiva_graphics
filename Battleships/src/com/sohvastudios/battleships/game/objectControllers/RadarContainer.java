@@ -93,8 +93,9 @@ public class RadarContainer extends ObjectController {
 	}
 	@Override
 	public boolean handleInputDrag(Vector3 pos) {
+		if(area_bounds_radar.contains(pos.x, pos.y))
+			crosshair.getController().handleInputDrag(pos);
 		
-		crosshair.getController().handleInputDrag(pos);
 		return true;
 	}
 	public boolean handleInputDown(Vector3 pos){

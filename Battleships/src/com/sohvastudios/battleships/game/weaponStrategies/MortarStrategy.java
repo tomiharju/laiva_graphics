@@ -20,13 +20,14 @@ public class MortarStrategy implements WeaponStrategy {
 	//Weapon properties
 		final float 	RADIUS 			= 0.25f;
 		final float 	DMG_DENSITY     = 1.0f;
-		final float		EXP_PROXIMITY	= 0.1f;
-	
+		final float		EXP_PROXIMITY	= 0.2f;
+		final float		TRIGGER_RADIUS	= 0.8f;
 		Vector3 projectilePosition;
 		Vector3 projectileDestination;
 		private Vector3 speedVector;
 		final float SPEED 	= 10;
-		
+		private Vector3 firstWayPoint;
+		private Vector3 secondWayPoint;
 	
 	//General variables
 		private Set<ShipController> hits;
@@ -53,18 +54,42 @@ public class MortarStrategy implements WeaponStrategy {
 		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED);
 		position.add(speedVector);
 		
-
-		if (position.dst(projectileDestination) < EXP_PROXIMITY) {
+		//Check if projectile is close to final target
+		if (position.dst(secondWayPoint) < TRIGGER_RADIUS) {
+			speedVector.nor().mul(position.dst(secondWayPoint)-EXP_PROXIMITY);
+			position.add(speedVector);
 			return true;
-		}else
-			return false;
+		//Check if projectile is close to first target (Clustering point)
+		} else if (position.dst(firstWayPoint) < TRIGGER_RADIUS) {
+			projectileDestination.set(secondWayPoint);
+		}
+		return false;
+
+	
 	}
 
 	@Override
 	public void calculatePathAndHits(Vector3 target) {
-		projectileDestination.set(target);
-		((SeaContainer)parent).flightpath.add(projectileDestination);
-		projectilePosition.set(projectileDestination);
+		
+		//Point where the clustering happens
+		Vector3 origin = new Vector3(5,20,0);
+		firstWayPoint = new Vector3();
+		firstWayPoint.set(target);
+		firstWayPoint.sub(origin);
+		firstWayPoint.nor().mul(origin.dst(target));
+		firstWayPoint.div(2);
+		firstWayPoint.add(origin);
+		//Displacement at clustering
+		Vector3 displacement = new Vector3(0,0,0);
+		displacement.add((float)(-2+Math.random()*4),(float)(-2+Math.random()*4), 0);
+		//Target after clustering
+		secondWayPoint = new Vector3().set(target);
+		secondWayPoint.add(displacement);
+		//Set first waypoint to clustering point
+		projectileDestination.set(firstWayPoint);
+		//Add both points to result set
+		((SeaContainer)parent).flightpath.add(firstWayPoint);
+		((SeaContainer)parent).flightpath.add(secondWayPoint);
 		findBlastAffectedShips();
 		
 	}
@@ -104,6 +129,7 @@ public class MortarStrategy implements WeaponStrategy {
 
 	@Override
 	public void findBlastAffectedShips() {
+		projectilePosition.set(secondWayPoint);
 		int radius_factor = (int) (RADIUS*100);
 		Vector3 spot = new Vector3();
 		for (ObjectController oc : parent.controllers) {

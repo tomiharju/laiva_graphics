@@ -20,7 +20,8 @@ public class TorpedoStrategy implements WeaponStrategy{
 	//Weapon properties
 		final float 	RADIUS 			= 0.5f;
 		final float 	DMG_DENSITY     = 1.0f;
-		final float		EXP_PROXIMITY	= 0.1f;
+		final float		EXP_PROXIMITY	= 0.5f;
+		final float		TRIGGER_RADIUS  = 0.8f;
 		Vector3 projectilePosition;
 		Vector3 projectileDestination;
 		Vector3 primaryDestination;
@@ -35,7 +36,7 @@ public class TorpedoStrategy implements WeaponStrategy{
 	
 	public TorpedoStrategy(ObjectController parent){
 		this.parent=parent;
-		projectilePosition 		= new Vector3(5,10,0);	//TODO: Implement torpedo launch position
+		projectilePosition 		= new Vector3(5,20,0);	//TODO: Implement torpedo launch position
 		projectileDestination 	= new Vector3();
 		primaryDestination		= new Vector3();
 		hits = new HashSet<ShipController>();
@@ -70,7 +71,9 @@ public class TorpedoStrategy implements WeaponStrategy{
 		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED);
 		position.add(speedVector);
 		
-		if (position.dst(projectileDestination) < EXP_PROXIMITY) {
+		if (position.dst(projectileDestination) < TRIGGER_RADIUS) {
+			speedVector.nor().mul(position.dst(projectileDestination)-EXP_PROXIMITY);
+			position.add(speedVector);
 			return true;
 		}else
 			return false;
@@ -78,7 +81,7 @@ public class TorpedoStrategy implements WeaponStrategy{
 	
 	@Override
 	public Vector3 simulate(Vector3 target) {
-		while(projectilePosition.dst(target)>EXP_PROXIMITY){
+		while(projectilePosition.dst(target) > TRIGGER_RADIUS){
 			projectilePosition.lerp(target, 0.1f);
 			for(ObjectController sc : parent.controllers)
 				if(sc instanceof ShipController){
@@ -89,6 +92,9 @@ public class TorpedoStrategy implements WeaponStrategy{
 				}
 	
 		}
+		Vector3 difference = new Vector3();
+		difference.nor().mul(projectilePosition.dst(target)-EXP_PROXIMITY);
+		target.add(difference);
 		return target;
 	}
 

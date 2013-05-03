@@ -29,7 +29,7 @@ public abstract class ObjectController {
 		bounds				= new Rectangle(x - width / 2, y - height / 2, width, height);
 		clear_bounds 		= new Rectangle();
 		area_bounds_sea 	= new Rectangle(-10,-10, 20, 20);
-		area_bounds_radar 	= new Rectangle(-2.5f,-2.5f,5,5);
+		area_bounds_radar 	= new Rectangle(-3f,-3f,6,6);
 		parent				= null;
 	}
 

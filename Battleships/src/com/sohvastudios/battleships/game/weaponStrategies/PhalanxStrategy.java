@@ -20,7 +20,7 @@ public class PhalanxStrategy implements WeaponStrategy {
 	//Weapon properties
 		final float 	RADIUS 			= 0.25f;
 		final float 	DMG_DENSITY     = 1.0f;
-		final float		EXP_PROXIMITY	= 0.1f;
+		final float		EXP_PROXIMITY	= 0.5f;
 		Vector3 projectilePosition;
 		Vector3 projectileDestination;
 		private Vector3 speedVector;
@@ -51,6 +51,8 @@ public class PhalanxStrategy implements WeaponStrategy {
 		position.add(speedVector);
 		
 		if (position.dst(projectileDestination) < EXP_PROXIMITY) {
+			speedVector.nor().mul(position.dst(projectileDestination));
+			position.add(speedVector);
 			return true;
 		}else
 			return false;

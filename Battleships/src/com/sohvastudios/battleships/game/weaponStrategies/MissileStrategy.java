@@ -21,8 +21,8 @@ public class MissileStrategy implements WeaponStrategy {
 		final float 	RADIUS 			= 0.5f;
 		final float 	SEEKING_RADIUS 	= 3f;
 		final float 	DMG_DENSITY     = 1.0f;
-		final float		EXP_PROXIMITY	= 0.5f;
-		
+		final float		EXP_PROXIMITY	= 0.1f;
+		final float		TRIGGER_RADIUS  = 0.8f;
 		Vector3 projectilePosition;
 		Vector3 projectileDestination;
 		Vector3 primaryDestination;
@@ -61,9 +61,11 @@ public class MissileStrategy implements WeaponStrategy {
 		speedVector.sub(position);
 		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED);
 		position.add(speedVector);
-		if (position.dst(primaryDestination) < EXP_PROXIMITY) {
+		if (position.dst(primaryDestination) < TRIGGER_RADIUS) {
+			speedVector.nor().mul(position.dst(projectileDestination)-EXP_PROXIMITY);
+			position.add(speedVector);
 			return true;
-		} else if (position.dst(projectileDestination) < EXP_PROXIMITY) {
+		} else if (position.dst(projectileDestination) < TRIGGER_RADIUS) {
 			projectileDestination.set(primaryDestination);
 		}
 		

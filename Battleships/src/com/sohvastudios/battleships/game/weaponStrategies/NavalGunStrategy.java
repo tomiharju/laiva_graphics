@@ -20,7 +20,9 @@ public class NavalGunStrategy implements WeaponStrategy{
 	//Weapon properties
 		final float 	RADIUS 			= 0.75f;
 		final float 	DMG_DENSITY     = 1.0f;
-		final float		EXP_PROXIMITY	= 0.1f;
+		final float		EXP_PROXIMITY	= 0.6f;
+		final float		TRIGGER_RADIUS	= 0.8f;
+		
 		Vector3 projectilePosition;
 		Vector3 projectileDestination;
 		private Vector3 speedVector;
@@ -50,7 +52,9 @@ public class NavalGunStrategy implements WeaponStrategy{
 		speedVector.nor().mul(Gdx.graphics.getDeltaTime()*SPEED);
 		position.add(speedVector);
 
-		if (position.dst(projectileDestination) < EXP_PROXIMITY) {
+		if (position.dst(projectileDestination) < TRIGGER_RADIUS) {
+			speedVector.nor().mul(position.dst(projectileDestination)-EXP_PROXIMITY);
+			position.add(speedVector);
 			return true;
 		}else
 			return false;

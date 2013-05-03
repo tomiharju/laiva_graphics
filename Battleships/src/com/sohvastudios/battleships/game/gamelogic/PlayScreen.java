@@ -47,7 +47,7 @@ public class PlayScreen extends InputAdapter implements Screen{
 	@Override
 	public void render(float delta) {
 			guiCam.update();
-			Gdx.gl.glClearColor(0f, .0f, .0f, 1);
+			Gdx.gl.glClearColor(0.529f, .808f, 1f, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 			logicHandler.handleServerInput();
 			world.update();

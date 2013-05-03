@@ -112,12 +112,8 @@ public class SeaContainer extends ObjectController {
 		case 2: {
 			// Mortar
 			for(int i = 0 ; i<5 ; i++){
-				
-				Vector3 displacement = new Vector3();
-				displacement.set(point);
-				displacement.add((float)(-2+Math.random()*4),(float)(-2+Math.random()*4), 0);
 				new ProjectileObject(new ProjectileController(5f, 20f, 0.75f, 0.75f),
-						new ProjectileRenderer(),this, weapon_type).animateDamage(displacement);
+						new ProjectileRenderer(),this, weapon_type).animateDamage(point);
 				
 				ArrayList<Vector3> temphit = new ArrayList<Vector3>();
 				ArrayList<Vector3> temppath = new ArrayList<Vector3>();
